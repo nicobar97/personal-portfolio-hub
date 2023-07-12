@@ -5,7 +5,7 @@ import { routes } from '../../src/router';
 import { server } from '../../src/mocks/server';
 import { rest } from 'msw';
 import { Hello } from '../../src/model/hello';
-import { App } from '../../src/app';
+import { App } from '../../src/App';
 
 export const handlers = [
   rest.get('/hello/:helloId', (req, res, ctx) =>
