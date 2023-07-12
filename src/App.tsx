@@ -1,26 +1,24 @@
-import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ComponentProps } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
-import React, { useState } from 'react';
+import { GlobalStyle } from './components/GlobalStyle';
+import { theme } from './style/style';
 
-import logo from './logo.svg';
+type Props = {
+  router: ComponentProps<typeof RouterProvider>['router'];
+};
 
-function App() {
-  const [count, setCount] = useState(0);
+const queryClient = new QueryClient();
 
+export const App: React.FC<Props> = (props: Props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className="header">Vite + React + Typescript</p>
-
-        <div className="body">
-          <button onClick={() => setCount((count) => count + 1)}>
-            Click me: {count}
-          </button>
-        </div>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <GlobalStyle />
+        <RouterProvider router={props.router} />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
-}
-
-export default App;
+};
