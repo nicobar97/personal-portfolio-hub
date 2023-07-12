@@ -23,7 +23,7 @@ describe('App', () => {
     render(
       <App
         router={createMemoryRouter(routes, {
-          initialEntries: ['/pay/testrender'],
+          initialEntries: ['/testrender'],
         })}
       />,
     );
@@ -34,7 +34,7 @@ describe('App', () => {
     render(
       <App
         router={createMemoryRouter(routes, {
-          initialEntries: ['/pay/hello/HELLO'],
+          initialEntries: ['/hello/HELLO'],
         })}
       />,
     );
@@ -48,7 +48,7 @@ describe('App', () => {
     render(
       <App
         router={createMemoryRouter(routes, {
-          initialEntries: ['/pay/hello/HELLO'],
+          initialEntries: ['/hello/HELLO'],
         })}
       />,
     );
