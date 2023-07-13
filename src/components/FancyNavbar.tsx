@@ -14,10 +14,9 @@ const NavigationBar = styled.div<{ floating: boolean }>`
   max-width: 500px;
   margin: 0 auto;
   z-index: 1;
-  transition: all 0.3s ease-in-out;
-
+  /* transition: justify-content 0.2s ease 0.2s; */
   ${(props) =>
-    props.floating ? `justify-content: space-evenly;` : `justify-content: space-between;`};
+    props.floating ? `justify-content: space-evenly;` : `justify-content: space-between;`}
 `;
 
 const Container = styled.div<{ floating: boolean }>`
@@ -27,7 +26,12 @@ const Container = styled.div<{ floating: boolean }>`
   left: 0;
   right: 0;
   z-index: 1;
-  transition: all 0.3s ease-in-out;
+
+  transition:
+    box-shadow ${(props) => (props.floating ? '0.2s' : '0.3s')} ease-in-out
+      ${(props) => (props.floating ? '0s' : '0.35s')},
+    background-color 0.2s ease-in,
+    padding 0.3s ease-out ${(props) => (props.floating ? '0.25s' : '0s')};
 
   ${(props) =>
     props.floating
@@ -55,15 +59,14 @@ const Bubble = styled(motion.div)<{ floating: boolean }>`
   flex-direction: column;
   height: 1.5rem;
   padding: 1.1rem;
+  border-radius: 100px;
+  gap: 1rem;
   background-color: ${(props) => props.theme.colors.white};
-  transition: all 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-out ${(props) => (props.floating ? '0.2s' : '0s')};
 
   ${(props) =>
     props.floating
-      ? `border-radius: 100px;  gap: 1rem; box-shadow: ${props.theme.hexToRgbA(
-          props.theme.colors.black,
-          0.2,
-        )} 0px 7px 20px 0px;
+      ? `box-shadow: ${props.theme.hexToRgbA(props.theme.colors.black, 0.2)} 0px 7px 20px 0px;
 `
       : ``}
 `;
