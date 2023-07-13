@@ -16,19 +16,18 @@ type Props = {
   currentTab: TabsEnum;
 };
 
-const Button = styled.button`
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  margin: 2rem;
-  border: none;
-  padding: 1rem;
-  border-radius: 20px;
-`;
+// const Button = styled.button`
+//   position: fixed;
+//   right: 0;
+//   bottom: 0;
+//   margin: 2rem;
+//   border: none;
+//   padding: 1rem;
+//   border-radius: 20px;
+// `;
 
 export const HomePage: React.FC<Props> = (props: Props) => {
   const [currentTab, setCurrentTab] = useState<TabsEnum>(props.currentTab);
-  const [isFloatingBar, setIsFloatingBar] = useState<boolean>(false);
   return (
     <>
       <Container>
@@ -50,7 +49,7 @@ export const HomePage: React.FC<Props> = (props: Props) => {
               <HomeTab />
             </AnimateFadeIn>
           )}
-          <Button onClick={() => setIsFloatingBar(!isFloatingBar)}>Switch</Button>
+          {/* <Button onClick={() => setIsFloatingBar(!isFloatingBar)}>Switch</Button> */}
         </MobileFrame>
       </Container>
     </>
