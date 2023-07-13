@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 
 :root {
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: ${(props) => props.theme.colors.black};

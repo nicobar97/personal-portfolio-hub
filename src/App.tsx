@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyle } from './components/GlobalStyle';
 import { theme } from './style/style';
+import { GlobalFonts } from './components/GlobalFonts';
 
 type Props = {
   router: ComponentProps<typeof RouterProvider>['router'];
@@ -17,6 +18,7 @@ export const App: React.FC<Props> = (props: Props) => {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
+        <GlobalFonts />
         <RouterProvider router={props.router} />
       </QueryClientProvider>
     </ThemeProvider>

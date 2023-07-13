@@ -1,26 +1,22 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { HomePage } from './views/HomePage';
 
-import { HelloPage } from './views/HelloPage';
-import { LocalHelloPage } from './views/LocalHelloPage';
-import { NotFound } from './views/NotFound';
-import { MainPage } from './views/Page';
-
-export const routes = [
-  {
-    path: 'page/:helloId',
-    element: <MainPage />,
-  },
-  {
-    path: 'hello/:helloId',
-    element: <HelloPage />,
-  },
-  {
-    path: 'local/hello/:helloId',
-    element: <LocalHelloPage />,
-  },
+export const routes: RouteObject[] = [
+  // {
+  //   path: 'page/:helloId',
+  //   element: <MainPage />,
+  // },
+  // {
+  //   path: 'hello/:helloId',
+  //   element: <HelloPage />,
+  // },
+  // {
+  //   path: 'local/hello/:helloId',
+  //   element: <LocalHelloPage />,
+  // },
   {
     path: '*',
-    element: <NotFound />,
+    element: <HomePage />,
   },
 ];
 
