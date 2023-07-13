@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import homeIcon from '../assets/icons/home.png';
+// import homeIcon from '../assets/icons/home.png';
 import infoIcon from '../assets/icons/info.png';
 import menuIcon from '../assets/icons/menu.png';
 import { Tabs, TabsEnum } from '../model/Tabs';
@@ -100,7 +100,11 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
           <Icon src={menuIcon} whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }} />
         </Bubble>
         <Bubble floating={isFloatingBar} whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}>
-          <Logo src={logoLight} whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }} />
+          <Logo
+            onClick={() => props.onClick(Tabs.Home)}
+            src={logoLight}
+            whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }}
+          />
         </Bubble>
         <Bubble
           floating={isFloatingBar}
@@ -109,13 +113,13 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
         >
           <Icon src={infoIcon} whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }} />
         </Bubble>
-        <Bubble
+        {/* <Bubble
           floating={isFloatingBar}
           onClick={() => props.onClick(Tabs.Home)}
           whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
         >
           <Icon src={homeIcon} whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }} />
-        </Bubble>
+        </Bubble> */}
       </NavigationBar>
     </Container>
   );
