@@ -17,7 +17,7 @@ export const routes: RouteObject[] = [
   // },
   {
     path: '*',
-    element: <HomePage currentTab={Tabs.Home}/>,
+    element: <HomePage currentTab={Tabs.Home} />,
   },
 ];
 

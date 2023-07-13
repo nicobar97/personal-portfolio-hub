@@ -59,7 +59,7 @@ export const theme = {
       '800': '#b30a0a',
       '900': '#9f0606',
     },
-    darkGray: '#333333'
+    darkGray: '#333333',
   },
   hexToRgbA: hexToRgbA,
 } as const;

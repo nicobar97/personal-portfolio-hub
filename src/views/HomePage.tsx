@@ -33,10 +33,7 @@ export const HomePage: React.FC<Props> = (props: Props) => {
     <>
       <Container>
         <MobileFrame>
-          <FancyNavbar
-            onClick={(tab: TabsEnum) => setCurrentTab(tab)}
-            isFloatingBar={isFloatingBar}
-          />
+          <FancyNavbar onClick={(tab: TabsEnum) => setCurrentTab(tab)} />
 
           {currentTab === Tabs.Menu && (
             <AnimateFadeIn trigger={currentTab === Tabs.Menu}>

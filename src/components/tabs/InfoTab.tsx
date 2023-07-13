@@ -20,11 +20,9 @@ export const InfoTab: React.FC = () => (
   <>
     <Content>
       <MobileFrame>
-      <h1>Info Page</h1>
+        <h1>Info Page</h1>
 
-        <div>
-          This is the WIP Info Tab
-        </div>
+        <div>This is the WIP Info Tab</div>
       </MobileFrame>
     </Content>
   </>

@@ -5,5 +5,3 @@ export const Tabs = {
 };
 
 export type TabsEnum = (typeof Tabs)[keyof typeof Tabs];
-
-
