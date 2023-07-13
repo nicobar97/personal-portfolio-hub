@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: { https: true },
+  server: { open: './public/index.html', https: true },
   plugins: [react(), mkcert()],
   test: {
     globals: true,
@@ -16,4 +16,5 @@ export default defineConfig({
       'whatwg-fetch',
     ],
   },
+  publicDir: 'public',
 });
