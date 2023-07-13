@@ -12,7 +12,7 @@ const NavigationBarContainer = styled.div`
 `;
 
 const Icon = styled.img`
-  width: 1.8rem;
+  width: 1.5rem;
   margin: 0 5px;
 `;
 
