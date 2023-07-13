@@ -16,7 +16,6 @@ export const GlobalStyle = createGlobalStyle`
   user-select: none;
   overflow-x: hidden;
   overflow-y: hidden;
-
 }
 
 #root {

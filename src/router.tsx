@@ -4,10 +4,10 @@ import { Tabs } from './model/Tabs';
 import { MainPage } from './views/MainPage';
 
 export const routes: RouteObject[] = [
-  {
-    path: 'page/:helloId',
-    element: <MainPage />,
-  },
+  // {
+  //   path: 'page/:helloId',
+  //   element: <MainPage />,
+  // },
   // {
   //   path: 'hello/:helloId',
   //   element: <HelloPage />,
