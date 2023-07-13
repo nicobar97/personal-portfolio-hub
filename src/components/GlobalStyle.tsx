@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
   -webkit-text-size-adjust: 100%;
   user-select: none;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 #root {

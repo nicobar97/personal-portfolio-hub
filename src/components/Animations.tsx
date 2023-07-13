@@ -7,8 +7,8 @@ type Props = {
 
 export const AnimateFadeInDown: React.FC<Props> = (props: Props) => (
   <motion.div
-    initial={{ opacity: 0, translateY: -20 }}
-    animate={{ opacity: props.trigger ? 1 : 0, translateY: props.trigger ? 0 : -20 }}
+    initial={{ opacity: 0, translateY: 0 }}
+    animate={{ opacity: props.trigger ? 1 : 0, translateY: props.trigger ? 0 : -40 }}
     transition={{ duration: 0.5 }}
   >
     {props.children}
@@ -24,3 +24,8 @@ export const AnimateFadeIn: React.FC<Props> = (props: Props) => (
     {props.children}
   </motion.div>
 );
+{/* <motion.div
+initial={{ opacity: 0, translateY: 0 }}
+animate={{ opacity: props.trigger ? 1 : 0, translateY: props.trigger ? 30 : -30 }}
+transition={{ duration: 0.5 }}
+> */}

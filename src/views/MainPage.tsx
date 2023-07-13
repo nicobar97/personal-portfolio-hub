@@ -36,7 +36,7 @@ const Content = styled.div`
   margin: 0 auto;
   position: fixed;
   overflow-x: hidden;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   inset: 3rem 0px 3rem;
   margin-top: 0.5rem;
   padding: 1.5rem;

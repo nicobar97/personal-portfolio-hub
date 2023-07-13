@@ -8,10 +8,10 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  position: fixed;
+  /* position: fixed; */
   overflow-x: hidden;
-  overflow-y: auto;
-  inset: 3rem 0px 3rem;
+  /* overflow-y: auto; */
+  /* inset: 3rem 0px 3rem; */
   margin-top: 0.5rem;
   padding: 1.5rem;
 `;
@@ -20,6 +20,8 @@ export const InfoTab: React.FC = () => (
   <>
     <Content>
       <MobileFrame>
+      <h1>Info Page</h1>
+
         <div>
           This is the WIP Info Tab
         </div>

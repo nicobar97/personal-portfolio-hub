@@ -8,10 +8,10 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  position: fixed;
+  /* position: fixed; */
   overflow-x: hidden;
-  overflow-y: auto !important;
-  inset: 3rem 0px 3rem;
+  /* overflow-y: auto !important; */
+  /* inset: 3rem 0px 3rem; */
   margin-top: 0.5rem;
   padding: 1.5rem;
 `;
@@ -19,6 +19,7 @@ const Content = styled.div`
 export const HomeTab: React.FC = () => (
   <Content>
     <MobileFrame>
+      <h1>Home Page</h1>
       <div>
         Bacon ipsum dolor amet ham swine meatball meatloaf, turducken turkey sausage fatback.
         Turducken short loin flank, pork beef ribs andouille turkey jerky shankle venison. Cow kevin
