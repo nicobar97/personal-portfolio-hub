@@ -24,8 +24,8 @@ type Props = {
 
 export const NavigationBar: React.FC<Props> = (props: Props) => (
   <NavigationBarContainer>
-    <Icon src={homeIcon} onClick={() => props.onClick(Tabs.Home)} whileTap={{ scale: 1.5 }} />
-    <Icon src={menuIcon} onClick={() => props.onClick(Tabs.Menu)} whileTap={{ scale: 1.5 }} />
-    <Icon src={infoIcon} onClick={() => props.onClick(Tabs.Info)} whileTap={{ scale: 1.5 }} />
+    <Icon src={homeIcon} onClick={() => props.onClick(Tabs.Home)} whileTap={{ scale: 2 }} />
+    <Icon src={menuIcon} onClick={() => props.onClick(Tabs.Menu)} whileTap={{ scale: 2 }} />
+    <Icon src={infoIcon} onClick={() => props.onClick(Tabs.Info)} whileTap={{ scale: 2 }} />
   </NavigationBarContainer>
 );
