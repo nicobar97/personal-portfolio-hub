@@ -5,7 +5,6 @@ import menuIcon from '../assets/icons/menu.png';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import { motion } from 'framer-motion';
 import logoLight from '../../src/assets/images/logo_light.png';
-import { useState } from 'react';
 
 const NavigationBarContainer = styled.div<{ floating: boolean }>`
   display: flex;
@@ -75,10 +74,7 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
       >
         <Icon src={menuIcon} whileTap={{ scale: !props.isFloatingBar ? 1.5 : 0 }} />
       </Bubble>
-      <Bubble
-        floating={props.isFloatingBar}
-        whileTap={{ scale: props.isFloatingBar ? 1.5 : 0 }}
-      >
+      <Bubble floating={props.isFloatingBar} whileTap={{ scale: props.isFloatingBar ? 1.5 : 0 }}>
         <Logo src={logoLight} whileTap={{ scale: !props.isFloatingBar ? 1.5 : 0 }} />
       </Bubble>
       <Bubble
