@@ -43,7 +43,6 @@ const Logo = styled.img`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  flex-shrink: 0;
   width: 8rem;
 `;
 
@@ -53,19 +52,19 @@ type Props = {
 
 export const HomePage: React.FC<Props> = (props: Props) => {
   const [currentTab, setCurrentTab] = useState<TabsEnum>(props.currentTab);
-  console.log(currentTab);
+
   return (
     <>
-      <AnimateFadeIn trigger={currentTab === Tabs.Home}>
-        <HomeTab />
-      </AnimateFadeIn>
-
       <AnimateFadeIn trigger={currentTab === Tabs.Menu}>
         <MenuTab />
       </AnimateFadeIn>
 
       <AnimateFadeIn trigger={currentTab === Tabs.Info}>
         <InfoTab />
+      </AnimateFadeIn>
+
+      <AnimateFadeIn trigger={currentTab === Tabs.Home}>
+        <HomeTab />
       </AnimateFadeIn>
 
       <Header key="header">
