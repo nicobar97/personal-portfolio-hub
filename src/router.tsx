@@ -1,5 +1,6 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 import { HomePage } from './views/HomePage';
+import { Tabs } from './model/Tabs';
 
 export const routes: RouteObject[] = [
   // {
@@ -16,7 +17,7 @@ export const routes: RouteObject[] = [
   // },
   {
     path: '*',
-    element: <HomePage />,
+    element: <HomePage currentTab={Tabs.Home}/>,
   },
 ];
 

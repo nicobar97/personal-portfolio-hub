@@ -47,7 +47,7 @@ const ErrorImg = styled.img`
   width: 5rem;
 `;
 
-export const Error: React.FC<Props> = (props: Props) => (
+export const ErrorPopup: React.FC<Props> = (props: Props) => (
   <>
     <Container>
       <Title>{props.title}</Title>

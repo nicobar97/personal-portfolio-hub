@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { getHello } from '../api/hello';
 import { AnimateFadeIn, AnimateFadeInDown } from '../components/Animations';
-import { Error } from '../components/Error';
+import { ErrorPopup } from '../components/ErrorPopup';
 import { MobileFrame } from '../components/MobileFrame';
 import { FetchAuthMapError } from '../model/errors';
 import { Loader, LoaderContainer } from '../components/Loader';
@@ -222,7 +222,7 @@ const handleError = (err: FetchAuthMapError) => {
   switch (err.type) {
     case 'auth_error':
       return (
-        <Error
+        <ErrorPopup
           key={err.type}
           data-testid="error"
           title={'Errore'}
@@ -231,7 +231,7 @@ const handleError = (err: FetchAuthMapError) => {
       );
     case 'auth_fetch_error':
       return (
-        <Error
+        <ErrorPopup
           key={err.type}
           data-testid="error"
           title={'Errore'}
@@ -240,7 +240,7 @@ const handleError = (err: FetchAuthMapError) => {
       );
     case 'api_error':
       return (
-        <Error
+        <ErrorPopup
           key={err.type}
           data-testid="error"
           title={'Errore'}
@@ -249,7 +249,7 @@ const handleError = (err: FetchAuthMapError) => {
       );
     case 'mapping_error':
       return (
-        <Error
+        <ErrorPopup
           key={'mapping_error'}
           data-testid="error"
           title={'Errore'}
@@ -258,7 +258,7 @@ const handleError = (err: FetchAuthMapError) => {
       );
     default:
       return (
-        <Error
+        <ErrorPopup
           key={'unknown_error'}
           data-testid="error"
           title={'Errore'}
