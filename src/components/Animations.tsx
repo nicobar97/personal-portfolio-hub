@@ -19,7 +19,7 @@ export const AnimateFadeIn: React.FC<Props> = (props: Props) => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: props.trigger ? 1 : 0 }}
-    transition={{ duration: 0.5 }}
+    transition={{ duration: 0.2 }}
   >
     {props.children}
   </motion.div>

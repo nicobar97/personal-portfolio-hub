@@ -13,11 +13,10 @@ export const GlobalStyle = createGlobalStyle`
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  -webkit-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   overflow-x: hidden;
   overflow-y: hidden;
+
 }
 
 #root {
@@ -29,5 +28,15 @@ body {
 
 li {
   list-style: none;
+}
+
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -webkit-user-drag: none;
 }
 `;
