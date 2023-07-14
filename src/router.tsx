@@ -4,11 +4,6 @@ import { Tabs, TabsEnum } from './model/Tabs';
 
 export const routes: (RouteObject & { type: string })[] = [
   {
-    path: '*',
-    type: Tabs.Home,
-    element: <HomePage currentTab={Tabs.Info} />,
-  },
-  {
     path: '/info',
     type: Tabs.Info,
     element: <HomePage currentTab={Tabs.Info} />,
@@ -22,6 +17,11 @@ export const routes: (RouteObject & { type: string })[] = [
     path: '/home',
     type: Tabs.Home,
     element: <HomePage currentTab={Tabs.Home} />,
+  },
+  {
+    path: '*',
+    type: Tabs.Info,
+    element: <HomePage currentTab={Tabs.Info} />,
   },
 ];
 

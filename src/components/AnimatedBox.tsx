@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const squareVariants = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
-  hidden: { opacity: 0, scale: 0 },
+  hidden: { opacity: 0, scale: 0.5 },
 };
 
 const Box = styled.div<{ themeStyle: ThemeStyleEnum }>`
@@ -27,7 +27,7 @@ export const AnimatedBox: React.FC<{ children: React.ReactNode; themeStyle: Them
   themeStyle: ThemeStyleEnum;
 }) => {
   const controls = useAnimation();
-  const [ref, inView] = useInView();
+  const [ref, inView] = useInView({threshold: 0.1});
 
   useEffect(() => {
     if (inView) {

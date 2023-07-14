@@ -123,7 +123,7 @@ export const InfoTab: React.FC = () => {
             </BulletList>
           </AnimatedBox>
           <AnimatedBox themeStyle={themeStyle.style}>
-            <Title>Work Career</Title>
+            <Title>Work Career - Current</Title>
             <div>
               <SubTitle>Backend Software Engineer at ONYON</SubTitle>
               <p>January 2023 - Present</p>
@@ -152,6 +152,9 @@ export const InfoTab: React.FC = () => {
                 <BulletRow>JavaScript</BulletRow>
               </BulletList>
             </div>
+          </AnimatedBox>
+          <AnimatedBox themeStyle={themeStyle.style}>
+            <Title>Work Career - Past</Title>
             <div>
               <SubTitle>Research Fellow at Alma Mater Studiorum - Università di Bologna</SubTitle>
               <p>June 2022 - December 2022 · 7 months</p>
