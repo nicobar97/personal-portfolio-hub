@@ -10,13 +10,14 @@ import { useState } from 'react';
 const NavigationBar = styled.div<{ floating: boolean }>`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 35%;
   max-width: 500px;
   margin: 0 auto;
   z-index: 1;
-  /* transition: justify-content 0.2s ease 0.2s; */
+  justify-content: space-between;
+  transition: width 0.2s ease 0.1s;
   ${(props) =>
-    props.floating ? `justify-content: space-evenly;` : `justify-content: space-between;`}
+    props.floating ? `width: 25em;` : `width: 35em;`}
 `;
 
 const Container = styled.div<{ floating: boolean }>`
