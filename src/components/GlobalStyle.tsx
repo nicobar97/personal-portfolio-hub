@@ -17,6 +17,7 @@ export const GlobalStyle = createGlobalStyle<{ themeStyle: ThemeStyleEnum }>`
   user-select: none;
   overflow-x: hidden;
   overflow-y: auto;
+  transition: background-color 0.5s, color 0.5s;
 }
 
 #root {

@@ -70,8 +70,9 @@ const Bubble = styled(motion.div)<{ floating: boolean; themeStyle: ThemeStyleEnu
   ${(props) =>
     props.floating
       ? `box-shadow: ${props.theme.colors(props.themeStyle).shadow} 0px 7px 20px 0px;
+      background-color: ${props.theme.colors(props.themeStyle).background};
 `
-      : ``}
+      : `background-color: transparent`}
 `;
 
 type Props = {
