@@ -32,7 +32,7 @@ const changeTab = (setCurrentTab: (tab: TabsEnum) => void, tab: TabsEnum) => {
   setCurrentTab(tab);
 };
 
-export const HomePage: React.FC<Props> = (props: Props) => {
+export const PortfolioWithTabs: React.FC<Props> = (props: Props) => {
   const [currentTab, setCurrentTab] = useState<TabsEnum>(props.currentTab);
   return (
     <>
