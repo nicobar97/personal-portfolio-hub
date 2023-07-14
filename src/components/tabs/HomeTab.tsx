@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../MobileFrame';
-import { AnimatedBox } from '../AnimatedBox';
+import { AnimatedBox } from '../animations/AnimatedBox';
 import { useThemeStore } from '../../stores/useThemeStore';
 
 const Content = styled.div`

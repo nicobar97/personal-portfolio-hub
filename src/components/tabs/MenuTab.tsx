@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../MobileFrame';
 import { useThemeStore } from '../../stores/useThemeStore';
-import { AnimatedBox } from '../AnimatedBox';
+import { AnimatedBox } from '../animations/AnimatedBox';
 
 const Content = styled.div`
   display: flex;

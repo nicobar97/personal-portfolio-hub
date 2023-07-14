@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ThemeStyleEnum } from '../model/Theme';
+import { ThemeStyleEnum } from '../../model/Theme';
 import styled from 'styled-components';
 
 const Box = styled.div<{ themeStyle: ThemeStyleEnum }>`
