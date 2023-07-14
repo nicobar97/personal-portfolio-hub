@@ -3,9 +3,9 @@ import { ComponentProps } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { GlobalStyle } from './components/GlobalStyle';
+import { GlobalStyle } from './components/globals/GlobalStyle';
 import { theme } from './style/style';
-import { GlobalFonts } from './components/GlobalFonts';
+import { GlobalFonts } from './components/globals/GlobalFonts';
 import { useThemeStore } from './stores/useThemeStore';
 
 type Props = {
