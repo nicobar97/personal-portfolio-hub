@@ -1,7 +1,7 @@
 import { EitherAsync, Right } from 'purify-ts';
 
-import { FetchAuthMapError } from '../model/Errors';
-import { Hello } from '../model/Hello';
+import { FetchAuthMapError } from '../model/errors';
+import { Hello } from '../model/hello';
 import { mapFetchFactory } from '../service/MappedFetch';
 
 export type GetHello = (helloId: string) => EitherAsync<FetchAuthMapError, Hello>;
