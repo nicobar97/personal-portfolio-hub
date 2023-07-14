@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import error_img from '../assets/images/error.png';
-import { useThemeStore } from '../../stores/useThemeStore';
-import { ThemeStyleEnum } from '../../model/Theme';
+import { useThemeStore } from '../stores/useThemeStore';
+import { ThemeStyleEnum } from '../model/Theme';
 
 type Props = {
   title: string;

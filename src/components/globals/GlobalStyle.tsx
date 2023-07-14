@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { ThemeStyleEnum } from '../../model/Theme';
+import { ThemeStyleEnum } from '../model/Theme';
 
 export const GlobalStyle = createGlobalStyle<{ themeStyle: ThemeStyleEnum }>`
 
