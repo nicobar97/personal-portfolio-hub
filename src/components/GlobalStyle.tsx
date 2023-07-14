@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle<{ themeStyle: ThemeStyleEnum }>`
   user-select: none;
   overflow-x: hidden;
   overflow-y: auto;
-  transition: background-color 0.5s, color 0.5s;
+  transition: background-color 0.5s, color 0.5s, border 0.5s;
 }
 
 #root {
@@ -43,9 +43,5 @@ img {
 
 a:link {
   color: ${(props) => props.theme.colors(props.themeStyle).accent.color}
-}
-
-li {
-  list-style-type: circle;
 }
 `;
