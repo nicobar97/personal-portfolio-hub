@@ -40,4 +40,8 @@ img {
   -o-user-select: none;
   -webkit-user-drag: none;
 }
+
+a:link {
+  color: ${(props) => props.theme.colors(props.themeStyle).accent.color}
+}
 `;
