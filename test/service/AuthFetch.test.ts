@@ -1,6 +1,6 @@
 import { Right, Left, Maybe, Just } from 'purify-ts';
 import { AuthToken } from '../../src/model/Authentication';
-import { AuthError, AuthFetchError } from '../../src/model/errors';
+import { AuthError, AuthFetchError } from '../../src/model/Errors';
 import { authFetchFactory } from '../../src/service/AuthFetch';
 import { AuthService } from '../../src/service/AuthService';
 import { vitest } from 'vitest';

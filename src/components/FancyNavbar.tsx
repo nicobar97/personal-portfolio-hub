@@ -99,7 +99,7 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
           themeStyle={theme.style}
           floating={isFloatingBar}
           onClick={() => props.onBubbleClick(Tabs.Menu)}
-          onTap={{ scale: isFloatingBar ? 1.5 : 0 }}
+          whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
         >
           <Icon
             themeStyle={theme.style}

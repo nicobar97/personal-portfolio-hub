@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { createMemoryRouter } from 'react-router-dom';
-import { routes } from '../../src/router';
-import { server } from '../../src/mocks/server';
+import { routes } from '../../src/Router';
+import { server } from '../../src/mocks/Server';
 import { rest } from 'msw';
-import { Hello } from '../../src/model/hello';
+import { Hello } from '../../src/model/Hello';
 import { App } from '../../src/App';
 
 export const handlers = [
