@@ -9,6 +9,6 @@ export const PageStatus = {
   LOADING: loading,
   SUCCESS: success,
   ERROR: error,
-};
+} as const;
 
 export type PageStatusEnum = (typeof PageStatus)[keyof typeof PageStatus];

@@ -1,13 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
+import { ThemeStyleEnum } from '../model/Theme';
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ themeStyle: ThemeStyleEnum }>`
 
 :root {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: ${(props) => props.theme.colors.black};
-  background-color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors(props.themeStyle).text};
+  background-color: ${(props) => props.theme.colors(props.themeStyle).background};
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

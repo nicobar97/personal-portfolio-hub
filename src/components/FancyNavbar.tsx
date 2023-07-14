@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 // import homeIcon from '../assets/icons/home.png';
 import infoIcon from '../assets/icons/info.png';
+import lightModeIcon from '../assets/icons/light-mode.png';
+import darkModeIcon from '../assets/icons/dark-mode.png';
 import menuIcon from '../assets/icons/menu.png';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import { motion } from 'framer-motion';
 import logoLight from '../../src/assets/images/logo_light.png';
 import { useState } from 'react';
+import { useThemeStore } from '../stores/useThemeStore';
+import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
 
 const NavigationBar = styled.div<{ floating: boolean }>`
   display: flex;
@@ -16,11 +20,10 @@ const NavigationBar = styled.div<{ floating: boolean }>`
   z-index: 1;
   justify-content: space-between;
   transition: width 0.2s ease 0.1s;
-  ${(props) =>
-    props.floating ? `width: 25em;` : `width: 35em;`}
+  ${(props) => (props.floating ? `width: 25em;` : `width: 35em;`)}
 `;
 
-const Container = styled.div<{ floating: boolean }>`
+const Container = styled.div<{ floating: boolean; themeStyle: ThemeStyleEnum }>`
   display: flex;
   position: fixed;
   top: 0;
@@ -37,16 +40,15 @@ const Container = styled.div<{ floating: boolean }>`
   ${(props) =>
     props.floating
       ? `padding: 2rem`
-      : `background-color: ${props.theme.colors.white}; box-shadow: ${props.theme.hexToRgbA(
-          props.theme.colors.black,
-          0.1,
-        )} 0px 7px 20px 0px;`}
+      : `background-color: ${props.theme.colors(props.themeStyle).background}; box-shadow: ${
+          props.theme.colors(props.themeStyle).shadow
+        } 0px 7px 20px 0px;`}
 `;
 
-const Icon = styled(motion.img)`
+const Icon = styled(motion.img)<{ themeStyle: ThemeStyleEnum }>`
   height: 1.5rem;
   margin: 0;
-  /* filter: invert(100%); */
+  ${(props) => (props.themeStyle === ThemeStyle.DARK ? `filter: invert(100%);` : ``)}
 `;
 
 const Logo = styled(motion.img)`
@@ -54,7 +56,7 @@ const Logo = styled(motion.img)`
   height: 1.5rem;
 `;
 
-const Bubble = styled(motion.div)<{ floating: boolean }>`
+const Bubble = styled(motion.div)<{ floating: boolean; themeStyle: ThemeStyleEnum }>`
   z-index: 5;
   display: flex;
   flex-direction: column;
@@ -62,12 +64,12 @@ const Bubble = styled(motion.div)<{ floating: boolean }>`
   padding: 1.1rem;
   border-radius: 100px;
   gap: 1rem;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.theme.colors(props.themeStyle).background};
   transition: box-shadow 0.3s ease-out ${(props) => (props.floating ? '0.2s' : '0s')};
 
   ${(props) =>
     props.floating
-      ? `box-shadow: ${props.theme.hexToRgbA(props.theme.colors.black, 0.2)} 0px 7px 20px 0px;
+      ? `box-shadow: ${props.theme.colors(props.themeStyle).shadow} 0px 7px 20px 0px;
 `
       : ``}
 `;
@@ -89,21 +91,31 @@ const handleScroll =
 
 export const FancyNavbar: React.FC<Props> = (props: Props) => {
   const scrollTriggerY = 30;
+  const theme = useThemeStore();
   const [isFloatingBar, setIsFloatingBar] = useState(false);
 
   setUpScrolling(scrollTriggerY, setIsFloatingBar);
 
   return (
-    <Container floating={isFloatingBar}>
+    <Container floating={isFloatingBar} themeStyle={theme.style}>
       <NavigationBar floating={isFloatingBar}>
         <Bubble
+          themeStyle={theme.style}
           floating={isFloatingBar}
           onClick={() => props.onClick(Tabs.Menu)}
           whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
         >
-          <Icon src={menuIcon} whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }} />
+          <Icon
+            themeStyle={theme.style}
+            src={menuIcon}
+            whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }}
+          />
         </Bubble>
-        <Bubble floating={isFloatingBar} whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}>
+        <Bubble
+          themeStyle={theme.style}
+          floating={isFloatingBar}
+          whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
+        >
           <Logo
             onClick={() => props.onClick(Tabs.Home)}
             src={logoLight}
@@ -111,19 +123,29 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
           />
         </Bubble>
         <Bubble
+          themeStyle={theme.style}
+          floating={isFloatingBar}
+          onClick={() => theme.switchDarkMode()}
+          whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
+        >
+          <Icon
+            themeStyle={theme.style}
+            src={theme.style === ThemeStyle.LIGHT ? lightModeIcon : darkModeIcon}
+            whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }}
+          />
+        </Bubble>
+        <Bubble
+          themeStyle={theme.style}
           floating={isFloatingBar}
           onClick={() => props.onClick(Tabs.Info)}
           whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
         >
-          <Icon src={infoIcon} whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }} />
+          <Icon
+            themeStyle={theme.style}
+            src={infoIcon}
+            whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }}
+          />
         </Bubble>
-        {/* <Bubble
-          floating={isFloatingBar}
-          onClick={() => props.onClick(Tabs.Home)}
-          whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
-        >
-          <Icon src={homeIcon} whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }} />
-        </Bubble> */}
       </NavigationBar>
     </Container>
   );

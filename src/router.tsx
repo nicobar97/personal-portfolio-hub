@@ -7,14 +7,6 @@ export const routes: RouteObject[] = [
   //   path: 'page/:helloId',
   //   element: <MainPage />,
   // },
-  // {
-  //   path: 'hello/:helloId',
-  //   element: <HelloPage />,
-  // },
-  // {
-  //   path: 'local/hello/:helloId',
-  //   element: <LocalHelloPage />,
-  // },
   {
     path: '*',
     element: <HomePage currentTab={Tabs.Home} />,
