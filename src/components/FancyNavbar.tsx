@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-// import homeIcon from '../assets/icons/home.png';
 import infoIcon from '../assets/icons/info.png';
 import lightModeIcon from '../assets/icons/light-mode.png';
 import darkModeIcon from '../assets/icons/dark-mode.png';
 import menuIcon from '../assets/icons/menu.png';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import { motion } from 'framer-motion';
-import logoLight from '../../src/assets/images/logo_light.png';
+import logo from '../../src/assets/images/logo_black_fill.svg';
 import { useState } from 'react';
 import { useThemeStore } from '../stores/useThemeStore';
 import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
@@ -50,11 +49,6 @@ const Icon = styled(motion.img)<{ themeStyle: ThemeStyleEnum }>`
   margin: 0;
   transition: filter 0.5s;
   ${(props) => (props.themeStyle === ThemeStyle.DARK ? `filter: invert(100%);` : ``)}
-`;
-
-const Logo = styled(motion.img)`
-  margin: 0 auto;
-  height: 1.5rem;
 `;
 
 const Bubble = styled(motion.div)<{ floating: boolean; themeStyle: ThemeStyleEnum }>`
@@ -118,9 +112,10 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
           floating={isFloatingBar}
           whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
         >
-          <Logo
+          <Icon
+            themeStyle={theme.style}
             onClick={() => props.onClick(Tabs.Home)}
-            src={logoLight}
+            src={logo}
             whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }}
           />
         </Bubble>
