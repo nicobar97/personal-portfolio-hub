@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../MobileFrame';
+import { useThemeStore } from '../../stores/useThemeStore';
+import { AnimatedBox } from '../AnimatedBox';
 
 const Content = styled.div`
   display: flex;
@@ -8,21 +10,24 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  /* position: fixed; */
   overflow-x: hidden;
-  /* overflow-y: auto; */
-  /* inset: 3rem 0px 3rem; */
   margin-top: 0.5rem;
   padding: 1.5rem;
 `;
 
-export const MenuTab: React.FC = () => (
-  <>
-    <Content>
-      <MobileFrame>
-        <h1>Menu Page</h1>
-        <div>This is the WIP Menu Tab</div>
-      </MobileFrame>
-    </Content>
-  </>
-);
+export const MenuTab: React.FC = () => {
+  const themeStyle = useThemeStore();
+
+  return (
+    <>
+      <Content>
+        <MobileFrame>
+          <AnimatedBox themeStyle={themeStyle.style}>
+            <h1>Menu Page</h1>
+            <h3>This is the WIP Menu Tab</h3>
+          </AnimatedBox>
+        </MobileFrame>
+      </Content>
+    </>
+  );
+};

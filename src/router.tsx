@@ -1,5 +1,5 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
-import { PortfolioWithTabs } from './views/Portfolio';
+import { PortfolioWithTabs } from './views/PortfolioWithTabs';
 import { Tabs, TabsEnum } from './model/Tabs';
 
 export const routes: (RouteObject & { type: string })[] = [
