@@ -17,7 +17,7 @@ const Content = styled.div`
 `;
 
 const LinkText = styled.span`
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 `;
 
 export const InfoTab: React.FC = () => (
@@ -59,7 +59,9 @@ export const InfoTab: React.FC = () => (
             </li>
             <li>
               <strong>Email:</strong>
-              <span>nicobar97@gmail.com</span>
+              <a href="mailto:nicobar97@gmail.com">
+                <LinkText>nicobar97@gmail.com</LinkText>
+              </a>
             </li>
             <li>
               <strong>GitHub:</strong>
