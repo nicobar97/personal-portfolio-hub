@@ -23,10 +23,7 @@ const Header = styled.div`
   left: 0;
   right: 0;
   height: 2rem;
-  /* background-color: ${(props) => props.theme.colors.white}; */
   padding: 1rem;
-  /* box-shadow: ${(props) =>
-    props.theme.hexToRgbA(props.theme.colors.black, 0.1)} 0px 7px 20px 0px; */
 `;
 
 const Icon = styled(motion.img)`
