@@ -7,7 +7,7 @@ import { TabsEnum, Tabs } from '../model/Tabs';
 import { AnimateFadeIn } from '../components//animations/Animations';
 import { FancyNavbar } from '../components/FancyNavbar';
 import { MobileFrame } from '../components/MobileFrame';
-import { getPathFromTab } from '../Router';
+import { getPathFromTab } from '../router';
 
 const Container = styled.div`
   margin-top: 3rem;
