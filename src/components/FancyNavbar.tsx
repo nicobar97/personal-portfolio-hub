@@ -48,6 +48,7 @@ const Container = styled.div<{ floating: boolean; themeStyle: ThemeStyleEnum }>`
 const Icon = styled(motion.img)<{ themeStyle: ThemeStyleEnum }>`
   height: 1.5rem;
   margin: 0;
+  transition: filter 0.5s;
   ${(props) => (props.themeStyle === ThemeStyle.DARK ? `filter: invert(100%);` : ``)}
 `;
 

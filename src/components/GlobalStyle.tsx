@@ -44,4 +44,8 @@ img {
 a:link {
   color: ${(props) => props.theme.colors(props.themeStyle).accent.color}
 }
+
+li {
+  list-style-type: circle;
+}
 `;
