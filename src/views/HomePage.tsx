@@ -4,10 +4,10 @@ import { HomeTab } from '../components/tabs/HomeTab';
 import { InfoTab } from '../components/tabs/InfoTab';
 import { MenuTab } from '../components/tabs/MenuTab';
 import { TabsEnum, Tabs } from '../model/Tabs';
-import { AnimateFadeIn } from '../components//animations/Animations';
+import { AnimateFadeIn } from '../components/Animations';
 import { FancyNavbar } from '../components/FancyNavbar';
 import { MobileFrame } from '../components/MobileFrame';
-import { getPathFromTab } from '../Router';
+import { getPathFromTab } from '../router';
 
 const Container = styled.div`
   margin-top: 3rem;

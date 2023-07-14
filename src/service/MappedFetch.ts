@@ -1,6 +1,6 @@
 import { Either, EitherAsync, Left, Right } from 'purify-ts';
 
-import { ApiError, FetchMapError, MappingError } from '../model/Errors';
+import { ApiError, FetchMapError, MappingError } from '../model/errors';
 
 export type MapFetch = {
   fetch: FetchWithMappings;

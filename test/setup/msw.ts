@@ -1,5 +1,5 @@
 import { afterAll, afterEach, beforeAll } from 'vitest';
-import { server } from '../../src/mocks/Server';
+import { server } from '../../src/mocks/server';
 import { MockedRequest, matchRequestUrl } from 'msw';
 
 beforeAll(() => server.listen());
