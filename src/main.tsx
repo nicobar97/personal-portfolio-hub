@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { App } from './app';
+import { App } from './App';
 import { config } from './configuration/ViteConfiguration';
-import { router } from './router';
+import { router } from './Router';
 
 (async () => {
   if (config.environment === 'mock') {
