@@ -7,6 +7,7 @@ import { TabsEnum, Tabs } from '../model/Tabs';
 import { AnimateFadeIn } from '../components/Animations';
 import { FancyNavbar } from '../components/FancyNavbar';
 import { MobileFrame } from '../components/MobileFrame';
+import { getPathFromTab } from '../router';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -26,13 +27,18 @@ type Props = {
 //   border-radius: 20px;
 // `;
 
+const changeTab = (setCurrentTab: (tab: TabsEnum) => void, tab: TabsEnum) => {
+  window.history.replaceState(null, '', getPathFromTab(tab));
+  setCurrentTab(tab);
+};
+
 export const HomePage: React.FC<Props> = (props: Props) => {
   const [currentTab, setCurrentTab] = useState<TabsEnum>(props.currentTab);
   return (
     <>
       <Container>
         <MobileFrame>
-          <FancyNavbar onClick={(tab: TabsEnum) => setCurrentTab(tab)} />
+          <FancyNavbar onBubbleClick={(tab: TabsEnum) => changeTab(setCurrentTab, tab)} />
 
           {currentTab === Tabs.Menu && (
             <AnimateFadeIn trigger={currentTab === Tabs.Menu}>

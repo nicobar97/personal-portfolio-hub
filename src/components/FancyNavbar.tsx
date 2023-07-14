@@ -71,7 +71,7 @@ const Bubble = styled(motion.div)<{ floating: boolean; themeStyle: ThemeStyleEnu
 `;
 
 type Props = {
-  onClick: (tab: TabsEnum) => void;
+  onBubbleClick: (tab: TabsEnum) => void;
 };
 
 const setUpScrolling = (
@@ -98,7 +98,7 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
         <Bubble
           themeStyle={theme.style}
           floating={isFloatingBar}
-          onClick={() => props.onClick(Tabs.Menu)}
+          onClick={() => props.onBubbleClick(Tabs.Menu)}
           whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
         >
           <Icon
@@ -114,7 +114,7 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
         >
           <Icon
             themeStyle={theme.style}
-            onClick={() => props.onClick(Tabs.Home)}
+            onClick={() => props.onBubbleClick(Tabs.Home)}
             src={logo}
             whileTap={{ scale: !isFloatingBar ? 1.5 : 0 }}
           />
@@ -134,7 +134,7 @@ export const FancyNavbar: React.FC<Props> = (props: Props) => {
         <Bubble
           themeStyle={theme.style}
           floating={isFloatingBar}
-          onClick={() => props.onClick(Tabs.Info)}
+          onClick={() => props.onBubbleClick(Tabs.Info)}
           whileTap={{ scale: isFloatingBar ? 1.5 : 0 }}
         >
           <Icon
