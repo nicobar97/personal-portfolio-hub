@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 import { Either, Right } from 'purify-ts';
 
-import { FetchAuthMapError } from '../model/errors';
-import { Hello } from '../model/hello';
+import { FetchAuthMapError } from '../model/Errors';
+import { Hello } from '../model/Hello';
 
 export const handlers = [
   rest.get('/hello/:helloId', (req, res, ctx) => {

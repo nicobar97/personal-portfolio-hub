@@ -7,7 +7,7 @@ import {
   AuthFetchError,
   FetchAuthMapError,
   MappingError,
-} from '../model/errors';
+} from '../model/Errors';
 import { AuthService } from './AuthService';
 
 export type AuthFetch = {

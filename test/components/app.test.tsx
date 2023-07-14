@@ -4,7 +4,7 @@ import { createMemoryRouter } from 'react-router-dom';
 import { routes } from '../../src/router';
 import { server } from '../../src/mocks/server';
 import { rest } from 'msw';
-import { Hello } from '../../src/model/hello';
+import { Hello } from '../../src/model/Hello';
 import { App } from '../../src/App';
 
 export const handlers = [
