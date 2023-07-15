@@ -12,6 +12,7 @@ const Content = styled.div`
   margin: 0 auto;
   overflow-x: hidden;
   margin-top: 0.5rem;
+  padding: 1.5rem;
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
