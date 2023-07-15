@@ -3,15 +3,14 @@
 // import { useState } from 'react';
 // import { useParams } from 'react-router-dom';
 // import styled from 'styled-components';
-
-// import { getHello } from '../api/hello';
-// import { AnimateFadeIn, AnimateFadeInDown } from '../components/Animations';
-// import { ErrorPopup } from '../components/ErrorPopup';
 // import { MobileFrame } from '../components/MobileFrame';
 // import { FetchAuthMapError } from '../model/errors';
 // import { Loader, LoaderContainer } from '../components/Loader';
 // import { Hello } from '../model/hello';
 // import { PageStatus } from '../model/Page';
+// import { getHello } from '../api/Hello';
+// import { AnimateFadeInDown, AnimateFadeIn } from '../components/animations/Animations';
+// import { handleError } from '../components/errors/ErrorPopup';
 
 // const Footer = styled.div`
 //   display: flex;
@@ -216,54 +215,4 @@
 //       )}
 //     </>
 //   );
-// };
-
-// const handleError = (err: FetchAuthMapError) => {
-//   switch (err.type) {
-//     case 'auth_error':
-//       return (
-//         <ErrorPopup
-//           key={err.type}
-//           data-testid="error"
-//           title={'Errore'}
-//           message={`Credenziali mancanti`}
-//         />
-//       );
-//     case 'auth_fetch_error':
-//       return (
-//         <ErrorPopup
-//           key={err.type}
-//           data-testid="error"
-//           title={'Errore'}
-//           message={`Credenziali scadute, status: ${err.code}`}
-//         />
-//       );
-//     case 'api_error':
-//       return (
-//         <ErrorPopup
-//           key={err.type}
-//           data-testid="error"
-//           title={'Errore'}
-//           message={`Pagamento non trovato, status: ${err.code}`}
-//         />
-//       );
-//     case 'mapping_error':
-//       return (
-//         <ErrorPopup
-//           key={'mapping_error'}
-//           data-testid="error"
-//           title={'Errore'}
-//           message={`Risposta API errata o malformata`}
-//         />
-//       );
-//     default:
-//       return (
-//         <ErrorPopup
-//           key={'unknown_error'}
-//           data-testid="error"
-//           title={'Errore'}
-//           message={`Unknown error`}
-//         />
-//       );
-//   }
 // };

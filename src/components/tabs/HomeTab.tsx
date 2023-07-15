@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../MobileFrame';
-import { AnimatedBox } from '../animations/AnimatedBox';
 import { useThemeStore } from '../../stores/useThemeStore';
+import { AnimatedBox } from '../animations/AnimatedBox';
 
 const Content = styled.div`
   display: flex;
@@ -19,13 +19,15 @@ export const HomeTab: React.FC = () => {
   const themeStyle = useThemeStore();
 
   return (
-    <Content>
-      <MobileFrame>
-        <AnimatedBox themeStyle={themeStyle.style}>
-          <h1>Home Page</h1>
-          <h3>This is the WIP Home Tab</h3>
-        </AnimatedBox>
-      </MobileFrame>
-    </Content>
+    <>
+      <Content>
+        <MobileFrame>
+          <AnimatedBox themeStyle={themeStyle.style}>
+            <h1>Home Page</h1>
+            <h3>This is the WIP Home Tab</h3>
+          </AnimatedBox>
+        </MobileFrame>
+      </Content>
+    </>
   );
 };

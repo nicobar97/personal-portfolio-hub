@@ -12,7 +12,9 @@ export const useThemeStore = create<ThemeState>()(
   devtools(
     persist(
       (set) => ({
-        style: window.matchMedia('(prefers-color-scheme: dark)').matches ? ThemeStyle.DARK : ThemeStyle.LIGHT,
+        style: window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? ThemeStyle.DARK
+          : ThemeStyle.LIGHT,
         setTheme: (style: ThemeStyleEnum) => set(() => ({ style })),
         switchDarkMode: () =>
           set((state) => ({

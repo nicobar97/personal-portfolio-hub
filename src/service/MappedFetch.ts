@@ -1,6 +1,5 @@
 import { Either, EitherAsync, Left, Right } from 'purify-ts';
-
-import { ApiError, FetchMapError, MappingError } from '../model/errors';
+import { MappingError, FetchMapError, ApiError } from '../model/errors';
 
 export type MapFetch = {
   fetch: FetchWithMappings;
@@ -29,6 +28,11 @@ const mapFetch =
 const fetchEither = <K>(url: string, config: RequestInit): Promise<Either<FetchMapError, K>> =>
   fetch(url, {
     ...config,
+    headers: {
+      ...config.headers,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+    },
   })
     .then((res) =>
       res.status < 400

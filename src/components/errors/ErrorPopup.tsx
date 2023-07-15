@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-import error_img from '../assets/images/error.png';
+import error_img from '../../assets/images/error.png';
 import { useThemeStore } from '../../stores/useThemeStore';
 import { ThemeStyleEnum } from '../../model/Theme';
+import { FetchAuthMapError } from '../../model/errors';
 
 type Props = {
   title: string;
@@ -20,7 +21,6 @@ const Title = styled.span`
 `;
 
 const Message = styled.span`
-  font-family: Barlow;
   font-size: 1rem;
   display: flex;
   justify-content: center;
@@ -60,4 +60,54 @@ export const ErrorPopup: React.FC<Props> = (props: Props) => {
       </Container>
     </>
   );
+};
+
+export const handleError = (err: FetchAuthMapError) => {
+  switch (err.type) {
+    case 'auth_error':
+      return (
+        <ErrorPopup
+          key={err.type}
+          data-testid="error"
+          title={'Errore'}
+          message={`Credenziali mancanti`}
+        />
+      );
+    case 'auth_fetch_error':
+      return (
+        <ErrorPopup
+          key={err.type}
+          data-testid="error"
+          title={'Errore'}
+          message={`Credenziali scadute, status: ${err.code}`}
+        />
+      );
+    case 'api_error':
+      return (
+        <ErrorPopup
+          key={err.type}
+          data-testid="error"
+          title={'Errore'}
+          message={`Api error non trovato, status: ${err.code}`}
+        />
+      );
+    case 'mapping_error':
+      return (
+        <ErrorPopup
+          key={'mapping_error'}
+          data-testid="error"
+          title={'Errore'}
+          message={`Risposta API errata o malformata`}
+        />
+      );
+    default:
+      return (
+        <ErrorPopup
+          key={'unknown_error'}
+          data-testid="error"
+          title={'Errore'}
+          message={`Unknown error`}
+        />
+      );
+  }
 };

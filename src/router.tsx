@@ -25,9 +25,9 @@ export const routes: (RouteObject & { type: string })[] = [
   },
 ];
 
-const getPath = (tab: TabsEnum): string =>
-  routes.find((route) => route.type === tab)?.path!;
+const getPath = (tab: TabsEnum): string => routes.find((route) => route.type === tab)?.path!;
 
-export const getPathFromTab = (tab: TabsEnum): string => getPath(tab) === '*' || !getPath(tab) ? '/' : getPath(tab);
+export const getPathFromTab = (tab: TabsEnum): string =>
+  getPath(tab) === '*' || !getPath(tab) ? '/' : getPath(tab);
 
 export const router = createBrowserRouter(routes);
