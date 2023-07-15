@@ -8,6 +8,7 @@ import { AnimateFadeIn } from '../components/animations/Animations';
 import { FancyNavbar } from '../components/FancyNavbar';
 import { MobileFrame } from '../components/MobileFrame';
 import { getPathFromTab } from '../router';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -28,11 +29,13 @@ type Props = {
 // `;
 
 const changeTab = (setCurrentTab: (tab: TabsEnum) => void, tab: TabsEnum) => {
-  window.history.replaceState(null, '', getPathFromTab(tab));
+  window.history.pushState(null, '', getPathFromTab(tab));
   setCurrentTab(tab);
 };
 
 export const PortfolioWithTabs: React.FC<Props> = (props: Props) => {
+  const params = useParams();
+  const articleId = params.articleId;
   const [currentTab, setCurrentTab] = useState<TabsEnum>(props.currentTab);
   return (
     <>
@@ -42,7 +45,7 @@ export const PortfolioWithTabs: React.FC<Props> = (props: Props) => {
 
           {currentTab === Tabs.Menu && (
             <AnimateFadeIn trigger={currentTab === Tabs.Menu}>
-              <MenuTab />
+              <MenuTab articleId={articleId ?? null} />
             </AnimateFadeIn>
           )}
           {currentTab === Tabs.Info && (

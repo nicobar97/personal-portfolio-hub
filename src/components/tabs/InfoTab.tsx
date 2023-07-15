@@ -10,16 +10,12 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  /* position: fixed; */
   overflow-x: hidden;
-  /* overflow-y: auto; */
-  /* inset: 3rem 0px 3rem; */
   margin-top: 0.5rem;
-  padding: 1.5rem;
-  -webkit-user-select: all;  /* Chrome 49+ */
-  -moz-user-select: all;     /* Firefox 43+ */
-  -ms-user-select: all;      /* No support yet */
-  user-select: all;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 `;
 
 const LinkText = styled.span`

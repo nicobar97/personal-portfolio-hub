@@ -2,16 +2,15 @@ import styled from 'styled-components';
 import { MobileFrame } from '../MobileFrame';
 import { AnimatedBox } from '../animations/AnimatedBox';
 import { useThemeStore } from '../../stores/useThemeStore';
-import { getArticles } from '../../api/Article';
+import { getArticle } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
-import { SimpleArticle } from '../../model/Article';
+import { Article } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
 import { PageStatus } from '../../model/Page';
 import { useState } from 'react';
 import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
-import { ReadArticleTab } from './ReadArticleTab';
 
 const Content = styled.div`
   display: flex;
@@ -21,8 +20,6 @@ const Content = styled.div`
   right: 0;
   margin: 0 auto;
   overflow-x: hidden;
-  margin-top: 0.5rem;
-  padding: 1.5rem;
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
@@ -58,8 +55,7 @@ type LoadingState = {
 
 type SuccessState = {
   status: 'success';
-  articles: SimpleArticle[];
-  articleId: string | null;
+  article: Article;
 };
 
 type ErrorState = {
@@ -79,35 +75,23 @@ const parseDate = (date: Date) =>
     timeZone: 'Europe/Rome', // Time zone set to Italy
   });
 
-const handleArticleOpen = (
-  articleId: string,
-  pageState: SuccessState,
-  setPageState: (state: SuccessState) => void,
-) => {
-  window.history.pushState(null, '', `/article/${articleId}`);
-  setPageState({ ...pageState, articleId });
-};
 type Props = {
-  articleId: string | null;
+  articleId: string;
 };
 
-export const MenuTab: React.FC<Props> = (props: Props) => {
+export const ReadArticleTab: React.FC<Props> = (props: Props) => {
   const themeStyle = useThemeStore();
-  const [pageState, setPageState] = useState<PageState>(
-    props.articleId
-      ? { status: 'success', articles: [], articleId: props.articleId }
-      : { status: 'loading' },
-  );
+  const [pageState, setPageState] = useState<PageState>({ status: 'loading' });
   const query = useQuery({
-    queryKey: ['articles'],
-    queryFn: () => getArticles().run(),
+    queryKey: ['article'],
+    queryFn: () => getArticle(props.articleId).run(),
   });
 
   query.data &&
     query.data
-      .map((data: SimpleArticle[]) => {
+      .map((data: Article) => {
         if (pageState.status !== PageStatus.SUCCESS) {
-          setPageState({ status: PageStatus.SUCCESS, articles: data, articleId: null });
+          setPageState({ status: PageStatus.SUCCESS, article: data });
         }
         return null;
       })
@@ -122,33 +106,6 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
   return (
     <Content>
       <MobileFrame>
-        {pageState.status === PageStatus.SUCCESS && (
-          <AnimateFadeIn trigger={pageState.status === PageStatus.SUCCESS}>
-            {pageState.articleId ? (
-              <ReadArticleTab articleId={pageState.articleId}></ReadArticleTab>
-            ) : (
-              pageState.articles
-                .sort((a, b) => b.date.getTime() - a.date.getTime())
-                .map((article) => (
-                  <AnimatedBox themeStyle={themeStyle.style}>
-                    <Title onClick={() => handleArticleOpen(article.id, pageState, setPageState)}>
-                      {article.title}
-                    </Title>
-                    <SubSubTitle>
-                      Read it in {article.estimatedReadingTimeMinutes} minutes
-                    </SubSubTitle>
-                    <div>{article.content}</div>
-                    <Info>
-                      <strong>Tags:</strong> {article.tags.join(', ')}
-                    </Info>
-                    <Info>
-                      <strong>Generated on:</strong> {parseDate(article.date)}
-                    </Info>
-                  </AnimatedBox>
-                ))
-            )}
-          </AnimateFadeIn>
-        )}
         {pageState.status === PageStatus.ERROR && (
           <AnimateFadeInDown trigger={pageState.status === PageStatus.ERROR}>
             <MobileFrame>{handleError(pageState.error)}</MobileFrame>
@@ -162,6 +119,23 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
               </LoaderContainer>
             </MobileFrame>
           </AnimateFadeInDown>
+        )}
+        {pageState.status === PageStatus.SUCCESS && (
+          <AnimateFadeIn trigger={pageState.status === PageStatus.SUCCESS}>
+            <AnimatedBox themeStyle={themeStyle.style}>
+              <Title>{pageState.article.title}</Title>
+              <SubSubTitle>
+                Read it in {pageState.article.estimatedReadingTimeMinutes} minutes
+              </SubSubTitle>
+              <div>{pageState.article.content}</div>
+              <Info>
+                <strong>Tags:</strong> {pageState.article.tags.join(', ')}
+              </Info>
+              <Info>
+                <strong>Generated on:</strong> {parseDate(pageState.article.date)}
+              </Info>
+            </AnimatedBox>
+          </AnimateFadeIn>
         )}
       </MobileFrame>
     </Content>
