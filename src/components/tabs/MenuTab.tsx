@@ -4,7 +4,7 @@ import { AnimatedBox } from '../animations/AnimatedBox';
 import { useThemeStore } from '../../stores/useThemeStore';
 import { getArticles } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
-import { Article } from '../../model/Article';
+import { SimpleArticle } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
 import { PageStatus } from '../../model/Page';
 import { useState } from 'react';
@@ -57,7 +57,7 @@ type LoadingState = {
 
 type SuccessState = {
   status: 'success';
-  articles: Article[];
+  articles: SimpleArticle[];
 };
 
 type ErrorState = {
@@ -87,7 +87,7 @@ export const MenuTab: React.FC = () => {
 
   query.data &&
     query.data
-      .map((data: Article[]) => {
+      .map((data: SimpleArticle[]) => {
         if (pageState.status !== PageStatus.SUCCESS) {
           setPageState({ status: PageStatus.SUCCESS, articles: data });
         }
@@ -130,9 +130,6 @@ export const MenuTab: React.FC = () => {
                   <div>{article.content}</div>
                   <Info>
                     <strong>Tags:</strong> {article.tags.join(', ')}
-                  </Info>
-                  <Info>
-                    <strong>Related Fields:</strong> {article.relatedTopicsTags.join(', ')}
                   </Info>
                   <Info>
                     <strong>Generated on:</strong> {parseDate(article.date)}

@@ -18,6 +18,15 @@ export type ArticlePrompt = {
   length: string;
 };
 
+export type SimpleArticle = {
+  title: string;
+  id: string;
+  content: string;
+  tags: string[];
+  estimatedReadingTimeMinutes: number;
+  date: Date;
+};
+
 [
   {
     name: 'Task',
