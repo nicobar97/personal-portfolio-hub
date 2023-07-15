@@ -115,22 +115,26 @@ export const MenuTab: React.FC = () => {
         </AnimateFadeInDown>
         {pageState.status === PageStatus.SUCCESS && (
           <AnimateFadeIn trigger={pageState.status === PageStatus.SUCCESS}>
-            {pageState.articles.map((article) => (
-              <AnimatedBox themeStyle={themeStyle.style}>
-                <MainTitle>{article.title}</MainTitle>
-                <SubSubTitle>Read it in {article.estimatedReadingTimeMinutes} minutes</SubSubTitle>
-                <div>{article.formatted_content}</div>
-                <Info>
-                  <strong>Tags:</strong> {article.tags.join(', ')}
-                </Info>
-                <Info>
-                  <strong>Related Fields:</strong> {article.relatedTopicsTags.join(', ')}
-                </Info>
-                <Info>
-                  <strong>Generated on:</strong> {parseDate(article.date)}
-                </Info>
-              </AnimatedBox>
-            ))}
+            {pageState.articles
+              .sort((a, b) => b.date.getTime() - a.date.getTime())
+              .map((article) => (
+                <AnimatedBox themeStyle={themeStyle.style}>
+                  <MainTitle>{article.title}</MainTitle>
+                  <SubSubTitle>
+                    Read it in {article.estimatedReadingTimeMinutes} minutes
+                  </SubSubTitle>
+                  <div>{article.formatted_content}</div>
+                  <Info>
+                    <strong>Tags:</strong> {article.tags.join(', ')}
+                  </Info>
+                  <Info>
+                    <strong>Related Fields:</strong> {article.relatedTopicsTags.join(', ')}
+                  </Info>
+                  <Info>
+                    <strong>Generated on:</strong> {parseDate(article.date)}
+                  </Info>
+                </AnimatedBox>
+              ))}
           </AnimateFadeIn>
         )}
       </MobileFrame>

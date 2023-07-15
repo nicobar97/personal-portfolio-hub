@@ -10,5 +10,8 @@ export const getArticles: GetArticles = () =>
   mapFetchFactory().fetch<Article[], Article[]>(
     `https://nicobar-portfolio-backend-2a94882f04a5.herokuapp.com/api/article/get`,
     { method: 'GET' },
-    (articles) => Right(articles),
+    (articles) => Right(mapArticles(articles)),
   );
+
+const mapArticles = (articles: Article[]) =>
+  articles.map((article: Article) => ({ ...article, date: new Date(article.date) }));
