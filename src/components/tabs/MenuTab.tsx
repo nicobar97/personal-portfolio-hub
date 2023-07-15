@@ -19,18 +19,21 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
+  /* position: fixed; */
   overflow-x: hidden;
+  /* overflow-y: auto; */
+  /* inset: 3rem 0px 3rem; */
   margin-top: 0.5rem;
   padding: 1.5rem;
 `;
 
-const MainTitle = styled.h1`
-  margin: 0rem;
-`;
-
-// const Title = styled.h2`
+// const MainTitle = styled.h1`
 //   margin: 0rem;
 // `;
+
+const Title = styled.h2`
+  margin: 0rem;
+`;
 
 // const SubTitle = styled.h3`
 //   margin: 0rem;
@@ -119,7 +122,7 @@ export const MenuTab: React.FC = () => {
               .sort((a, b) => b.date.getTime() - a.date.getTime())
               .map((article) => (
                 <AnimatedBox themeStyle={themeStyle.style}>
-                  <MainTitle>{article.title}</MainTitle>
+                  <Title>{article.title}</Title>
                   <SubSubTitle>
                     Read it in {article.estimatedReadingTimeMinutes} minutes
                   </SubSubTitle>
