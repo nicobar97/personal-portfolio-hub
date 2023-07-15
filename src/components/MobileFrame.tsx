@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Frame = styled.div`
   width: 100%;
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
 `;
 

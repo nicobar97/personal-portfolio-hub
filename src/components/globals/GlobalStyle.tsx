@@ -27,6 +27,11 @@ body {
   margin: 0;
 }
 
+::selection {
+  color: ${(props) => props.theme.colors(props.themeStyle).accent.text};
+  background: ${(props) => props.theme.colors(props.themeStyle).accent.color};
+}
+
 li {
   list-style: none;
 }

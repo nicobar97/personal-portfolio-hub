@@ -42,7 +42,7 @@ const light: ThemeColor = {
   shadow: hexToRgbA('#000', 0.2),
   optionSelected: '#f4f4f5',
   accent: {
-    color: '#3b82f6',
+    color: '#d40f36',
     text: '#fff',
   },
 };

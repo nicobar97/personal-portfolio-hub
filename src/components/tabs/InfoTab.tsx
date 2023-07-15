@@ -16,6 +16,10 @@ const Content = styled.div`
   /* inset: 3rem 0px 3rem; */
   margin-top: 0.5rem;
   padding: 1.5rem;
+  -webkit-user-select: all;  /* Chrome 49+ */
+  -moz-user-select: all;     /* Firefox 43+ */
+  -ms-user-select: all;      /* No support yet */
+  user-select: all;
 `;
 
 const LinkText = styled.span`

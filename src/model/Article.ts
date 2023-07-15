@@ -1,7 +1,6 @@
 export type Article = {
   id: string;
   content: string;
-  formatted_content: string;
   articlePrompt: ArticlePrompt;
   date: Date;
   title: string;

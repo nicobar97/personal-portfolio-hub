@@ -13,6 +13,10 @@ const Content = styled.div`
   overflow-x: hidden;
   margin-top: 0.5rem;
   padding: 1.5rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 `;
 
 export const HomeTab: React.FC = () => {

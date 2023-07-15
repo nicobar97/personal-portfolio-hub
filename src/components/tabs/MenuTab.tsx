@@ -19,12 +19,13 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  /* position: fixed; */
   overflow-x: hidden;
-  /* overflow-y: auto; */
-  /* inset: 3rem 0px 3rem; */
   margin-top: 0.5rem;
   padding: 1.5rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 `;
 
 // const MainTitle = styled.h1`
@@ -126,7 +127,7 @@ export const MenuTab: React.FC = () => {
                   <SubSubTitle>
                     Read it in {article.estimatedReadingTimeMinutes} minutes
                   </SubSubTitle>
-                  <div>{article.formatted_content}</div>
+                  <div>{article.content}</div>
                   <Info>
                     <strong>Tags:</strong> {article.tags.join(', ')}
                   </Info>
