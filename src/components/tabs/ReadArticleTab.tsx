@@ -6,7 +6,7 @@ import { getArticle } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
 import { Article } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
-import { PageStatus, PageStatusEnum } from '../../model/Page';
+import { PageStatus } from '../../model/Page';
 import { useEffect, useState } from 'react';
 import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
@@ -83,7 +83,6 @@ const parseDate = (date: Date) =>
 
 type Props = {
   articleId: string;
-  status: PageStatusEnum;
 };
 
 export const ReadArticleTab: React.FC<Props> = (props: Props) => {
