@@ -36,7 +36,7 @@ type Props = {
 };
 
 export const NavbarBubble: React.FC<Props> = (props: Props) => (
-  <div onClick={() => props.onBubbleClick()}>
+  <div onClick={props.onBubbleClick}>
     <Bubble
       themeStyle={props.style}
       floating={props.isFloating}

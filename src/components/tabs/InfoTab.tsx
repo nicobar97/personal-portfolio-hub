@@ -53,7 +53,7 @@ export const InfoTab: React.FC = () => {
     <>
       <Content>
         <MobileFrame>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <MainTitle>Hello,</MainTitle>
             <Title>I'm Nicolò Bartelucci</Title>
             <SubSubTitle>Backend Software Engineer at ONYON</SubSubTitle>
@@ -68,7 +68,7 @@ export const InfoTab: React.FC = () => {
               opportunities in the field of software engineering.
             </p>
           </AnimatedBox>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Information</Title>
             <BulletList>
               <BulletRow>
@@ -106,7 +106,7 @@ export const InfoTab: React.FC = () => {
               </BulletRow>
             </BulletList>
           </AnimatedBox>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Speaking</Title>
             <BulletList>
               <BulletRow>Italian</BulletRow>
@@ -114,7 +114,7 @@ export const InfoTab: React.FC = () => {
               <BulletRow>Typescript</BulletRow>
             </BulletList>
           </AnimatedBox>{' '}
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Main Tech Stack</Title>
             <BulletList>
               <BulletRow>Typescript</BulletRow>
@@ -123,7 +123,7 @@ export const InfoTab: React.FC = () => {
               <BulletRow>React</BulletRow>
             </BulletList>
           </AnimatedBox>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Work Career - Current</Title>
             <div>
               <SubTitle>Backend Software Engineer at ONYON</SubTitle>
@@ -154,7 +154,7 @@ export const InfoTab: React.FC = () => {
               </BulletList>
             </div>
           </AnimatedBox>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Work Career - Past</Title>
             <div>
               <SubTitle>Research Fellow at Alma Mater Studiorum - Università di Bologna</SubTitle>
@@ -186,7 +186,7 @@ export const InfoTab: React.FC = () => {
               </BulletList>
             </div>
           </AnimatedBox>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Academic Career</Title>
             <div>
               <SubTitle>Master in Computer Engineering</SubTitle>
@@ -209,7 +209,7 @@ export const InfoTab: React.FC = () => {
               <p>Sep 2017 - Oct 2020</p>
             </div>
           </AnimatedBox>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Interests</Title>
             <BulletList>
               <BulletRow>App & Software Development</BulletRow>
@@ -222,7 +222,7 @@ export const InfoTab: React.FC = () => {
               <BulletRow>Healthy Lifestyle & Foods</BulletRow>
             </BulletList>
           </AnimatedBox>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <Title>Characteristics</Title>
             <BulletList>
               <BulletRow>Gets on well with people of all ages.</BulletRow>

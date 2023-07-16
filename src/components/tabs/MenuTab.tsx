@@ -130,7 +130,7 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
               pageState.articles
                 .sort((a, b) => b.date.getTime() - a.date.getTime())
                 .map((article) => (
-                  <AnimatedBox themeStyle={themeStyle.style}>
+                  <AnimatedBox themestyle={themeStyle.style}>
                     <Title onClick={() => handleArticleOpen(article.id, pageState, setPageState)}>
                       {article.title}
                     </Title>

@@ -5,7 +5,7 @@ import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
 
 export type NavbarState = {
   style: ThemeStyleEnum;
-  navbarBubbles: NavbarBubbleContent[];
+  bubbles: NavbarBubbleContent[];
   setNavbarBubbles: (navbarBubbles: NavbarBubbleContent[]) => void;
   removeNavbarBubble: (tab: TabsEnum) => void;
   addNavbarBubble: (bubble: NavbarBubbleContent) => void;
@@ -23,16 +23,16 @@ export const useNavbarStore = create<NavbarState>()(
     persist(
       (set) => ({
         style: ThemeStyle.DARK,
-        navbarBubbles: [],
+        bubbles: [],
         setTheme: (style: ThemeStyleEnum) => set(() => ({ style })),
-        setNavbarBubbles: (navbarBubbles: NavbarBubbleContent[]) => set(() => ({ navbarBubbles })),
+        setNavbarBubbles: (navbarBubbles: NavbarBubbleContent[]) => set(() => ({ bubbles: navbarBubbles })),
         removeNavbarBubble: (tab: TabsEnum) =>
           set((state) => ({
-            navbarBubbles: state.navbarBubbles.filter((bubble) => bubble.linkedTab !== tab),
+            bubbles: state.bubbles.filter((bubble) => bubble.linkedTab !== tab),
           })),
         addNavbarBubble: (bubble: NavbarBubbleContent) =>
           set((state) => ({
-            navbarBubbles: [...state.navbarBubbles, bubble],
+            bubbles: [...state.bubbles, bubble],
           })),
         switchDarkMode: () =>
           set((state) => ({

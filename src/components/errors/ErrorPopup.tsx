@@ -30,7 +30,7 @@ const Message = styled.span`
   padding-bottom: 1rem;
 `;
 
-const Container = styled.div<{ themeStyle: ThemeStyleEnum }>`
+const Container = styled.div<{ themestyle: ThemeStyleEnum }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,7 +39,7 @@ const Container = styled.div<{ themeStyle: ThemeStyleEnum }>`
   margin-top: 30%;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: ${(props) => props.theme.colors(props.themeStyle).shadow} 0px 7px 29px 0px;
+  box-shadow: ${(props) => props.theme.colors(props.themestyle).shadow} 0px 7px 29px 0px;
 `;
 
 const ErrorImg = styled.img`
@@ -53,7 +53,7 @@ export const ErrorPopup: React.FC<Props> = (props: Props) => {
   const themeStore = useThemeStore();
   return (
     <>
-      <Container themeStyle={themeStore.style}>
+      <Container themestyle={themeStore.style}>
         <Title>{props.title}</Title>
         <Message>{props.message}</Message>
         <ErrorImg alt="error" src={error_img}></ErrorImg>

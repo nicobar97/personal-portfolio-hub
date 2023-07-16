@@ -26,7 +26,7 @@ export const HomeTab: React.FC = () => {
     <>
       <Content>
         <MobileFrame>
-          <AnimatedBox themeStyle={themeStyle.style}>
+          <AnimatedBox themestyle={themeStyle.style}>
             <h1>Home Page</h1>
             <h3>This is the WIP Home Tab</h3>
           </AnimatedBox>

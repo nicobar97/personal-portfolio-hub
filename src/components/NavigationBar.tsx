@@ -13,19 +13,18 @@ import { getPathFromTab } from '../router';
 import { NavbarState, useNavbarStore } from '../stores/useNavbarStore';
 import { TabState, useTabStore } from '../stores/useTabStore';
 
-const NavbarBubblesContainer = styled.div<{ floating: boolean }>`
+const NavbarBubblesContainer = styled.div<{ isFloating: boolean; bubblecount: number }>`
   display: flex;
   align-items: center;
-  width: 35%;
-  max-width: 500px;
+  ${(props) => (props.bubblecount < 5 ? (props.isFloating ? `width: 25em;` : `width: 35em;`) : ``)}
   margin: 0 auto;
   z-index: 1;
   justify-content: space-between;
   transition: width 0.2s ease 0.1s;
-  ${(props) => (props.floating ? `width: 25em;` : `width: 35em;`)}
+  /* ${(props) => (props.isFloating ? `width: 25em;` : `width: 35em;`)} */
 `;
 
-const NavbarContainer = styled.div<{ floating: boolean; themeStyle: ThemeStyleEnum }>`
+const NavbarContainer = styled.div<{ isFloating: boolean; themestyle: ThemeStyleEnum }>`
   display: flex;
   position: fixed;
   top: 0;
@@ -34,16 +33,16 @@ const NavbarContainer = styled.div<{ floating: boolean; themeStyle: ThemeStyleEn
   z-index: 1;
 
   transition:
-    box-shadow ${(props) => (props.floating ? '0.2s' : '0.3s')} ease-in-out
-      ${(props) => (props.floating ? '0s' : '0.35s')},
+    box-shadow ${(props) => (props.isFloating ? '0.2s' : '0.3s')} ease-in-out
+      ${(props) => (props.isFloating ? '0s' : '0.35s')},
     background-color 0.2s ease-in,
-    padding 0.3s ease-out ${(props) => (props.floating ? '0.25s' : '0s')};
+    padding 0.3s ease-out ${(props) => (props.isFloating ? '0.25s' : '0s')};
 
   ${(props) =>
-    props.floating
+    props.isFloating
       ? `padding: 2rem`
-      : `background-color: ${props.theme.colors(props.themeStyle).background}; box-shadow: ${
-          props.theme.colors(props.themeStyle).shadow
+      : `background-color: ${props.theme.colors(props.themestyle).background}; box-shadow: ${
+          props.theme.colors(props.themestyle).shadow
         } 0px 7px 20px 0px;`}
 `;
 
@@ -73,51 +72,6 @@ const changeTab = (setCurrentTab: (tab: TabsEnum) => void, tab: TabsEnum) => {
   setCurrentTab(tab);
 };
 
-export const NavigationBar: React.FC = () => {
-  const scrollTriggerY = 30;
-  const theme = useThemeStore();
-  const [isFloatingBar, setIsFloatingBar] = useState(false);
-  const navbar = useNavbarStore();
-  const tab = useTabStore();
-
-  if (!navbar.navbarBubbles) {
-    navbar.setNavbarBubbles(initNavbarBubbles(navbar, tab));
-  }
-
-  setUpScrolling(scrollTriggerY, setIsFloatingBar);
-
-  return (
-    <NavbarContainer floating={isFloatingBar} themeStyle={theme.style}>
-      <NavbarBubblesContainer floating={isFloatingBar}>
-        <NavbarBubble
-          onBubbleClick={() => changeTab(tab.setTab, Tabs.Menu)}
-          iconSrc={menuIcon}
-          isFloating={isFloatingBar}
-          style={theme.style}
-        />
-        <NavbarBubble
-          onBubbleClick={() => changeTab(tab.setTab, Tabs.Home)}
-          iconSrc={logo}
-          isFloating={isFloatingBar}
-          style={theme.style}
-        />
-        <NavbarBubble
-          onBubbleClick={() => theme.switchDarkMode()}
-          iconSrc={theme.style === ThemeStyle.LIGHT ? lightModeIcon : darkModeIcon}
-          isFloating={isFloatingBar}
-          style={theme.style}
-        />
-        <NavbarBubble
-          onBubbleClick={() => changeTab(tab.setTab, Tabs.Info)}
-          iconSrc={infoIcon}
-          isFloating={isFloatingBar}
-          style={theme.style}
-        />
-      </NavbarBubblesContainer>
-    </NavbarContainer>
-  );
-};
-
 const initNavbarBubbles = (navbar: NavbarState, tab: TabState) => [
   {
     iconSrc: menuIcon,
@@ -136,7 +90,41 @@ const initNavbarBubbles = (navbar: NavbarState, tab: TabState) => [
   },
   {
     iconSrc: infoIcon,
-    onBubbleClick: () => () => changeTab(tab.setTab, Tabs.Info),
+    onBubbleClick: () => changeTab(tab.setTab, Tabs.Info),
     linkedTab: Tabs.Info,
   },
 ];
+
+export const NavigationBar: React.FC = () => {
+  const scrollTriggerY = 30;
+  const theme = useThemeStore();
+  const [isFloatingBar, setIsFloatingBar] = useState(false);
+  const navbar = useNavbarStore();
+  const tab = useTabStore();
+
+  if (navbar.bubbles.length === 0) {
+    console.log(initNavbarBubbles(navbar, tab));
+    navbar.setNavbarBubbles(initNavbarBubbles(navbar, tab));
+  }
+
+  setUpScrolling(scrollTriggerY, setIsFloatingBar);
+
+  return (
+    <NavbarContainer isFloating={isFloatingBar} themestyle={theme.style}>
+      <NavbarBubblesContainer isFloating={isFloatingBar} bubblecount={navbar.bubbles.length}>
+        {navbar.bubbles.map((bubble: NavbarBubbleContent) => {
+          // console.log(bubble);
+          return (
+            <NavbarBubble
+              key={bubble.linkedTab}
+              onBubbleClick={bubble.onBubbleClick}
+              iconSrc={bubble.iconSrc}
+              isFloating={isFloatingBar}
+              style={theme.style}
+            />
+          );
+        })}
+      </NavbarBubblesContainer>
+    </NavbarContainer>
+  );
+};

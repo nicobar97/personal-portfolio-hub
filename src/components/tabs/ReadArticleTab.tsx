@@ -122,7 +122,7 @@ export const ReadArticleTab: React.FC<Props> = (props: Props) => {
         )}
         {pageState.status === PageStatus.SUCCESS && (
           <AnimateFadeIn trigger={pageState.status === PageStatus.SUCCESS}>
-            <AnimatedBox themeStyle={themeStyle.style}>
+            <AnimatedBox themestyle={themeStyle.style}>
               <Title>{pageState.article.title}</Title>
               <SubSubTitle>
                 Read it in {pageState.article.estimatedReadingTimeMinutes} minutes
