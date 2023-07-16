@@ -8,8 +8,8 @@ import { MobileFrame } from '../components/MobileFrame';
 import { NavigationBar } from '../components/NavigationBar';
 import { ReadArticleTab } from '../components/tabs/ReadArticleTab';
 import { useState } from 'react';
-import { getPathFromTab } from '../router';
-import { useParams } from 'react-router-dom';
+import { getPathFromTab, getTabFromPath } from '../router';
+import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
 import { GenerateArticle } from '../components/tabs/GenerateArticle';
 
 const Container = styled.div`
@@ -20,35 +20,51 @@ type Props = {
   startTab: TabsEnum;
 };
 
-const changeTab = (setCurrentTab: (tab: TabsEnum) => void, tab: TabsEnum) => {
-  window.history.pushState(null, '', getPathFromTab(tab));
+const bindNavigateStateListener = (setCurrentTab: (tab: TabsEnum) => void) => {
+  window.onpopstate = (event) => {
+    console.log(event);
+    setCurrentTab(getTabFromPath(window.location.pathname) as TabsEnum);
+  };
+};
+
+const changeTab = (
+  setCurrentTab: (tab: TabsEnum) => void,
+  navigate: NavigateFunction,
+  tab: TabsEnum,
+) => {
+  // window.history.replaceState(null, '', getPathFromTab(tab));
   setCurrentTab(tab);
+  navigate(getPathFromTab(tab));
 };
 
 const openArticle = (
   articleId: string,
   setCurrentTab: (tab: TabsEnum) => void,
   setArticleId: (articleId: string) => void,
+  navigate: NavigateFunction,
 ) => {
   setArticleId(articleId);
   setCurrentTab(Tabs.ReadArticle);
-  window.history.pushState(null, '', `/articles/read/${articleId}`);
+  // window.history.replaceState(null, '', `/articles/read/${articleId}`);
+  navigate(`/articles/read/${articleId}`);
 };
 
 export const TabManager: React.FC<Props> = (props: Props) => {
+  const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState<TabsEnum>(props.startTab);
   const [articleId, setArticleId] = useState<string | undefined>(useParams().articleId);
+  bindNavigateStateListener(setCurrentTab);
   return (
     <>
       <Container>
         <MobileFrame>
-          <NavigationBar changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, tab)} />
+          <NavigationBar changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)} />
           {currentTab === Tabs.Articles && (
             <AnimateFadeIn trigger={currentTab === Tabs.Articles}>
               <ArticlesTab
-                changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, tab)}
+                changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)}
                 openArticle={(articleId: string) =>
-                  openArticle(articleId, setCurrentTab, setArticleId)
+                  openArticle(articleId, setCurrentTab, setArticleId, navigate)
                 }
               />
             </AnimateFadeIn>

@@ -26,8 +26,8 @@ export const HomeTab: React.FC = () => {
       <Content>
         <MobileFrame>
           <AnimatedBox themestyle={themeStyle.style}>
-            <h1>Generate an Article with AI</h1>
-            <h3>Topic</h3>
+            <h1>Home Page</h1>
+            <h3>This is the WIP Home Page</h3>
           </AnimatedBox>
         </MobileFrame>
       </Content>

@@ -19,6 +19,11 @@ export const routes: (RouteObject & { type: string })[] = [
     element: <TabManager startTab={Tabs.ReadArticle} />,
   },
   {
+    path: '/articles/generate',
+    type: Tabs.GenerateArticle,
+    element: <TabManager startTab={Tabs.GenerateArticle} />,
+  },
+  {
     path: '/home',
     type: Tabs.Home,
     element: <TabManager startTab={Tabs.Home} />,
@@ -35,4 +40,6 @@ const getPath = (tab: TabsEnum): string => routes.find((route) => route.type ===
 export const getPathFromTab = (tab: TabsEnum): string =>
   getPath(tab) === '*' || !getPath(tab) ? '/' : getPath(tab);
 
+export const getTabFromPath = (path: string): string =>
+  routes.find((route) => path.startsWith(route.path!.split(':')[0]))!.type;
 export const router = createBrowserRouter(routes);
