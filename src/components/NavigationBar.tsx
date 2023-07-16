@@ -110,8 +110,8 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
             iconSrc={bubble.iconSrc}
             rounded={isFloatingBar}
             scale={1}
-            darkModeInvert={true}                borderSize={1}
-
+            darkModeInvert={true}
+            borderSize={1}
             style={theme.style}
           />
         ))}
@@ -119,10 +119,12 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
           onBubbleClick={() => {
             theme.switchDarkMode();
           }}
+          key={'dark-light-mode'}
           iconSrc={theme.style === ThemeStyle.LIGHT ? lightModeIcon : darkModeIcon}
           rounded={isFloatingBar}
           darkModeInvert={false}
           scale={1}
+          borderSize={1}
           style={theme.style}
         />
       </NavbarBubblesContainer>
