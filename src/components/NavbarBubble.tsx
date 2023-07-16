@@ -36,16 +36,17 @@ type Props = {
 };
 
 export const NavbarBubble: React.FC<Props> = (props: Props) => (
-  <Bubble
-    themeStyle={props.style}
-    floating={props.isFloating}
-    whileTap={{ scale: props.isFloating ? 1.5 : 0 }}
-  >
-    <Icon
+  <div onClick={() => props.onBubbleClick()}>
+    <Bubble
       themeStyle={props.style}
-      onClick={() => props.onBubbleClick()}
-      src={props.iconSrc}
-      whileTap={{ scale: !props.isFloating ? 1.5 : 0 }}
-    />
-  </Bubble>
+      floating={props.isFloating}
+      whileTap={{ scale: props.isFloating ? 1.5 : 1 }}
+    >
+      <Icon
+        themeStyle={props.style}
+        src={props.iconSrc}
+        whileTap={{ scale: !props.isFloating ? 1.5 : 1 }}
+      />
+    </Bubble>
+  </div>
 );
