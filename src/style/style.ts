@@ -48,17 +48,18 @@ const light: ThemeColor = {
 };
 
 const dark: ThemeColor = {
-  background: '#1f2937',
-  text: '#fff',
-  border: '#374151',
-  backdrop: '#111827',
-  shadow: hexToRgbA('#374151', 0.3),
-  optionSelected: '#4b5563',
+  background: '#1a1a1a', // Dark background color
+  text: '#f2f2f2', // Light text color
+  border: '#2f2f2f', // Darker border color
+  backdrop: '#272727', // Slightly darker backdrop color
+  shadow: hexToRgbA('#000', 0.3), // Darker shadow color
+  optionSelected: '#1f1f1f', // Darker optionSelected color
   accent: {
-    color: '#3b82f6',
-    text: '#fff',
+    color: '#d40f36', // Same accent color as in the light theme
+    text: '#fff', // Light text color for the accent elements
   },
 };
+
 const pickColor = (themeType: ThemeStyleEnum): ThemeColor =>
   themeType === ThemeStyle.DARK ? dark : light;
 

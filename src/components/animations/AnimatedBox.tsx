@@ -23,8 +23,8 @@ type Props = {
 export const AnimatedBox: React.FC<Props> = (props: Props) => {
   return (
     <motion.div
-      initial={{ scale: 0.5, opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{ scale: 0.8, opacity: 0.5 }}
+      transition={{ duration: 0.2 }}
       className="square"
       whileInView={{ scale: 1, opacity: 1 }}
     >

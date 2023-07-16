@@ -158,6 +158,7 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                 iconSrc={genArticleIcon}
                 style={themeStyle.style}
                 label="Generate"
+                borderSize={1}
               />
             </BubbleContainer>
           </AnimateFadeIn>

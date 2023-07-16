@@ -12,7 +12,12 @@ const Icon = styled(motion.img)<{
     props.darkModeInvert && props.themeStyle === ThemeStyle.DARK ? `invert(100%)` : ``};
 `;
 
-const Bubble = styled(motion.div)<{ rounded: boolean; themeStyle: ThemeStyleEnum; scale: number }>`
+const Bubble = styled(motion.div)<{
+  rounded: boolean;
+  themeStyle: ThemeStyleEnum;
+  scale: number;
+  borderSize: number;
+}>`
   z-index: 5;
   display: flex;
   flex-direction: row;
@@ -24,9 +29,13 @@ const Bubble = styled(motion.div)<{ rounded: boolean; themeStyle: ThemeStyleEnum
     props.rounded ? props.theme.colors(props.themeStyle).background : `transparent`};
   transition:
     box-shadow 0.3s ease-out ${(props) => (props.rounded ? '0.2s' : '0s')},
-    border-radius ease-out ${(props) => (props.rounded ? '0s' : '1s')};
+    border 0.2s ease-out ${(props) => (props.rounded ? '0.3s' : '0s')},
+    border-radius 0.3s ease-out ${(props) => (props.rounded ? '0s' : '1s')};
   box-shadow: ${(props) =>
     props.rounded ? `${props.theme.colors(props.themeStyle).shadow} 0px 7px 20px 0px` : ''};
+  border: ${(props) => (props.rounded ? props.borderSize : 0)}px solid
+    ${(props) => props.theme.colors(props.themeStyle).border};
+
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -52,6 +61,7 @@ type Props = {
   scale?: number;
   darkModeInvert?: boolean;
   label?: string;
+  borderSize?: number;
 };
 
 export const BubbleButton: React.FC<Props> = (props: Props) => (
@@ -59,6 +69,7 @@ export const BubbleButton: React.FC<Props> = (props: Props) => (
     <Bubble
       themeStyle={props.style}
       rounded={props.rounded ?? true}
+      borderSize={props.borderSize ?? 0}
       scale={props.scale ?? 1}
       whileTap={{ scale: props.rounded ? 1.5 : 1 }}
     >

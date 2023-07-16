@@ -32,8 +32,7 @@ const NavbarContainer = styled.div<{ isFloating: boolean; themestyle: ThemeStyle
   z-index: 1;
 
   transition:
-    box-shadow ${(props) => (props.isFloating ? '0.2s' : '0.3s')} ease-in-out
-      ${(props) => (props.isFloating ? '0s' : '0.35s')},
+    box-shadow ${(props) => (props.isFloating ? '0.2s' : '0.3s')} ease-in-out,
     background-color 0.2s ease-in,
     padding 0.3s ease-out ${(props) => (props.isFloating ? '0.25s' : '0s')};
 
@@ -111,7 +110,8 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
             iconSrc={bubble.iconSrc}
             rounded={isFloatingBar}
             scale={1}
-            darkModeInvert={true}
+            darkModeInvert={true}                borderSize={1}
+
             style={theme.style}
           />
         ))}
