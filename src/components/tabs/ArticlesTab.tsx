@@ -40,11 +40,21 @@ const BubbleContainer = styled.div`
 
 const Title = styled.h2`
   margin: 0rem;
+  cursor: pointer;
+`;
+
+const Clickable = styled.div`
+  cursor: pointer;
+`;
+
+const Text = styled.div`
+  cursor: text;
 `;
 
 const Info = styled.p`
   margin: 0rem;
   font-style: italic;
+  cursor: text;
 `;
 
 export type PageState = LoadingState | SuccessState | ErrorState;
@@ -116,17 +126,19 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
             {pageState.articles
               .sort((a, b) => b.date.getTime() - a.date.getTime())
               .map((article) => (
-                <AnimatedBox themestyle={themeStyle.style}>
-                  <Info>On {parseDate(article.date)}</Info>
-                  <Title onClick={() => props.openArticle(article.id)}>{article.title}</Title>
-                  <div>{article.content}</div>
-                  <Info>
-                    <strong>Tags:</strong> {article.tags.join(', ')}
-                  </Info>
-                  <Info>
-                    Read it in <strong>{article.estimatedReadingTimeMinutes} minutes</strong>
-                  </Info>
-                </AnimatedBox>
+                <Clickable onClick={() => props.openArticle(article.id)}>
+                  <AnimatedBox themestyle={themeStyle.style}>
+                    <Info>On {parseDate(article.date)}</Info>
+                    <Title onClick={() => props.openArticle(article.id)}>{article.title}</Title>
+                    <Text>{article.content}</Text>
+                    <Info>
+                      <strong>Tags:</strong> {article.tags.join(', ')}
+                    </Info>
+                    <Info>
+                      Read it in <strong>{article.estimatedReadingTimeMinutes} minutes</strong>
+                    </Info>
+                  </AnimatedBox>
+                </Clickable>
               ))}
             <BubbleContainer>
               <BubbleButton
