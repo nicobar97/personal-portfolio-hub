@@ -43,10 +43,10 @@ const openArticle = (
   setArticleId: (articleId: string) => void,
   navigate: NavigateFunction,
 ) => {
+  navigate(`/articles/read/${articleId}`);
   setArticleId(articleId);
   setCurrentTab(Tabs.ReadArticle);
   // window.history.replaceState(null, '', `/articles/read/${articleId}`);
-  navigate(`/articles/read/${articleId}`);
 };
 
 export const TabManager: React.FC<Props> = (props: Props) => {
@@ -86,7 +86,7 @@ export const TabManager: React.FC<Props> = (props: Props) => {
           )}
           {currentTab === Tabs.ReadArticle && articleId && (
             <AnimateFadeIn trigger={currentTab === Tabs.ReadArticle}>
-              <ReadArticleTab articleId={articleId} />
+              <ReadArticleTab articleId={articleId}/>
             </AnimateFadeIn>
           )}
         </MobileFrame>

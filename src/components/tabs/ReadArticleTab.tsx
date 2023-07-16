@@ -6,8 +6,8 @@ import { getArticle } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
 import { Article } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
-import { PageStatus } from '../../model/Page';
-import { useState } from 'react';
+import { PageStatus, PageStatusEnum } from '../../model/Page';
+import { useEffect, useState } from 'react';
 import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
@@ -44,6 +44,10 @@ const SubSubTitle = styled.h4`
   margin: 0rem;
 `;
 
+const Section = styled.div`
+  margin-top: 1rem;
+`;
+
 const Info = styled.p`
   margin: 0rem;
   font-style: italic;
@@ -78,16 +82,22 @@ const parseDate = (date: Date) =>
   });
 
 type Props = {
-  articleId:string;
-}
+  articleId: string;
+  status: PageStatusEnum;
+};
 
 export const ReadArticleTab: React.FC<Props> = (props: Props) => {
   const themeStyle = useThemeStore();
-  const [pageState, setPageState] = useState<PageState>({ status: 'loading' });
+  const [pageState, setPageState] = useState<PageState>({ status: PageStatus.LOADING });
+
   const query = useQuery({
     queryKey: ['article'],
     queryFn: () => getArticle(props.articleId).run(),
   });
+
+  useEffect(() => {
+    query.refetch();
+  }, [props]);
 
   query.data &&
     query.data
@@ -129,7 +139,11 @@ export const ReadArticleTab: React.FC<Props> = (props: Props) => {
               <SubSubTitle>
                 Read it in {pageState.article.estimatedReadingTimeMinutes} minutes
               </SubSubTitle>
-              <div>{pageState.article.content}</div>
+              <div>
+                {pageState.article.content.split('\n\n').map((section) => (
+                  <Section>{section}</Section>
+                ))}
+              </div>
               <Info>
                 <strong>Tags:</strong> {pageState.article.tags.join(', ')}
               </Info>
