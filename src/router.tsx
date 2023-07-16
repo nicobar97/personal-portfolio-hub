@@ -4,11 +4,6 @@ import { Tabs, TabsEnum } from './model/Tabs';
 
 export const routes: (RouteObject & { type: string })[] = [
   {
-    path: '/info',
-    type: Tabs.Info,
-    element: <TabManager startTab={Tabs.Info} />,
-  },
-  {
     path: '/articles/',
     type: Tabs.Articles,
     element: <TabManager startTab={Tabs.Articles} />,
@@ -24,14 +19,14 @@ export const routes: (RouteObject & { type: string })[] = [
     element: <TabManager startTab={Tabs.GenerateArticle} />,
   },
   {
-    path: '/home',
-    type: Tabs.Home,
-    element: <TabManager startTab={Tabs.Home} />,
+    path: '/cv',
+    type: Tabs.Cv,
+    element: <TabManager startTab={Tabs.Cv} />,
   },
   {
     path: '*',
-    type: Tabs.Info,
-    element: <TabManager startTab={Tabs.Info} />,
+    type: Tabs.ProjectInfo,
+    element: <TabManager startTab={Tabs.ProjectInfo} />,
   },
 ];
 

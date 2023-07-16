@@ -14,8 +14,6 @@ import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
 import { BubbleButton } from '../BubbleButton';
 import { Tabs, TabsEnum } from '../../model/Tabs';
-// import { TabState, useTabStore } from '../../stores/useTabStore';
-// import { Tabs, TabsEnum } from '../../model/Tabs';
 
 const Content = styled.div`
   display: flex;
@@ -40,19 +38,7 @@ const BubbleContainer = styled.div`
   margin: 1rem;
 `;
 
-// const MainTitle = styled.h1`
-//   margin: 0rem;
-// `;
-
 const Title = styled.h2`
-  margin: 0rem;
-`;
-
-// const SubTitle = styled.h3`
-//   margin: 0rem;
-// `;
-
-const SubSubTitle = styled.h4`
   margin: 0rem;
 `;
 
@@ -90,10 +76,6 @@ const parseDate = (date: Date) =>
     timeZone: 'Europe/Rome', // Time zone set to Italy
   });
 
-// const handleArticleOpen = (articleId: string, setCurrentTab: (tab: TabsEnum) => {
-//   window.history.pushState(null, '', `/article/${articleId}`);
-//   tab.setTab(Tabs.ReadArticle, { articleId });
-// };
 type Props = {
   openArticle: (articleId: string) => void;
   changeTab: (tab: TabsEnum) => void;
@@ -137,16 +119,13 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                 <AnimatedBox themestyle={themeStyle.style}>
                   <Info>On {parseDate(article.date)}</Info>
                   <Title onClick={() => props.openArticle(article.id)}>{article.title}</Title>
-                  <SubSubTitle>
-                    Read it in {article.estimatedReadingTimeMinutes} minutes
-                  </SubSubTitle>
                   <div>{article.content}</div>
                   <Info>
                     <strong>Tags:</strong> {article.tags.join(', ')}
                   </Info>
-                  {/* <Info>
-                    <strong>Generated on:</strong> {parseDate(article.date)}
-                  </Info> */}
+                  <Info>
+                    Read it in <strong>{article.estimatedReadingTimeMinutes} minutes</strong>
+                  </Info>
                 </AnimatedBox>
               ))}
             <BubbleContainer>

@@ -47,7 +47,7 @@ const BulletRow = styled.li`
   list-style-type: circle;
 `;
 
-export const InfoTab: React.FC = () => {
+export const CvTab: React.FC = () => {
   const themeStyle = useThemeStore();
   return (
     <>

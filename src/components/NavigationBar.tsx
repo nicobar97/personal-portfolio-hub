@@ -73,13 +73,13 @@ const initNavbarBubbles = (changeTab: (tab: TabsEnum) => void) => [
   },
   {
     iconSrc: logo,
-    onBubbleClick: () => changeTab(Tabs.Home),
-    linkedTab: Tabs.Home,
+    onBubbleClick: () => changeTab(Tabs.Cv),
+    linkedTab: Tabs.Cv,
   },
   {
     iconSrc: infoIcon,
-    onBubbleClick: () => changeTab(Tabs.Info),
-    linkedTab: Tabs.Info,
+    onBubbleClick: () => changeTab(Tabs.ProjectInfo),
+    linkedTab: Tabs.ProjectInfo,
   },
 ];
 

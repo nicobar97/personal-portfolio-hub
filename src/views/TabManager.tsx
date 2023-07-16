@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { HomeTab } from '../components/tabs/HomeTab';
-import { InfoTab } from '../components/tabs/InfoTab';
+import { ProjectInfoTab } from '../components/tabs/ProjectInfoTab';
+import { CvTab } from '../components/tabs/CvTab';
 import { ArticlesTab } from '../components/tabs/ArticlesTab';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import { AnimateFadeIn } from '../components/animations/Animations';
@@ -21,8 +21,7 @@ type Props = {
 };
 
 const bindNavigateStateListener = (setCurrentTab: (tab: TabsEnum) => void) => {
-  window.onpopstate = (event) => {
-    console.log(event);
+  window.onpopstate = () => {
     setCurrentTab(getTabFromPath(window.location.pathname) as TabsEnum);
   };
 };
@@ -32,7 +31,6 @@ const changeTab = (
   navigate: NavigateFunction,
   tab: TabsEnum,
 ) => {
-  // window.history.replaceState(null, '', getPathFromTab(tab));
   setCurrentTab(tab);
   navigate(getPathFromTab(tab));
 };
@@ -46,7 +44,6 @@ const openArticle = (
   navigate(`/articles/read/${articleId}`);
   setArticleId(articleId);
   setCurrentTab(Tabs.ReadArticle);
-  // window.history.replaceState(null, '', `/articles/read/${articleId}`);
 };
 
 export const TabManager: React.FC<Props> = (props: Props) => {
@@ -69,14 +66,14 @@ export const TabManager: React.FC<Props> = (props: Props) => {
               />
             </AnimateFadeIn>
           )}
-          {currentTab === Tabs.Info && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Info}>
-              <InfoTab />
+          {currentTab === Tabs.Cv && (
+            <AnimateFadeIn trigger={currentTab === Tabs.Cv}>
+              <CvTab />
             </AnimateFadeIn>
           )}
-          {currentTab === Tabs.Home && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Home}>
-              <HomeTab />
+          {currentTab === Tabs.ProjectInfo && (
+            <AnimateFadeIn trigger={currentTab === Tabs.ProjectInfo}>
+              <ProjectInfoTab />
             </AnimateFadeIn>
           )}
           {currentTab === Tabs.GenerateArticle && (
