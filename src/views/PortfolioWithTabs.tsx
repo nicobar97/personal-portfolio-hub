@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { HomeTab } from '../components/tabs/HomeTab';
 import { InfoTab } from '../components/tabs/InfoTab';
 import { MenuTab } from '../components/tabs/MenuTab';
 import { TabsEnum, Tabs } from '../model/Tabs';
 import { AnimateFadeIn } from '../components/animations/Animations';
-import { FancyNavbar } from '../components/FancyNavbar';
 import { MobileFrame } from '../components/MobileFrame';
-import { getPathFromTab } from '../router';
 import { useParams } from 'react-router-dom';
+import { NavigationBar } from '../components/NavigationBar';
+import { ReadArticleTab } from '../components/tabs/ReadArticleTab';
+import { ArticleTabState, useTabStore } from '../stores/useTabStore';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -18,46 +18,37 @@ type Props = {
   currentTab: TabsEnum;
 };
 
-// const Button = styled.button`
-//   position: fixed;
-//   right: 0;
-//   bottom: 0;
-//   margin: 2rem;
-//   border: none;
-//   padding: 1rem;
-//   border-radius: 20px;
-// `;
-
-const changeTab = (setCurrentTab: (tab: TabsEnum) => void, tab: TabsEnum) => {
-  window.history.pushState(null, '', getPathFromTab(tab));
-  setCurrentTab(tab);
-};
-
-export const PortfolioWithTabs: React.FC<Props> = (props: Props) => {
+export const PortfolioWithTabs: React.FC<Props> = () => {
   const params = useParams();
   const articleId = params.articleId;
-  const [currentTab, setCurrentTab] = useState<TabsEnum>(props.currentTab);
+  const tab = useTabStore()
   return (
     <>
       <Container>
         <MobileFrame>
-          <FancyNavbar onBubbleClick={(tab: TabsEnum) => changeTab(setCurrentTab, tab)} />
+          <NavigationBar />
 
-          {currentTab === Tabs.Menu && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Menu}>
+          {tab.currentTab === Tabs.Menu && (
+            <AnimateFadeIn trigger={tab.currentTab === Tabs.Menu}>
               <MenuTab articleId={articleId ?? null} />
             </AnimateFadeIn>
           )}
-          {currentTab === Tabs.Info && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Info}>
+          {tab.currentTab === Tabs.Info && (
+            <AnimateFadeIn trigger={tab.currentTab === Tabs.Info}>
               <InfoTab />
             </AnimateFadeIn>
           )}
-          {currentTab === Tabs.Home && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Home}>
+          {tab.currentTab === Tabs.Home && (
+            <AnimateFadeIn trigger={tab.currentTab === Tabs.Home}>
               <HomeTab />
             </AnimateFadeIn>
           )}
+          {tab.currentTab === Tabs.ReadArticle && (
+            <AnimateFadeIn trigger={tab.currentTab === Tabs.ReadArticle}>
+              <ReadArticleTab articleId={(tab as ArticleTabState).props.articleId}></ReadArticleTab>
+            </AnimateFadeIn>
+          )}
+
           {/* <Button onClick={() => setIsFloatingBar(!isFloatingBar)}>Switch</Button> */}
         </MobileFrame>
       </Container>
