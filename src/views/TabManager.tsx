@@ -10,6 +10,7 @@ import { ReadArticleTab } from '../components/tabs/ReadArticleTab';
 import { useState } from 'react';
 import { getPathFromTab } from '../router';
 import { useParams } from 'react-router-dom';
+import { GenerateArticle } from '../components/tabs/GenerateArticle';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -42,10 +43,10 @@ export const TabManager: React.FC<Props> = (props: Props) => {
       <Container>
         <MobileFrame>
           <NavigationBar changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, tab)} />
-
           {currentTab === Tabs.Articles && (
             <AnimateFadeIn trigger={currentTab === Tabs.Articles}>
               <ArticlesTab
+                changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, tab)}
                 openArticle={(articleId: string) =>
                   openArticle(articleId, setCurrentTab, setArticleId)
                 }
@@ -60,6 +61,11 @@ export const TabManager: React.FC<Props> = (props: Props) => {
           {currentTab === Tabs.Home && (
             <AnimateFadeIn trigger={currentTab === Tabs.Home}>
               <HomeTab />
+            </AnimateFadeIn>
+          )}
+          {currentTab === Tabs.GenerateArticle && (
+            <AnimateFadeIn trigger={currentTab === Tabs.GenerateArticle}>
+              <GenerateArticle />
             </AnimateFadeIn>
           )}
           {currentTab === Tabs.ReadArticle && articleId && (

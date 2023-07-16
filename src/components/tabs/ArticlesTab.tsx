@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import genArticleIcon from '../../assets/icons/ai-write.png';
 import { MobileFrame } from '../MobileFrame';
 import { AnimatedBox } from '../animations/AnimatedBox';
 import { useThemeStore } from '../../stores/useThemeStore';
@@ -11,6 +12,8 @@ import { useState } from 'react';
 import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
+import { BubbleButton } from '../BubbleButton';
+import { Tabs, TabsEnum } from '../../model/Tabs';
 // import { TabState, useTabStore } from '../../stores/useTabStore';
 // import { Tabs, TabsEnum } from '../../model/Tabs';
 
@@ -28,6 +31,13 @@ const Content = styled.div`
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+`;
+
+const BubbleContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 1rem;
 `;
 
 // const MainTitle = styled.h1`
@@ -86,6 +96,7 @@ const parseDate = (date: Date) =>
 // };
 type Props = {
   openArticle: (articleId: string) => void;
+  changeTab: (tab: TabsEnum) => void;
 };
 
 export const ArticlesTab: React.FC<Props> = (props: Props) => {
@@ -124,7 +135,7 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
               .sort((a, b) => b.date.getTime() - a.date.getTime())
               .map((article) => (
                 <AnimatedBox themestyle={themeStyle.style}>
-                  // TODO
+                  <Info>On {parseDate(article.date)}</Info>
                   <Title onClick={() => props.openArticle(article.id)}>{article.title}</Title>
                   <SubSubTitle>
                     Read it in {article.estimatedReadingTimeMinutes} minutes
@@ -133,11 +144,22 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                   <Info>
                     <strong>Tags:</strong> {article.tags.join(', ')}
                   </Info>
-                  <Info>
+                  {/* <Info>
                     <strong>Generated on:</strong> {parseDate(article.date)}
-                  </Info>
+                  </Info> */}
                 </AnimatedBox>
               ))}
+            <BubbleContainer>
+              <BubbleButton
+                onBubbleClick={() => props.changeTab(Tabs.GenerateArticle)}
+                rounded={true}
+                scale={1.5}
+                darkModeInvert={false}
+                iconSrc={genArticleIcon}
+                style={themeStyle.style}
+                label="Generate"
+              />
+            </BubbleContainer>
           </AnimateFadeIn>
         )}
         {pageState.status === PageStatus.ERROR && (

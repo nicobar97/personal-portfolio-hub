@@ -4,11 +4,11 @@ import lightModeIcon from '../assets/icons/light-mode.png';
 import darkModeIcon from '../assets/icons/dark-mode.png';
 import menuIcon from '../assets/icons/menu.png';
 import { Tabs, TabsEnum } from '../model/Tabs';
-import logo from '../../src/assets/images/logo_black_fill.svg';
+import logo from '../assets/images/logo_black_fill.svg';
 import { useState } from 'react';
 import { useThemeStore } from '../stores/useThemeStore';
 import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
-import { NavbarBubble } from './NavbarBubble';
+import { BubbleButton } from './BubbleButton';
 // import { getPathFromTab } from '../router';
 // import { useNavbarStore } from '../stores/useNavbarStore';
 // import { TabProps, TabState, useTabStore } from '../stores/useTabStore';
@@ -105,20 +105,24 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
     <NavbarContainer isFloating={isFloatingBar} themestyle={theme.style}>
       <NavbarBubblesContainer isFloating={isFloatingBar} bubblecount={bubbles.length}>
         {bubbles.map((bubble: NavbarBubbleContent) => (
-          <NavbarBubble
+          <BubbleButton
             key={bubble.linkedTab}
             onBubbleClick={bubble.onBubbleClick}
             iconSrc={bubble.iconSrc}
-            isFloating={isFloatingBar}
+            rounded={isFloatingBar}
+            scale={1}
+            darkModeInvert={true}
             style={theme.style}
           />
         ))}
-        <NavbarBubble
+        <BubbleButton
           onBubbleClick={() => {
             theme.switchDarkMode();
           }}
           iconSrc={theme.style === ThemeStyle.LIGHT ? lightModeIcon : darkModeIcon}
-          isFloating={isFloatingBar}
+          rounded={isFloatingBar}
+          darkModeInvert={false}
+          scale={1}
           style={theme.style}
         />
       </NavbarBubblesContainer>

@@ -49,4 +49,35 @@ img {
 a:link {
   color: ${(props) => props.theme.colors(props.themeStyle).accent.color}
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+}
+
+.menu {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.menu--close {
+  animation: fadeOut 0.2s ease-in-out;
+}
+
 `;

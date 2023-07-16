@@ -6,7 +6,6 @@ import { AnimatedBox } from '../animations/AnimatedBox';
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -27,8 +26,8 @@ export const HomeTab: React.FC = () => {
       <Content>
         <MobileFrame>
           <AnimatedBox themestyle={themeStyle.style}>
-            <h1>Home Page</h1>
-            <h3>This is the WIP Home Tab</h3>
+            <h1>Generate an Article with AI</h1>
+            <h3>Topic</h3>
           </AnimatedBox>
         </MobileFrame>
       </Content>
