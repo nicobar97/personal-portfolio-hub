@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
 
-type ThemeState = {
+export type ThemeState = {
   style: ThemeStyleEnum;
   setTheme: (theme: ThemeStyleEnum) => void;
   switchDarkMode: () => void;

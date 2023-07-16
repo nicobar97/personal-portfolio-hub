@@ -2,24 +2,25 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { Tabs, TabsEnum } from '../model/Tabs';
 
-
 export type TabState = BaseTabState | ArticleTabState;
+export type TabProps = BaseTabProps | ArticleTabProps;
 
 export type BaseTabState = {
-  currentTab: TabsEnum;
-  setTab: (tab: TabsEnum) => void;
+  currentTab: Omit<TabsEnum, typeof Tabs.ReadArticle>;
+  tabProps: BaseTabProps;
+  setTab: (currentTab: TabsEnum, tabProps: TabProps) => void;
 };
 
 export type ArticleTabState = Omit<BaseTabState, 'currentTab'> & {
-  currentTab: 'read-article';
-  props: ArticleTabProps;
+  currentTab: typeof Tabs.ReadArticle;
+  tabProps: ArticleTabProps;
 };
 
 export type ArticleTabProps = {
   articleId: string;
 };
 
-export type TabProps = {};
+export type BaseTabProps = {};
 
 export type NavbarBubbleContent = {
   linkedTab: TabsEnum;
@@ -32,7 +33,8 @@ export const useTabStore = create<TabState>()(
     persist(
       (set) => ({
         currentTab: Tabs.Home,
-        setTab: (tab: TabsEnum) => set(() => ({ currentTab: tab })),
+        tabProps: {},
+        setTab: (currentTab: TabsEnum, tabProps: TabProps) => set(() => ({ currentTab, tabProps })),
       }),
       {
         name: 'tab',

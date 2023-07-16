@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { TabsEnum } from '../model/Tabs';
 import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
+import lightModeIcon from '../assets/icons/light-mode.png';
+import darkModeIcon from '../assets/icons/dark-mode.png';
 
 export type NavbarState = {
   style: ThemeStyleEnum;
@@ -25,7 +27,8 @@ export const useNavbarStore = create<NavbarState>()(
         style: ThemeStyle.DARK,
         bubbles: [],
         setTheme: (style: ThemeStyleEnum) => set(() => ({ style })),
-        setNavbarBubbles: (navbarBubbles: NavbarBubbleContent[]) => set(() => ({ bubbles: navbarBubbles })),
+        setNavbarBubbles: (navbarBubbles: NavbarBubbleContent[]) =>
+          set(() => ({ bubbles: navbarBubbles })),
         removeNavbarBubble: (tab: TabsEnum) =>
           set((state) => ({
             bubbles: state.bubbles.filter((bubble) => bubble.linkedTab !== tab),
@@ -37,6 +40,7 @@ export const useNavbarStore = create<NavbarState>()(
         switchDarkMode: () =>
           set((state) => ({
             style: state.style === ThemeStyle.DARK ? ThemeStyle.LIGHT : ThemeStyle.DARK,
+            iconSrc: state.style === ThemeStyle.DARK ? darkModeIcon : lightModeIcon,
           })),
       }),
       {

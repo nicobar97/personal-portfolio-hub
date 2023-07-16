@@ -15,7 +15,7 @@ const Bubble = styled(motion.div)<{ floating: boolean; themeStyle: ThemeStyleEnu
   flex-direction: column;
   height: 1.5rem;
   padding: 1.1rem;
-  border-radius: 100px;
+  border-radius: ${(props) => (props.floating ? '100px' : '0px')};
   gap: 1rem;
   background-color: ${(props) => props.theme.colors(props.themeStyle).background};
   transition: box-shadow 0.3s ease-out ${(props) => (props.floating ? '0.2s' : '0s')};
@@ -40,12 +40,12 @@ export const NavbarBubble: React.FC<Props> = (props: Props) => (
     <Bubble
       themeStyle={props.style}
       floating={props.isFloating}
-      whileTap={{ scale: props.isFloating ? 1.5 : 1 }}
+      whileTap={{ scale: 1.5 }}
     >
       <Icon
         themeStyle={props.style}
         src={props.iconSrc}
-        whileTap={{ scale: !props.isFloating ? 1.5 : 1 }}
+        whileTap={{ scale: 1.5 }}
       />
     </Bubble>
   </div>

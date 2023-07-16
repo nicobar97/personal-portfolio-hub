@@ -1,32 +1,32 @@
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
-import { PortfolioWithTabs } from './views/PortfolioWithTabs';
+import { TabManager } from './views/TabManager';
 import { Tabs, TabsEnum } from './model/Tabs';
 
 export const routes: (RouteObject & { type: string })[] = [
   {
     path: '/info',
     type: Tabs.Info,
-    element: <PortfolioWithTabs currentTab={Tabs.Info} />,
+    element: <TabManager startTab={Tabs.Info} />,
   },
   {
-    path: '/menu',
-    type: Tabs.Menu,
-    element: <PortfolioWithTabs currentTab={Tabs.Menu} />,
+    path: '/articles/',
+    type: Tabs.Articles,
+    element: <TabManager startTab={Tabs.Articles} />,
   },
   {
-    path: '/article/:articleId',
-    type: Tabs.Menu,
-    element: <PortfolioWithTabs currentTab={Tabs.Menu} />,
+    path: '/articles/read/:articleId',
+    type: Tabs.ReadArticle,
+    element: <TabManager startTab={Tabs.ReadArticle} />,
   },
   {
     path: '/home',
     type: Tabs.Home,
-    element: <PortfolioWithTabs currentTab={Tabs.Home} />,
+    element: <TabManager startTab={Tabs.Home} />,
   },
   {
     path: '*',
     type: Tabs.Info,
-    element: <PortfolioWithTabs currentTab={Tabs.Info} />,
+    element: <TabManager startTab={Tabs.Info} />,
   },
 ];
 

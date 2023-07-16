@@ -19,6 +19,8 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
+  margin-top: 0.5rem;
+  padding: 1.5rem;
   overflow-x: hidden;
   -webkit-user-select: text;
   -moz-user-select: text;
@@ -76,8 +78,8 @@ const parseDate = (date: Date) =>
   });
 
 type Props = {
-  articleId: string;
-};
+  articleId:string;
+}
 
 export const ReadArticleTab: React.FC<Props> = (props: Props) => {
   const themeStyle = useThemeStore();
