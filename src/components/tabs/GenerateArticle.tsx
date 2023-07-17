@@ -237,6 +237,7 @@ export const GenerateArticle: React.FC = () => {
                   iconSrc={genArticleIcon}
                   style={themeStyle.style}
                   label={label}
+                  borderSize={1}
                 />
               </BubbleContainer>
             </Gap>
