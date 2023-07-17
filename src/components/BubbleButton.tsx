@@ -21,6 +21,7 @@ const Bubble = styled(motion.div)<{
   z-index: 5;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   height: ${(props) => `${props.scale * 1.5}rem`};
   padding: 1.1rem;
   border-radius: ${(props) => (props.rounded ? '100px' : '0px')};
