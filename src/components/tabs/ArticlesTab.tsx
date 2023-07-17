@@ -35,7 +35,7 @@ const BubbleContainer = styled.div`
   position: fixed;
   bottom: 0;
   right: 0;
-  margin: 1rem;
+  margin: 2rem;
 `;
 
 const Title = styled.h2`
@@ -144,7 +144,7 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
               <BubbleButton
                 onBubbleClick={() => props.changeTab(Tabs.GenerateArticle)}
                 rounded={true}
-                scale={1.5}
+                scale={1.2}
                 darkModeInvert={false}
                 iconSrc={genArticleIcon}
                 style={themeStyle.style}
