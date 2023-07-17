@@ -6,11 +6,10 @@ import { getArticle } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
 import { Article } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
-import { PageStatus } from '../../model/Page';
-import { useEffect, useState } from 'react';
 import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
+import { Either } from 'purify-ts';
 
 const Content = styled.div`
   display: flex;
@@ -53,22 +52,6 @@ const Info = styled.p`
   font-style: italic;
 `;
 
-export type PageState = LoadingState | SuccessState | ErrorState;
-
-type LoadingState = {
-  status: 'loading';
-};
-
-type SuccessState = {
-  status: 'success';
-  article: Article;
-};
-
-type ErrorState = {
-  status: 'error';
-  error: FetchAuthMapError;
-};
-
 const parseDate = (date: Date) =>
   date.toLocaleString('en-IT', {
     weekday: 'long',
@@ -87,43 +70,22 @@ type Props = {
 
 export const ReadArticleTab: React.FC<Props> = (props: Props) => {
   const themeStyle = useThemeStore();
-  const [pageState, setPageState] = useState<PageState>({ status: PageStatus.LOADING });
 
-  const query = useQuery({
-    queryKey: ['article'],
+  const query = useQuery<Either<FetchAuthMapError, Article>, FetchAuthMapError>({
+    queryKey: ['article', props.articleId],
     queryFn: () => getArticle(props.articleId).run(),
   });
-
-  useEffect(() => {
-    query.refetch();
-  }, [props]);
-
-  query.data &&
-    query.data
-      .map((data: Article) => {
-        if (pageState.status !== PageStatus.SUCCESS) {
-          setPageState({ status: PageStatus.SUCCESS, article: data });
-        }
-        return null;
-      })
-      .mapLeft((err: FetchAuthMapError) => {
-        if (pageState.status !== PageStatus.ERROR) {
-          setPageState({ status: PageStatus.ERROR, error: err });
-        }
-        return null;
-      })
-      .extract();
 
   return (
     <Content>
       <MobileFrame>
-        {pageState.status === PageStatus.ERROR && (
-          <AnimateFadeInDown trigger={pageState.status === PageStatus.ERROR}>
-            <MobileFrame>{handleError(pageState.error)}</MobileFrame>
+        {query.isError && (
+          <AnimateFadeInDown trigger={query.isError}>
+            <MobileFrame>{handleError(query.error)}</MobileFrame>
           </AnimateFadeInDown>
         )}
-        {pageState.status === PageStatus.LOADING && (
-          <AnimateFadeInDown trigger={pageState.status === PageStatus.LOADING}>
+        {query.isLoading && (
+          <AnimateFadeInDown trigger={query.isLoading}>
             <MobileFrame>
               <LoaderContainer>
                 <Loader />
@@ -131,28 +93,36 @@ export const ReadArticleTab: React.FC<Props> = (props: Props) => {
             </MobileFrame>
           </AnimateFadeInDown>
         )}
-        {pageState.status === PageStatus.SUCCESS && (
-          <AnimateFadeIn trigger={pageState.status === PageStatus.SUCCESS}>
-            <AnimatedBox themestyle={themeStyle.style}>
-              <Title>{pageState.article.title}</Title>
-              <SubSubTitle>
-                Read it in {pageState.article.estimatedReadingTimeMinutes} minutes
-              </SubSubTitle>
-              <div>
-                {pageState.article.content.split('\n\n').map((section) => (
-                  <Section>{section}</Section>
-                ))}
-              </div>
-              <Info>
-                <strong>Tags:</strong> {pageState.article.tags.join(', ')}
-              </Info>
-              <Info>
-                <strong>Generated on:</strong> {parseDate(pageState.article.date)}
-              </Info>
-            </AnimatedBox>
-          </AnimateFadeIn>
-        )}
+        {query.isSuccess &&
+          query.data &&
+          query.data
+            .map((article) => (
+              <AnimateFadeIn trigger={query.isSuccess}>
+                <AnimatedBox themestyle={themeStyle.style}>
+                  <Title>{article.title}</Title>
+                  <SubSubTitle>
+                    Read it in {article.estimatedReadingTimeMinutes} minutes
+                  </SubSubTitle>
+                  <div>{splitArticleSection(article.content)}</div>
+                  <Info>
+                    <strong>Tags:</strong> {article.tags.join(', ')}
+                  </Info>
+                  <Info>
+                    <strong>Generated on:</strong> {parseDate(article.date)}
+                  </Info>
+                </AnimatedBox>
+              </AnimateFadeIn>
+            ))
+            .mapLeft((error) => (
+              <AnimateFadeInDown trigger={query.isSuccess}>
+                <MobileFrame>{handleError(error)}</MobileFrame>
+              </AnimateFadeInDown>
+            ))
+            .extract()}
       </MobileFrame>
     </Content>
   );
 };
+
+const splitArticleSection = (content: string) =>
+  content.split('\n\n').map((section) => <Section>{section}</Section>);
