@@ -32,6 +32,7 @@ const fetchEither = <K>(url: string, config: RequestInit): Promise<Either<FetchM
       ...config.headers,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
+      'Content-Type': 'application/json',
     },
   })
     .then((res) =>

@@ -9,6 +9,8 @@ import { useState } from 'react';
 import { ArticlePrompt } from '../../model/Article';
 import { theme } from '../../style/style';
 import { ThemeStyleEnum } from '../../model/Theme';
+import { useMutation } from '@tanstack/react-query';
+import { generateArticle } from '../../api/Article';
 
 const Content = styled.div`
   display: flex;
@@ -131,6 +133,17 @@ export const GenerateArticle: React.FC = () => {
     length: '',
   });
 
+  const mutation = useMutation(() => generateArticle(articlePrompt).run());
+  const label = mutation.isIdle
+    ? 'Generate Article'
+    : mutation.isLoading
+    ? 'Generating...'
+    : mutation.isError
+    ? 'Error'
+    : mutation.isSuccess
+    ? mutation.data.map(() => "Article Generation Success!").mapLeft((err) => `Error: ${err}`).extract()
+    : 'IDK';
+
   return (
     <>
       <Content>
@@ -139,7 +152,6 @@ export const GenerateArticle: React.FC = () => {
             <Gap>
               <MainTitle>Generate an Article with AI</MainTitle>
               <SubTitle>Topic</SubTitle>
-              {/* Use the custom styled Input component */}{' '}
               <Input
                 placeholder="topic of the article to generate, ex. bees impact on the enviroment"
                 value={articlePrompt.topic}
@@ -218,13 +230,13 @@ export const GenerateArticle: React.FC = () => {
               </Disclamer>
               <BubbleContainer>
                 <BubbleButton
-                  onBubbleClick={() => console.log(articlePrompt)}
+                  onBubbleClick={() => mutation.mutate()}
                   rounded={true}
                   scale={1.5}
                   darkModeInvert={false}
                   iconSrc={genArticleIcon}
                   style={themeStyle.style}
-                  label="Generate"
+                  label={label}
                 />
               </BubbleContainer>
             </Gap>
@@ -303,12 +315,11 @@ const audienceOptions: SelectOption[] = [
 ];
 
 const lengthOptions: SelectOption[] = [
-  { value: '1 paragraph', label: '1 paragraph' },
-  { value: '2 paragraphs', label: '2 paragraphs' },
+  { value: '1 paragraphs', label: '3 paragraphs' },
+  { value: '2 paragraphs', label: '3 paragraphs' },
   { value: '3 paragraphs', label: '3 paragraphs' },
-  { value: '20 words', label: '20 words' },
-  { value: '50 words', label: '50 words' },
-  { value: '100 words', label: '100 words' },
-  { value: '200 words', label: '200 words' },
-  { value: '500 words', label: '500 words' },
+  { value: '4 paragraphs', label: '3 paragraphs' },
+  { value: '5 paragraphs', label: '3 paragraphs' },
+  { value: '10 paragraphs', label: '3 paragraphs' },
+  { value: '20 paragraphs', label: '3 paragraphs' },
 ];
