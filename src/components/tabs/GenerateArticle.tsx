@@ -165,7 +165,7 @@ export const GenerateArticle: React.FC = () => {
                   ...t,
                   colors: {
                     ...t.colors,
-                    text: theme.colors(themeStyle.style).text,
+                    text: 'black',
                     primary25: theme.colors(themeStyle.style).backdrop,
                     primary50: theme.colors(themeStyle.style).background,
                     primary: `${theme.colors(themeStyle.style).border}`,
@@ -181,7 +181,7 @@ export const GenerateArticle: React.FC = () => {
                   ...t,
                   colors: {
                     ...t.colors,
-                    text: theme.colors(themeStyle.style).text,
+                    text: 'black',
                     primary25: theme.colors(themeStyle.style).backdrop,
                     primary50: theme.colors(themeStyle.style).background,
                     primary: `${theme.colors(themeStyle.style).border}`,
@@ -197,7 +197,7 @@ export const GenerateArticle: React.FC = () => {
                   ...t,
                   colors: {
                     ...t.colors,
-                    text: theme.colors(themeStyle.style).text,
+                    text: 'black',
                     primary25: theme.colors(themeStyle.style).backdrop,
                     primary50: theme.colors(themeStyle.style).background,
                     primary: `${theme.colors(themeStyle.style).border}`,
@@ -213,7 +213,7 @@ export const GenerateArticle: React.FC = () => {
                   ...t,
                   colors: {
                     ...t.colors,
-                    text: theme.colors(themeStyle.style).text,
+                    text: 'black',
                     primary25: theme.colors(themeStyle.style).backdrop,
                     primary50: theme.colors(themeStyle.style).background,
                     primary: `${theme.colors(themeStyle.style).border}`,
