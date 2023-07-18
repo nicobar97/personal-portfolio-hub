@@ -68,8 +68,8 @@ const handleScroll =
 const initNavbarBubbles = (changeTab: (tab: TabsEnum) => void) => [
   {
     iconSrc: menuIcon,
-    onBubbleClick: () => changeTab(Tabs.Articles),
-    linkedTab: Tabs.Articles,
+    onBubbleClick: () => changeTab(Tabs.Menu),
+    linkedTab: Tabs.Menu,
   },
   {
     iconSrc: logo,

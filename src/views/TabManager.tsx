@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { getPathFromTab, getTabFromPath } from '../router';
 import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
 import { GenerateArticle } from '../components/tabs/GenerateArticle';
+import { MenuTab } from '../components/tabs/MenuTab';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -83,7 +84,12 @@ export const TabManager: React.FC<Props> = (props: Props) => {
           )}
           {currentTab === Tabs.ReadArticle && articleId && (
             <AnimateFadeIn trigger={currentTab === Tabs.ReadArticle}>
-              <ReadArticleTab articleId={articleId}/>
+              <ReadArticleTab articleId={articleId} />
+            </AnimateFadeIn>
+          )}
+          {currentTab === Tabs.Menu && (
+            <AnimateFadeIn trigger={currentTab === Tabs.Menu}>
+              <MenuTab changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)} />
             </AnimateFadeIn>
           )}
         </MobileFrame>

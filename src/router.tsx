@@ -24,6 +24,11 @@ export const routes: (RouteObject & { type: string })[] = [
     element: <TabManager startTab={Tabs.Cv} />,
   },
   {
+    path: '/menu',
+    type: Tabs.Menu,
+    element: <TabManager startTab={Tabs.Menu} />,
+  },
+  {
     path: '*',
     type: Tabs.ProjectInfo,
     element: <TabManager startTab={Tabs.ProjectInfo} />,
