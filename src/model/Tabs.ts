@@ -14,6 +14,12 @@ type ReadArticle = 'readArticle';
 const readArticle: ReadArticle = 'readArticle';
 const generateArticle: GenerateArticle = 'generateArticle';
 type GenerateArticle = 'generateArticle';
+type Mangas = 'mangas';
+const mangas: Mangas = 'mangas';
+type Chapters = 'chapters';
+const chapters: Chapters = 'chapters';
+type ReadChapter = 'readChapter';
+const readChapter: ReadChapter = 'readChapter';
 
 export const Tabs = {
   Home: home,
@@ -24,6 +30,9 @@ export const Tabs = {
   Articles: articles,
   ReadArticle: readArticle,
   GenerateArticle: generateArticle,
+  Mangas: mangas,
+  Chapters: chapters,
+  ReadChapter: readChapter,
 };
 
 export type TabsEnum = (typeof Tabs)[keyof typeof Tabs];

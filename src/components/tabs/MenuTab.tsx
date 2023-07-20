@@ -80,10 +80,10 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
                 <AppTitle>Articles</AppTitle>
                 <Icon src={articleIcon} />
               </AppButton>
-              <AppButton
-                background="lightyellow"
-                onClick={() => props.changeTab(Tabs.Articles)}
-              ></AppButton>
+              <AppButton background="lightyellow" onClick={() => props.changeTab(Tabs.Mangas)}>
+                <AppTitle>Mangas</AppTitle>
+                <Icon src={articleIcon} />
+              </AppButton>
               <AppButton
                 background="lightgreen"
                 onClick={() => props.changeTab(Tabs.Articles)}

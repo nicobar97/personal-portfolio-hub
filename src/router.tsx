@@ -29,6 +29,21 @@ export const routes: (RouteObject & { type: string })[] = [
     element: <TabManager startTab={Tabs.Menu} />,
   },
   {
+    path: '/manga',
+    type: Tabs.Mangas,
+    element: <TabManager startTab={Tabs.Mangas} />,
+  },
+  {
+    path: '/manga/chapters/:mangaId',
+    type: Tabs.Chapters,
+    element: <TabManager startTab={Tabs.Chapters} />,
+  },
+  {
+    path: '/manga/chapters/read/:chapterId',
+    type: Tabs.ReadChapter,
+    element: <TabManager startTab={Tabs.ReadChapter} />,
+  },
+  {
     path: '*',
     type: Tabs.ProjectInfo,
     element: <TabManager startTab={Tabs.ProjectInfo} />,

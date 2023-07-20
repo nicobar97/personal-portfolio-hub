@@ -51,6 +51,7 @@ export const ProjectInfoTab: React.FC = () => {
       <Content>
         <MobileFrame>
           <AnimatedBox themestyle={themeStyle.style}>
+            <a href={'mailto://'}>TEST CLICK ME</a>
             <MainTitle>Project Summary</MainTitle>
             <Title>Description</Title>
             <Paragraph>
