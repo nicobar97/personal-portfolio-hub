@@ -57,7 +57,7 @@ export const MangaTab: React.FC<Props> = (props: Props) => {
   const themeStyle = useThemeStore();
 
   const query = useQuery<Either<FetchMapError, MangaList>, FetchMapError>({
-    queryKey: ['mangas'],
+    queryKey: ['mangas', props.provider],
     queryFn: () => getMangas(props.provider).run(),
   });
 
@@ -70,10 +70,7 @@ export const MangaTab: React.FC<Props> = (props: Props) => {
               mangaList.mangas.map((manga) => (
                 <AnimateFadeIn trigger={query.isSuccess}>
                   <Clickable
-                    onClick={() => {
-                      console.log(manga.url);
-                      return props.openManga(manga.url);
-                    }}
+                    onClick={() => props.openManga(manga.url)}
                   >
                     <AnimatedBox themestyle={themeStyle.style}>
                       <Title onClick={() => props.openManga(manga.url)}>{manga.title}</Title>

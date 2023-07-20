@@ -82,7 +82,6 @@ export const TabManager: React.FC<Props> = (props: Props) => {
   );
   const [mangaUrl, setMangaUrl] = useState<string | undefined>(useParams().mangaId);
   const [chapterUrl, setChapterUrl] = useState<string | undefined>(useParams().chapterId);
-    console.log(atob(chapterUrl!));
   bindNavigateStateListener(setCurrentTab);
   return (
     <>

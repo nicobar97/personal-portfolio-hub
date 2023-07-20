@@ -66,18 +66,9 @@ export const ChaptersTab: React.FC<Props> = (props: Props) => {
             .map((mangaList) =>
               mangaList.chapters.map((chapter) => (
                 <AnimateFadeIn trigger={query.isSuccess}>
-                  <Clickable
-                    onClick={() => {
-                      console.log(chapter.url);
-                      return props.openChapter(chapter.url);
-                    }}
-                  >
+                  <Clickable onClick={() => props.openChapter(chapter.url)}>
                     <AnimatedBox themestyle={themeStyle.style}>
-                      <Title
-                        onClick={() => props.openChapter(chapter.url)}
-                      >
-                        {chapter.title}
-                      </Title>
+                      <Title onClick={() => props.openChapter(chapter.url)}>{chapter.title}</Title>
                       <Info>
                         <strong>Provider:</strong> {chapter.provider}
                       </Info>
