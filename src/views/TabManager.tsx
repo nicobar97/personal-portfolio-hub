@@ -6,13 +6,14 @@ import { Tabs, TabsEnum } from '../model/Tabs';
 import { MobileFrame } from '../components/MobileFrame';
 import { NavigationBar } from '../components/NavigationBar';
 import { ReadArticleTab } from '../components/tabs/ReadArticleTab';
-import { NavigateFunction, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, NavigateFunction, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { GenerateArticle } from '../components/tabs/GenerateArticle';
 import { MenuTab } from '../components/tabs/MenuTab';
 import { MangaTab } from '../components/tabs/MangaTab';
 import { ChaptersTab } from '../components/tabs/ChaptersTab';
 import { ReadChapterTab } from '../components/tabs/ReadChapterTab';
 import ParamWrapper from '../components/ParamsWrapper';
+import { ErrorPopup } from '../components/errors/ErrorPopup';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -68,7 +69,6 @@ export const TabManager: React.FC = () => {
             />
             <Route path="/articles/generate" element={<GenerateArticle />} />
             <Route path="/info" element={<ProjectInfoTab />} />
-            <Route path="*" element={<div>404</div>} />
             <Route
               path="/manga"
               element={
@@ -107,6 +107,15 @@ export const TabManager: React.FC = () => {
                   {(chapterId) => <ReadChapterTab chapterId={chapterId} />}
                 </ParamWrapper>
               }
+            />
+            <Route
+              path="/"
+              element={<Navigate to="/menu" />}
+            />
+
+            <Route
+              path="*"
+              element={<ErrorPopup title={'Page not found'} message={'this is not a valid url'} />}
             />
           </Routes>
         </MobileFrame>

@@ -5,6 +5,7 @@ import { useThemeStore } from '../../stores/useThemeStore';
 import { AnimatedBox } from '../animations/AnimatedBox';
 import { Tabs, TabsEnum } from '../../model/Tabs';
 import { AnimateFade } from '../animations/Animations';
+import { ThemeStyleEnum } from '../../model/Theme';
 
 const Content = styled.div`
   display: flex;
@@ -49,18 +50,20 @@ const AppContainer = styled.div`
   justify-content: center;
 `;
 
-const AppButton = styled.button<{ background: string }>`
+const AppButton = styled.button<{ background: string; themeStyle: ThemeStyleEnum }>`
   display: inline-flex;
-  height: 8rem;
-  width: 8rem;
+  width: 20%;
+  min-width: 8rem;
+  min-height: 8rem;
   margin: 0.5rem;
   border-radius: 15px;
-  border: none;
+  border: 1px solid ${(props) => props.theme.colors(props.themeStyle).border};
   background-color: ${(props) => props.background};
   overflow: hidden;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+  box-shadow: inset ${(props) => props.theme.colors(props.themeStyle).background}99 2px 2px 30px;
 `;
 
 type Props = {
@@ -78,19 +81,29 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
             <AnimatedBox themestyle={themeStyle.style}>
               <MainTitle>Menu</MainTitle>
               <AppContainer>
-                <AppButton background="indianred" onClick={() => props.changeTab(Tabs.Articles)}>
+                <AppButton
+                  themeStyle={themeStyle.style}
+                  background="indianred"
+                  onClick={() => props.changeTab(Tabs.Articles)}
+                >
                   <AppTitle>Articles</AppTitle>
                   <Icon src={articleIcon} />
                 </AppButton>
-                <AppButton background="lightyellow" onClick={() => props.changeTab(Tabs.Mangas)}>
+                <AppButton
+                  themeStyle={themeStyle.style}
+                  background="lightyellow"
+                  onClick={() => props.changeTab(Tabs.Mangas)}
+                >
                   <AppTitle>Mangas</AppTitle>
                   <Icon src={articleIcon} />
                 </AppButton>
                 <AppButton
+                  themeStyle={themeStyle.style}
                   background="lightgreen"
                   onClick={() => props.changeTab(Tabs.Articles)}
                 ></AppButton>
                 <AppButton
+                  themeStyle={themeStyle.style}
                   background="lightblue"
                   onClick={() => props.changeTab(Tabs.Articles)}
                 ></AppButton>
