@@ -69,7 +69,7 @@ export const ChaptersTab: React.FC<Props> = (props: Props) => {
                   <AnimateFadeIn trigger={query.isSuccess}>
                     <Clickable onClick={() => props.openChapter(chapter.url)}>
                       <AnimatedBox themestyle={themeStyle.style}>
-                        <Title onClick={() => props.openChapter(chapter.url)}>
+                        <Title>
                           {chapter.title}
                         </Title>
                         <Info>

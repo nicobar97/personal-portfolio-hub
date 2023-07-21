@@ -71,7 +71,7 @@ export const MangaTab: React.FC<Props> = (props: Props) => {
                   <AnimateFadeIn trigger={query.isSuccess}>
                     <Clickable onClick={() => props.openManga(manga.url)}>
                       <AnimatedBox themestyle={themeStyle.style}>
-                        <Title onClick={() => props.openManga(manga.url)}>{manga.title}</Title>
+                        <Title>{manga.title}</Title>
                         <Info>
                           <strong>Provider:</strong> {manga.provider}
                         </Info>
