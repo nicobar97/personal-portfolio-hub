@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import articleIcon from '../../assets/icons/article.png';
+import mangaIcon from '../../assets/icons/manga.png';
 import { MobileFrame } from '../MobileFrame';
 import { useThemeStore } from '../../stores/useThemeStore';
 import { AnimatedBox } from '../animations/AnimatedBox';
@@ -95,7 +96,7 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
                   onClick={() => props.changeTab(Tabs.Mangas)}
                 >
                   <AppTitle>Mangas</AppTitle>
-                  <Icon src={articleIcon} />
+                  <Icon src={mangaIcon} />
                 </AppButton>
                 <AppButton
                   themeStyle={themeStyle.style}
