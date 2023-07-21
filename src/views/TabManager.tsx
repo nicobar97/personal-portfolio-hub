@@ -3,159 +3,165 @@ import { ProjectInfoTab } from '../components/tabs/ProjectInfoTab';
 import { CvTab } from '../components/tabs/CvTab';
 import { ArticlesTab } from '../components/tabs/ArticlesTab';
 import { Tabs, TabsEnum } from '../model/Tabs';
-import { AnimateFadeIn } from '../components/animations/Animations';
 import { MobileFrame } from '../components/MobileFrame';
 import { NavigationBar } from '../components/NavigationBar';
 import { ReadArticleTab } from '../components/tabs/ReadArticleTab';
-import { useState } from 'react';
-import { getPathFromTab, getTabFromPath } from '../router';
-import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
+import { NavigateFunction, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { GenerateArticle } from '../components/tabs/GenerateArticle';
 import { MenuTab } from '../components/tabs/MenuTab';
 import { MangaTab } from '../components/tabs/MangaTab';
-import { SupportedProvider, SupportedProviders } from '../model/Manga';
 import { ChaptersTab } from '../components/tabs/ChaptersTab';
 import { ReadChapterTab } from '../components/tabs/ReadChapterTab';
+import ParamWrapper from '../components/ParamsWrapper';
 
 const Container = styled.div`
   margin-top: 3rem;
 `;
 
-type Props = {
-  startTab: TabsEnum;
-};
-
-const bindNavigateStateListener = (setCurrentTab: (tab: TabsEnum) => void) => {
-  window.onpopstate = () => {
-    setCurrentTab(getTabFromPath(window.location.pathname) as TabsEnum);
-  };
-};
-
-const changeTab = (
-  setCurrentTab: (tab: TabsEnum) => void,
-  navigate: NavigateFunction,
-  tab: TabsEnum,
-) => {
-  setCurrentTab(tab);
+const changeTab = (navigate: NavigateFunction, tab: TabsEnum) => {
   navigate(getPathFromTab(tab));
 };
 
-const openArticle = (
-  articleId: string,
-  setCurrentTab: (tab: TabsEnum) => void,
-  setArticleId: (articleId: string) => void,
-  navigate: NavigateFunction,
-) => {
+const openArticle = (articleId: string, navigate: NavigateFunction) => {
   navigate(`/articles/read/${articleId}`);
-  setArticleId(articleId);
-  setCurrentTab(Tabs.ReadArticle);
 };
 
-const openManga = (
-  mangaId: string,
-  setCurrentTab: (tab: TabsEnum) => void,
-  setManga: (mangaUrl: string) => void,
-  navigate: NavigateFunction,
-) => {
+const openManga = (mangaId: string, navigate: NavigateFunction) => {
   navigate(`/manga/chapters/${btoa(mangaId)}`);
-  setManga(btoa(mangaId));
-  setCurrentTab(Tabs.Chapters);
 };
 
-const openChapter = (
-  chapterId: string,
-  setCurrentTab: (tab: TabsEnum) => void,
-  setChapter: (chapterUrl: string) => void,
-  navigate: NavigateFunction,
-) => {
+const openChapter = (chapterId: string, navigate: NavigateFunction) => {
   navigate(`/manga/chapters/read/${btoa(chapterId)}`);
-  setChapter(btoa(chapterId));
-  setCurrentTab(Tabs.ReadChapter);
 };
 
-export const TabManager: React.FC<Props> = (props: Props) => {
+export const TabManager: React.FC = () => {
   const navigate = useNavigate();
-  const [currentTab, setCurrentTab] = useState<TabsEnum>(props.startTab);
-  const [articleId, setArticleId] = useState<string | undefined>(useParams().articleId);
-  const [providerId] = useState<SupportedProvider | undefined>(
-    SupportedProviders.TCBScans,
-  );
-  const [mangaUrl, setMangaUrl] = useState<string | undefined>(useParams().mangaId);
-  const [chapterUrl, setChapterUrl] = useState<string | undefined>(useParams().chapterId);
-  bindNavigateStateListener(setCurrentTab);
+  const params = useParams();
+  console.log(params.articleId!);
   return (
     <>
       <Container>
         <MobileFrame>
-          <NavigationBar changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)} />
-          {currentTab === Tabs.Articles && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Articles}>
-              <ArticlesTab
-                changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)}
-                openArticle={(articleId: string) =>
-                  openArticle(articleId, setCurrentTab, setArticleId, navigate)
-                }
-              />
-            </AnimateFadeIn>
-          )}
-          {currentTab === Tabs.Cv && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Cv}>
-              <CvTab />
-            </AnimateFadeIn>
-          )}
-          {currentTab === Tabs.ProjectInfo && (
-            <AnimateFadeIn trigger={currentTab === Tabs.ProjectInfo}>
-              <ProjectInfoTab />
-            </AnimateFadeIn>
-          )}
-          {currentTab === Tabs.GenerateArticle && (
-            <AnimateFadeIn trigger={currentTab === Tabs.GenerateArticle}>
-              <GenerateArticle />
-            </AnimateFadeIn>
-          )}
-          {currentTab === Tabs.ReadArticle && articleId && (
-            <AnimateFadeIn trigger={currentTab === Tabs.ReadArticle}>
-              <ReadArticleTab articleId={articleId} />
-            </AnimateFadeIn>
-          )}
-          {currentTab === Tabs.Menu && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Menu}>
-              <MenuTab changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)} />
-            </AnimateFadeIn>
-          )}
-
-          {currentTab === Tabs.Mangas && providerId && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Mangas}>
-              <MangaTab
-                openManga={(url: string) => openManga(url, setCurrentTab, setMangaUrl, navigate)}
-                changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)}
-                provider={providerId}
-              />
-            </AnimateFadeIn>
-          )}
-          {currentTab === Tabs.Chapters && providerId && mangaUrl && (
-            <AnimateFadeIn trigger={currentTab === Tabs.Chapters}>
-              <ChaptersTab
-                url={atob(mangaUrl)}
-                provider={providerId}
-                openChapter={(url: string) =>
-                  openChapter(url, setCurrentTab, setChapterUrl, navigate)
-                }
-                changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)}
-              />
-            </AnimateFadeIn>
-          )}
-          {currentTab === Tabs.ReadChapter && providerId && chapterUrl && (
-            <AnimateFadeIn trigger={currentTab === Tabs.ReadChapter}>
-              <ReadChapterTab
-                url={atob(chapterUrl)}
-                provider={providerId}
-                changeTab={(tab: TabsEnum) => changeTab(setCurrentTab, navigate, tab)}
-              />
-            </AnimateFadeIn>
-          )}
+          <NavigationBar changeTab={(tab: TabsEnum) => changeTab(navigate, tab)} />
+          <Routes>
+            <Route path="/cv" element={<CvTab />} />
+            <Route
+              path="/menu"
+              element={<MenuTab changeTab={(tab: TabsEnum) => changeTab(navigate, tab)} />}
+            />
+            <Route
+              path="/articles/"
+              element={
+                <ArticlesTab
+                  changeTab={(tab: TabsEnum) => changeTab(navigate, tab)}
+                  openArticle={(articleId: string) => openArticle(articleId, navigate)}
+                />
+              }
+            />
+            <Route
+              path="/articles/read/:articleId"
+              element={
+                <ParamWrapper paramKey="articleId">
+                  {(articleId) => <ReadArticleTab articleId={articleId} />}
+                </ParamWrapper>
+              }
+            />
+            <Route path="/articles/generate" element={<GenerateArticle />} />
+            <Route path="/info" element={<ProjectInfoTab />} />
+            <Route path="*" element={<div>404</div>} />
+            <Route
+              path="/manga"
+              element={
+                <MangaTab
+                  openManga={(url: string) => openManga(url, navigate)}
+                  changeTab={(tab: TabsEnum) => changeTab(navigate, tab)}
+                />
+              }
+            />
+            <Route
+              path="/articles/read/:articleId"
+              element={
+                <ParamWrapper paramKey="articleId">
+                  {(articleId) => <ReadArticleTab articleId={articleId} />}
+                </ParamWrapper>
+              }
+            />
+            <Route
+              path="/manga/chapters/:mangaId"
+              element={
+                <ParamWrapper paramKey="mangaId">
+                  {(mangaId) => (
+                    <ChaptersTab
+                      mangaId={mangaId}
+                      openChapter={(url: string) => openChapter(url, navigate)}
+                      changeTab={(tab: TabsEnum) => changeTab(navigate, tab)}
+                    />
+                  )}
+                </ParamWrapper>
+              }
+            />
+            <Route
+              path="/manga/chapters/read/:chapterId"
+              element={
+                <ParamWrapper paramKey="chapterId">
+                  {(chapterId) => <ReadChapterTab chapterId={chapterId} />}
+                </ParamWrapper>
+              }
+            />
+          </Routes>
         </MobileFrame>
       </Container>
     </>
   );
 };
+
+export const routes = [
+  {
+    path: '/articles/',
+    type: Tabs.Articles,
+  },
+  {
+    path: '/articles/read/:articleId',
+    type: Tabs.ReadArticle,
+  },
+  {
+    path: '/articles/generate',
+    type: Tabs.GenerateArticle,
+  },
+  {
+    path: '/cv',
+    type: Tabs.Cv,
+  },
+  {
+    path: '/menu',
+    type: Tabs.Menu,
+  },
+  {
+    path: '/manga',
+    type: Tabs.Mangas,
+  },
+  {
+    path: '/manga/chapters/:mangaId',
+    type: Tabs.Chapters,
+  },
+  {
+    path: '/manga/chapters/read/:chapterId',
+    type: Tabs.ReadChapter,
+  },
+  {
+    path: '/info',
+    type: Tabs.ProjectInfo,
+  },
+  {
+    path: '*',
+    type: Tabs.ProjectInfo,
+  },
+];
+
+const getPath = (tab: TabsEnum): string => routes.find((route) => route.type === tab)?.path!;
+
+export const getPathFromTab = (tab: TabsEnum): string =>
+  getPath(tab) === '*' || !getPath(tab) ? '/' : getPath(tab);
+
+export const getTabFromPath = (path: string): string =>
+  routes.find((route) => path.startsWith(route.path!.split(':')[0]))!.type;

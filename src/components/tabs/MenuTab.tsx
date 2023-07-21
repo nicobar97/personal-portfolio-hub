@@ -4,6 +4,7 @@ import { MobileFrame } from '../MobileFrame';
 import { useThemeStore } from '../../stores/useThemeStore';
 import { AnimatedBox } from '../animations/AnimatedBox';
 import { Tabs, TabsEnum } from '../../model/Tabs';
+import { AnimateFade } from '../animations/Animations';
 
 const Content = styled.div`
   display: flex;
@@ -71,31 +72,33 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <Content>
-        <MobileFrame>
-          <AnimatedBox themestyle={themeStyle.style}>
-            <MainTitle>Menu</MainTitle>
-            <AppContainer>
-              <AppButton background="indianred" onClick={() => props.changeTab(Tabs.Articles)}>
-                <AppTitle>Articles</AppTitle>
-                <Icon src={articleIcon} />
-              </AppButton>
-              <AppButton background="lightyellow" onClick={() => props.changeTab(Tabs.Mangas)}>
-                <AppTitle>Mangas</AppTitle>
-                <Icon src={articleIcon} />
-              </AppButton>
-              <AppButton
-                background="lightgreen"
-                onClick={() => props.changeTab(Tabs.Articles)}
-              ></AppButton>
-              <AppButton
-                background="lightblue"
-                onClick={() => props.changeTab(Tabs.Articles)}
-              ></AppButton>
-            </AppContainer>
-          </AnimatedBox>
-        </MobileFrame>
-      </Content>
+      <AnimateFade>
+        <Content>
+          <MobileFrame>
+            <AnimatedBox themestyle={themeStyle.style}>
+              <MainTitle>Menu</MainTitle>
+              <AppContainer>
+                <AppButton background="indianred" onClick={() => props.changeTab(Tabs.Articles)}>
+                  <AppTitle>Articles</AppTitle>
+                  <Icon src={articleIcon} />
+                </AppButton>
+                <AppButton background="lightyellow" onClick={() => props.changeTab(Tabs.Mangas)}>
+                  <AppTitle>Mangas</AppTitle>
+                  <Icon src={articleIcon} />
+                </AppButton>
+                <AppButton
+                  background="lightgreen"
+                  onClick={() => props.changeTab(Tabs.Articles)}
+                ></AppButton>
+                <AppButton
+                  background="lightblue"
+                  onClick={() => props.changeTab(Tabs.Articles)}
+                ></AppButton>
+              </AppContainer>
+            </AnimatedBox>
+          </MobileFrame>
+        </Content>
+      </AnimateFade>
     </>
   );
 };

@@ -1,20 +1,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ComponentProps } from 'react';
-import { RouterProvider } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-
 import { GlobalStyle } from './components/globals/GlobalStyle';
 import { theme } from './style/style';
 import { GlobalFonts } from './components/globals/GlobalFonts';
 import { useThemeStore } from './stores/useThemeStore';
-
-type Props = {
-  router: ComponentProps<typeof RouterProvider>['router'];
-};
+import { TabManager } from './views/TabManager';
 
 const queryClient = new QueryClient();
 
-export const App: React.FC<Props> = (props: Props) => {
+export const App: React.FC = () => {
   const themeStore = useThemeStore();
 
   return (
@@ -22,7 +17,9 @@ export const App: React.FC<Props> = (props: Props) => {
       <QueryClientProvider client={queryClient}>
         <GlobalStyle themeStyle={themeStore.style} />
         <GlobalFonts />
-        <RouterProvider router={props.router} />
+        <BrowserRouter>
+          <TabManager />
+        </BrowserRouter>
       </QueryClientProvider>
     </ThemeProvider>
   );

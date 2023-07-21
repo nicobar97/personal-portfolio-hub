@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { MobileFrame } from '../MobileFrame';
 import { useQuery } from '@tanstack/react-query';
 import { FetchAuthMapError, FetchMapError } from '../../model/errors';
-import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
+import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
-import { TabsEnum } from '../../model/Tabs';
 import { Either } from 'purify-ts';
 import { getChapter } from '../../api/Manga';
-import { Chapter, SupportedProvider } from '../../model/Manga';
+import { Chapter, SupportedProviders } from '../../model/Manga';
 
 const Content = styled.div`
   display: flex;
@@ -32,51 +31,52 @@ const Image = styled.img`
 `;
 
 type Props = {
-  changeTab: (tab: TabsEnum) => void;
-  url: string;
-  provider: SupportedProvider;
-};
+  chapterId: string
+}
 
 export const ReadChapterTab: React.FC<Props> = (props: Props) => {
+  const provider = SupportedProviders.TCBScans;
   const query = useQuery<Either<FetchMapError, Chapter>, FetchMapError>({
-    queryKey: ['chapter', props.url],
-    queryFn: () => getChapter(props.provider, props.url).run(),
+    queryKey: ['chapter', props.chapterId, provider],
+    queryFn: () => getChapter(provider, atob(props.chapterId)).run(),
   });
 
   return (
-    <Content>
-      <MobileFrame>
-        {query.isSuccess &&
-          query.data
-            .map((chapter) => (
-              <AnimateFadeIn trigger={query.isSuccess}>
-                {chapter.pages.map((page) => (
-                  <Image src={page.url} />
-                ))}
-              </AnimateFadeIn>
-            ))
-            .mapLeft((err: FetchAuthMapError) => (
-              <AnimateFadeInDown trigger={query.isSuccess}>
-                <MobileFrame>{handleError(err)}</MobileFrame>
-              </AnimateFadeInDown>
-            ))
-            .extract()}
+    <AnimateFade>
+      <Content>
+        <MobileFrame>
+          {query.isSuccess &&
+            query.data
+              .map((chapter) => (
+                <AnimateFadeIn trigger={query.isSuccess}>
+                  {chapter.pages.map((page) => (
+                    <Image src={page.url} />
+                  ))}
+                </AnimateFadeIn>
+              ))
+              .mapLeft((err: FetchAuthMapError) => (
+                <AnimateFadeInDown trigger={query.isSuccess}>
+                  <MobileFrame>{handleError(err)}</MobileFrame>
+                </AnimateFadeInDown>
+              ))
+              .extract()}
 
-        {query.isError && (
-          <AnimateFadeInDown trigger={query.isError}>
-            <MobileFrame>{handleError(query.error)}</MobileFrame>
-          </AnimateFadeInDown>
-        )}
-        {query.isLoading && (
-          <AnimateFadeInDown trigger={query.isLoading}>
-            <MobileFrame>
-              <LoaderContainer>
-                <Loader />
-              </LoaderContainer>
-            </MobileFrame>
-          </AnimateFadeInDown>
-        )}
-      </MobileFrame>
-    </Content>
+          {query.isError && (
+            <AnimateFadeInDown trigger={query.isError}>
+              <MobileFrame>{handleError(query.error)}</MobileFrame>
+            </AnimateFadeInDown>
+          )}
+          {query.isLoading && (
+            <AnimateFadeInDown trigger={query.isLoading}>
+              <MobileFrame>
+                <LoaderContainer>
+                  <Loader />
+                </LoaderContainer>
+              </MobileFrame>
+            </AnimateFadeInDown>
+          )}
+        </MobileFrame>
+      </Content>
+    </AnimateFade>
   );
 };

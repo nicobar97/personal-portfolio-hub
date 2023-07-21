@@ -6,7 +6,7 @@ import { getArticle } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
 import { Article } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
-import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
+import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
 import { Either } from 'purify-ts';
@@ -66,61 +66,62 @@ const parseDate = (date: Date) =>
 
 type Props = {
   articleId: string;
-};
+}
 
 export const ReadArticleTab: React.FC<Props> = (props: Props) => {
   const themeStyle = useThemeStore();
-
   const query = useQuery<Either<FetchAuthMapError, Article>, FetchAuthMapError>({
     queryKey: ['article', props.articleId],
     queryFn: () => getArticle(props.articleId).run(),
   });
 
   return (
-    <Content>
-      <MobileFrame>
-        {query.isError && (
-          <AnimateFadeInDown trigger={query.isError}>
-            <MobileFrame>{handleError(query.error)}</MobileFrame>
-          </AnimateFadeInDown>
-        )}
-        {query.isLoading && (
-          <AnimateFadeInDown trigger={query.isLoading}>
-            <MobileFrame>
-              <LoaderContainer>
-                <Loader />
-              </LoaderContainer>
-            </MobileFrame>
-          </AnimateFadeInDown>
-        )}
-        {query.isSuccess &&
-          query.data &&
-          query.data
-            .map((article) => (
-              <AnimateFadeIn trigger={query.isSuccess}>
-                <AnimatedBox themestyle={themeStyle.style}>
-                  <Title>{article.title}</Title>
-                  <SubSubTitle>
-                    Read it in {article.estimatedReadingTimeMinutes} minutes
-                  </SubSubTitle>
-                  <div>{splitArticleSection(article.content)}</div>
-                  <Info>
-                    <strong>Tags:</strong> {article.tags.join(', ')}
-                  </Info>
-                  <Info>
-                    <strong>Generated on:</strong> {parseDate(article.date)}
-                  </Info>
-                </AnimatedBox>
-              </AnimateFadeIn>
-            ))
-            .mapLeft((error) => (
-              <AnimateFadeInDown trigger={query.isSuccess}>
-                <MobileFrame>{handleError(error)}</MobileFrame>
-              </AnimateFadeInDown>
-            ))
-            .extract()}
-      </MobileFrame>
-    </Content>
+    <AnimateFade>
+      <Content>
+        <MobileFrame>
+          {query.isError && (
+            <AnimateFadeInDown trigger={query.isError}>
+              <MobileFrame>{handleError(query.error)}</MobileFrame>
+            </AnimateFadeInDown>
+          )}
+          {query.isLoading && (
+            <AnimateFadeInDown trigger={query.isLoading}>
+              <MobileFrame>
+                <LoaderContainer>
+                  <Loader />
+                </LoaderContainer>
+              </MobileFrame>
+            </AnimateFadeInDown>
+          )}
+          {query.isSuccess &&
+            query.data &&
+            query.data
+              .map((article) => (
+                <AnimateFadeIn trigger={query.isSuccess}>
+                  <AnimatedBox themestyle={themeStyle.style}>
+                    <Title>{article.title}</Title>
+                    <SubSubTitle>
+                      Read it in {article.estimatedReadingTimeMinutes} minutes
+                    </SubSubTitle>
+                    <div>{splitArticleSection(article.content)}</div>
+                    <Info>
+                      <strong>Tags:</strong> {article.tags.join(', ')}
+                    </Info>
+                    <Info>
+                      <strong>Generated on:</strong> {parseDate(article.date)}
+                    </Info>
+                  </AnimatedBox>
+                </AnimateFadeIn>
+              ))
+              .mapLeft((error) => (
+                <AnimateFadeInDown trigger={query.isSuccess}>
+                  <MobileFrame>{handleError(error)}</MobileFrame>
+                </AnimateFadeInDown>
+              ))
+              .extract()}
+        </MobileFrame>
+      </Content>
+    </AnimateFade>
   );
 };
 

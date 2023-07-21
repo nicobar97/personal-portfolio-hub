@@ -7,7 +7,7 @@ import { getArticles } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
 import { SimpleArticle } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
-import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
+import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
 import { BubbleButton } from '../BubbleButton';
@@ -82,65 +82,71 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
   });
 
   return (
-    <Content>
-      <MobileFrame>
-        {query.isSuccess &&
-          query.data
-            .map((articles) =>
-              articles
-                .sort((a, b) => b.date.getTime() - a.date.getTime())
-                .map((article) => (
-                  <AnimateFadeIn trigger={query.isSuccess}>
-                    <Clickable onClick={() => props.openArticle(article.id)}>
-                      <AnimatedBox themestyle={themeStyle.style}>
-                        <Info>On {parseDate(article.date)}</Info>
-                        <Title onClick={() => props.openArticle(article.id)}>{article.title}</Title>
-                        <Text>{article.content}</Text>
-                        <Info>
-                          <strong>Tags:</strong> {article.tags.join(', ')}
-                        </Info>
-                        <Info>
-                          Read it in <strong>{article.estimatedReadingTimeMinutes} minutes</strong>
-                        </Info>
-                      </AnimatedBox>
-                    </Clickable>
-                    <BubbleContainer>
-                      <BubbleButton
-                        onBubbleClick={() => props.changeTab(Tabs.GenerateArticle)}
-                        rounded={true}
-                        scale={1.2}
-                        darkModeInvert={false}
-                        iconSrc={genArticleIcon}
-                        style={themeStyle.style}
-                        label="Generate"
-                        borderSize={1}
-                      />
-                    </BubbleContainer>
-                  </AnimateFadeIn>
-                )),
-            )
-            .mapLeft((err: FetchAuthMapError) => (
-              <AnimateFadeInDown trigger={query.isSuccess}>
-                <MobileFrame>{handleError(err)}</MobileFrame>
-              </AnimateFadeInDown>
-            ))
-            .extract()}
+    <AnimateFade>
+      <Content>
+        <MobileFrame>
+          {query.isSuccess && (
+            <AnimateFadeIn trigger={query.isSuccess}>
+              {query.data
+                .map((articles) =>
+                  articles
+                    .sort((a, b) => b.date.getTime() - a.date.getTime())
+                    .map((article) => (
+                      <Clickable onClick={() => props.openArticle(article.id)}>
+                        <AnimatedBox themestyle={themeStyle.style}>
+                          <Info>On {parseDate(article.date)}</Info>
+                          <Title onClick={() => props.openArticle(article.id)}>
+                            {article.title}
+                          </Title>
+                          <Text>{article.content}</Text>
+                          <Info>
+                            <strong>Tags:</strong> {article.tags.join(', ')}
+                          </Info>
+                          <Info>
+                            Read it in{' '}
+                            <strong>{article.estimatedReadingTimeMinutes} minutes</strong>
+                          </Info>
+                        </AnimatedBox>
+                      </Clickable>
+                    )),
+                )
+                .mapLeft((err: FetchAuthMapError) => (
+                  <AnimateFadeInDown trigger={query.isSuccess}>
+                    <MobileFrame>{handleError(err)}</MobileFrame>
+                  </AnimateFadeInDown>
+                ))
+                .extract()}
+              <BubbleContainer>
+                <BubbleButton
+                  onBubbleClick={() => props.changeTab(Tabs.GenerateArticle)}
+                  rounded={true}
+                  scale={1.2}
+                  darkModeInvert={false}
+                  iconSrc={genArticleIcon}
+                  style={themeStyle.style}
+                  label="Generate"
+                  borderSize={1}
+                />
+              </BubbleContainer>
+            </AnimateFadeIn>
+          )}
 
-        {query.isError && (
-          <AnimateFadeInDown trigger={query.isError}>
-            <MobileFrame>{handleError(query.error)}</MobileFrame>
-          </AnimateFadeInDown>
-        )}
-        {query.isLoading && (
-          <AnimateFadeInDown trigger={query.isLoading}>
-            <MobileFrame>
-              <LoaderContainer>
-                <Loader />
-              </LoaderContainer>
-            </MobileFrame>
-          </AnimateFadeInDown>
-        )}
-      </MobileFrame>
-    </Content>
+          {query.isError && (
+            <AnimateFadeInDown trigger={query.isError}>
+              <MobileFrame>{handleError(query.error)}</MobileFrame>
+            </AnimateFadeInDown>
+          )}
+          {query.isLoading && (
+            <AnimateFadeInDown trigger={query.isLoading}>
+              <MobileFrame>
+                <LoaderContainer>
+                  <Loader />
+                </LoaderContainer>
+              </MobileFrame>
+            </AnimateFadeInDown>
+          )}
+        </MobileFrame>
+      </Content>
+    </AnimateFade>
   );
 };

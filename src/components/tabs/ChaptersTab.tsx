@@ -4,13 +4,13 @@ import { AnimatedBox } from '../animations/AnimatedBox';
 import { useThemeStore } from '../../stores/useThemeStore';
 import { useQuery } from '@tanstack/react-query';
 import { FetchAuthMapError, FetchMapError } from '../../model/errors';
-import { AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
+import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../animations/Animations';
 import { LoaderContainer, Loader } from '../Loader';
 import { handleError } from '../errors/ErrorPopup';
 import { TabsEnum } from '../../model/Tabs';
 import { Either } from 'purify-ts';
 import { getChapters } from '../../api/Manga';
-import { ChapterList, SupportedProvider } from '../../model/Manga';
+import { ChapterList, SupportedProviders } from '../../model/Manga';
 
 const Content = styled.div`
   display: flex;
@@ -44,61 +44,65 @@ const Info = styled.p`
 `;
 
 type Props = {
+  mangaId: string;
   openChapter: (url: string) => void;
   changeTab: (tab: TabsEnum) => void;
-  url: string;
-  provider: SupportedProvider;
 };
 
 export const ChaptersTab: React.FC<Props> = (props: Props) => {
+  const provider = SupportedProviders.TCBScans;
   const themeStyle = useThemeStore();
 
   const query = useQuery<Either<FetchMapError, ChapterList>, FetchMapError>({
-    queryKey: ['chapters', props.url],
-    queryFn: () => getChapters(props.provider, props.url).run(),
+    queryKey: ['chapters', props.mangaId, provider],
+    queryFn: () => getChapters(provider, atob(props.mangaId)).run(),
   });
 
   return (
-    <Content>
-      <MobileFrame>
-        {query.isSuccess &&
-          query.data
-            .map((mangaList) =>
-              mangaList.chapters.map((chapter) => (
-                <AnimateFadeIn trigger={query.isSuccess}>
-                  <Clickable onClick={() => props.openChapter(chapter.url)}>
-                    <AnimatedBox themestyle={themeStyle.style}>
-                      <Title onClick={() => props.openChapter(chapter.url)}>{chapter.title}</Title>
-                      <Info>
-                        <strong>Provider:</strong> {chapter.provider}
-                      </Info>
-                    </AnimatedBox>
-                  </Clickable>
-                </AnimateFadeIn>
-              )),
-            )
-            .mapLeft((err: FetchAuthMapError) => (
-              <AnimateFadeInDown trigger={query.isSuccess}>
-                <MobileFrame>{handleError(err)}</MobileFrame>
-              </AnimateFadeInDown>
-            ))
-            .extract()}
+    <AnimateFade>
+      <Content>
+        <MobileFrame>
+          {query.isSuccess &&
+            query.data
+              .map((mangaList) =>
+                mangaList.chapters.map((chapter) => (
+                  <AnimateFadeIn trigger={query.isSuccess}>
+                    <Clickable onClick={() => props.openChapter(chapter.url)}>
+                      <AnimatedBox themestyle={themeStyle.style}>
+                        <Title onClick={() => props.openChapter(chapter.url)}>
+                          {chapter.title}
+                        </Title>
+                        <Info>
+                          <strong>Provider:</strong> {chapter.provider}
+                        </Info>
+                      </AnimatedBox>
+                    </Clickable>
+                  </AnimateFadeIn>
+                )),
+              )
+              .mapLeft((err: FetchAuthMapError) => (
+                <AnimateFadeInDown trigger={query.isSuccess}>
+                  <MobileFrame>{handleError(err)}</MobileFrame>
+                </AnimateFadeInDown>
+              ))
+              .extract()}
 
-        {query.isError && (
-          <AnimateFadeInDown trigger={query.isError}>
-            <MobileFrame>{handleError(query.error)}</MobileFrame>
-          </AnimateFadeInDown>
-        )}
-        {query.isLoading && (
-          <AnimateFadeInDown trigger={query.isLoading}>
-            <MobileFrame>
-              <LoaderContainer>
-                <Loader />
-              </LoaderContainer>
-            </MobileFrame>
-          </AnimateFadeInDown>
-        )}
-      </MobileFrame>
-    </Content>
+          {query.isError && (
+            <AnimateFadeInDown trigger={query.isError}>
+              <MobileFrame>{handleError(query.error)}</MobileFrame>
+            </AnimateFadeInDown>
+          )}
+          {query.isLoading && (
+            <AnimateFadeInDown trigger={query.isLoading}>
+              <MobileFrame>
+                <LoaderContainer>
+                  <Loader />
+                </LoaderContainer>
+              </MobileFrame>
+            </AnimateFadeInDown>
+          )}
+        </MobileFrame>
+      </Content>
+    </AnimateFade>
   );
 };
