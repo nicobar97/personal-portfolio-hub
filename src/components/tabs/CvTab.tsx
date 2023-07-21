@@ -195,7 +195,7 @@ export const CvTab: React.FC = () => {
                 <p>University of Bologna, Bologna</p>
                 <p>Graduated with 110/110 with greetings</p>
                 <p>
-                  Thesis: High!Level Metrics for Service Level Objective!aware Autoscaling in
+                  Thesis: High-Level Metrics for Service Level Objective!aware Autoscaling in
                   Polaris: a Performance Evaluation
                 </p>
                 <p>Sep 2020 - Mar 2022</p>
