@@ -30,6 +30,9 @@ const Image = styled.img`
   height: auto;
 `;
 
+const Title = styled.h3`
+`;
+
 type Props = {
   chapterId: string
 }
@@ -49,6 +52,7 @@ export const ReadChapterTab: React.FC<Props> = (props: Props) => {
             query.data
               .map((chapter) => (
                 <AnimateFadeIn trigger={query.isSuccess}>
+                  <Title>{chapter.title}</Title>
                   {chapter.pages.map((page) => (
                     <Image src={page.url} />
                   ))}
