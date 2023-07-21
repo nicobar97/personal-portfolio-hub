@@ -6,11 +6,9 @@ type Props = {
   children: (paramValue: string) => React.ReactElement | null;
 };
 
-const ParamWrapper: React.FC<Props> = (props: Props) => {
+export const ParamWrapper: React.FC<Props> = (props: Props) => {
   const params = useParams();
   const paramValue = params[props.paramKey];
 
   return props.children(paramValue!);
 };
-
-export default ParamWrapper;

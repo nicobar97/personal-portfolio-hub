@@ -6,13 +6,20 @@ import { Tabs, TabsEnum } from '../model/Tabs';
 import { MobileFrame } from '../components/MobileFrame';
 import { NavigationBar } from '../components/NavigationBar';
 import { ReadArticleTab } from '../components/tabs/ReadArticleTab';
-import { Navigate, NavigateFunction, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import {
+  Navigate,
+  NavigateFunction,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { GenerateArticle } from '../components/tabs/GenerateArticle';
 import { MenuTab } from '../components/tabs/MenuTab';
 import { MangaTab } from '../components/tabs/MangaTab';
 import { ChaptersTab } from '../components/tabs/ChaptersTab';
 import { ReadChapterTab } from '../components/tabs/ReadChapterTab';
-import ParamWrapper from '../components/ParamsWrapper';
+import { ParamWrapper } from '../components/ParamsWrapper';
 import { ErrorPopup } from '../components/errors/ErrorPopup';
 
 const Container = styled.div`
@@ -108,10 +115,7 @@ export const TabManager: React.FC = () => {
                 </ParamWrapper>
               }
             />
-            <Route
-              path="/"
-              element={<Navigate to="/menu" />}
-            />
+            <Route path="/" element={<Navigate to="/menu" />} />
 
             <Route
               path="*"
