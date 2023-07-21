@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a personal portfolio hub web application built using React, Typescript, and Vite. The app serves as a showcase for my personal information and acts as a hub with multiple apps accessible from a menu.
+This is a personal portfolio hub web application built using React, Typescript, and Vite. This personal portfolio hub is a showcase of my work, skills, and experiences. 
 
 ## Installation
 
@@ -43,8 +43,3 @@ To work efficiently with this template, follow these steps in VS Code:
 # Main Libs
 [Vite](https://github.com/vitejs/vite), [React](https://reactjs.org/), [Typescript](https://www.typescriptlang.org/), [Eslint](https://eslint.org/), [Prettier](https://prettier.io/).
 
-## Additional Information
-
-This personal portfolio hub is a showcase of my work, skills, and experiences. It was built using modern web technologies such as React, Typescript, and Vite, providing a fast and smooth user experience. The app is mobile-friendly, ensuring accessibility across various devices.
-
-Feel free to explore the different sections and apps in the portfolio hub. I hope you enjoy your experience!
