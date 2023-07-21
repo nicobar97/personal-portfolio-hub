@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { ProjectInfoTab } from '../components/tabs/ProjectInfoTab';
-import { CvTab } from '../components/tabs/CvTab';
-import { ArticlesTab } from '../components/tabs/ArticlesTab';
+import { ProjectInfoTab } from './tabs/ProjectInfoTab';
+import { CvTab } from './tabs/CvTab';
+import { ArticlesTab } from './tabs/ArticlesTab';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import { MobileFrame } from '../components/MobileFrame';
 import { NavigationBar } from '../components/NavigationBar';
-import { ReadArticleTab } from '../components/tabs/ReadArticleTab';
+import { ReadArticleTab } from './tabs/ReadArticleTab';
 import {
   Navigate,
   NavigateFunction,
@@ -14,11 +14,11 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { GenerateArticle } from '../components/tabs/GenerateArticle';
-import { MenuTab } from '../components/tabs/MenuTab';
-import { MangaTab } from '../components/tabs/MangaTab';
-import { ChaptersTab } from '../components/tabs/ChaptersTab';
-import { ReadChapterTab } from '../components/tabs/ReadChapterTab';
+import { GenerateArticle } from './tabs/GenerateArticle';
+import { MenuTab } from './tabs/MenuTab';
+import { MangaTab } from './tabs/MangaTab';
+import { ChaptersTab } from './tabs/ChaptersTab';
+import { ReadChapterTab } from './tabs/ReadChapterTab';
 import { ParamWrapper } from '../components/ParamsWrapper';
 import { ErrorPopup } from '../components/errors/ErrorPopup';
 
