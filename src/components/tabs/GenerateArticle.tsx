@@ -28,6 +28,10 @@ const Content = styled.div`
   user-select: text;
 `;
 
+const StyledSelect = styled.div`
+  color: darkgray;
+`;
+
 const Gap = styled.div`
   gap: 1rem;
   display: flex;
@@ -163,69 +167,77 @@ export const GenerateArticle: React.FC = () => {
                   onChange={handleTopicChange(articlePrompt, setArticlePrompt)}
                 />
                 <SubTitle>Style</SubTitle>
-                <Select
-                  onChange={handleStyleChange(articlePrompt, setArticlePrompt)}
-                  options={styleOptions}
-                  theme={(t) => ({
-                    ...t,
-                    colors: {
-                      ...t.colors,
-                      text: 'black',
-                      primary25: theme.colors(themeStyle.style).backdrop,
-                      primary50: theme.colors(themeStyle.style).background,
-                      primary: `${theme.colors(themeStyle.style).border}`,
-                    },
-                    borderRadius: 10,
-                  })}
-                />
+                <StyledSelect>
+                  <Select
+                    onChange={handleStyleChange(articlePrompt, setArticlePrompt)}
+                    options={styleOptions}
+                    theme={(t) => ({
+                      ...t,
+                      colors: {
+                        ...t.colors,
+                        text: 'black',
+                        primary25: theme.colors(themeStyle.style).backdrop,
+                        primary50: theme.colors(themeStyle.style).background,
+                        primary: `${theme.colors(themeStyle.style).border}`,
+                      },
+                      borderRadius: 10,
+                    })}
+                  />
+                </StyledSelect>
                 <SubTitle>Tone</SubTitle>
-                <Select
-                  onChange={handleToneChange(articlePrompt, setArticlePrompt)}
-                  options={toneOptions}
-                  theme={(t) => ({
-                    ...t,
-                    colors: {
-                      ...t.colors,
-                      text: 'black',
-                      primary25: theme.colors(themeStyle.style).backdrop,
-                      primary50: theme.colors(themeStyle.style).background,
-                      primary: `${theme.colors(themeStyle.style).border}`,
-                    },
-                    borderRadius: 10,
-                  })}
-                />
+                <StyledSelect>
+                  <Select
+                    onChange={handleToneChange(articlePrompt, setArticlePrompt)}
+                    options={toneOptions}
+                    theme={(t) => ({
+                      ...t,
+                      colors: {
+                        ...t.colors,
+                        text: 'black',
+                        primary25: theme.colors(themeStyle.style).backdrop,
+                        primary50: theme.colors(themeStyle.style).background,
+                        primary: `${theme.colors(themeStyle.style).border}`,
+                      },
+                      borderRadius: 10,
+                    })}
+                  />
+                </StyledSelect>
                 <SubTitle>Audience</SubTitle>
-                <Select
-                  onChange={handleAudienceChange(articlePrompt, setArticlePrompt)}
-                  options={audienceOptions}
-                  theme={(t) => ({
-                    ...t,
-                    colors: {
-                      ...t.colors,
-                      text: 'black',
-                      primary25: theme.colors(themeStyle.style).backdrop,
-                      primary50: theme.colors(themeStyle.style).background,
-                      primary: `${theme.colors(themeStyle.style).border}`,
-                    },
-                    borderRadius: 10,
-                  })}
-                />
+                <StyledSelect>
+                  <Select
+                    onChange={handleAudienceChange(articlePrompt, setArticlePrompt)}
+                    options={audienceOptions}
+                    theme={(t) => ({
+                      ...t,
+                      colors: {
+                        ...t.colors,
+                        text: 'black',
+                        primary25: theme.colors(themeStyle.style).backdrop,
+                        primary50: theme.colors(themeStyle.style).background,
+                        primary: `${theme.colors(themeStyle.style).border}`,
+                      },
+                      borderRadius: 10,
+                    })}
+                  />
+                </StyledSelect>
                 <SubTitle>Lenght</SubTitle>
-                <Select
-                  onChange={handleLengthChange(articlePrompt, setArticlePrompt)}
-                  options={lengthOptions}
-                  theme={(t) => ({
-                    ...t,
-                    colors: {
-                      ...t.colors,
-                      text: 'black',
-                      primary25: theme.colors(themeStyle.style).backdrop,
-                      primary50: theme.colors(themeStyle.style).background,
-                      primary: `${theme.colors(themeStyle.style).border}`,
-                    },
-                    borderRadius: 10,
-                  })}
-                />
+                <StyledSelect>
+                  <Select
+                    onChange={handleLengthChange(articlePrompt, setArticlePrompt)}
+                    options={lengthOptions}
+                    theme={(t) => ({
+                      ...t,
+                      colors: {
+                        ...t.colors,
+                        text: 'black',
+                        primary25: theme.colors(themeStyle.style).backdrop,
+                        primary50: theme.colors(themeStyle.style).background,
+                        primary: `${theme.colors(themeStyle.style).border}`,
+                      },
+                      borderRadius: 10,
+                    })}
+                  />
+                </StyledSelect>
                 <Disclamer>
                   Please note that the content generated by AI on this website is for informational
                   and entertainment purposes only. The AI-powered content may not always be 100%
@@ -322,11 +334,11 @@ const audienceOptions: SelectOption[] = [
 ];
 
 const lengthOptions: SelectOption[] = [
-  { value: '1 paragraphs', label: '3 paragraphs' },
-  { value: '2 paragraphs', label: '3 paragraphs' },
+  { value: '1 paragraphs', label: '1 paragraphs' },
+  { value: '2 paragraphs', label: '2 paragraphs' },
   { value: '3 paragraphs', label: '3 paragraphs' },
-  { value: '4 paragraphs', label: '3 paragraphs' },
-  { value: '5 paragraphs', label: '3 paragraphs' },
-  { value: '10 paragraphs', label: '3 paragraphs' },
-  { value: '20 paragraphs', label: '3 paragraphs' },
+  { value: '4 paragraphs', label: '4 paragraphs' },
+  { value: '5 paragraphs', label: '5 paragraphs' },
+  { value: '10 paragraphs', label: '10 paragraphs' },
+  { value: '20 paragraphs', label: '20 paragraphs' },
 ];
