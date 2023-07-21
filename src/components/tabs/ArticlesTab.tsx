@@ -95,7 +95,7 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                       <Clickable onClick={() => props.openArticle(article.id)}>
                         <AnimatedBox themestyle={themeStyle.style}>
                           <Info>On {parseDate(article.date)}</Info>
-                          <Title onClick={() => props.openArticle(article.id)}>
+                          <Title>
                             {article.title}
                           </Title>
                           <Text>{article.content}</Text>
