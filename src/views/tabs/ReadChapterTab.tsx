@@ -12,9 +12,9 @@ import { handleError } from '../../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
 import { getChapter } from '../../api/Manga';
 import { Chapter, SupportedProviders } from '../../model/Manga';
-import { useNavbarStore } from '../../stores/useNavbarStore';
-import { Bubbles } from '../../model/Bubbles';
-import { arraysAreEqual } from '../../Utils';
+// import { useNavbarStore } from '../../stores/useNavbarStore';
+// import { Bubbles } from '../../model/Bubbles';
+// import { arraysAreEqual } from '../../Utils';
 
 const Content = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ type Props = {
 };
 
 export const ReadChapterTab: React.FC<Props> = (props: Props) => {
-  const navbar = useNavbarStore();
+  // const navbar = useNavbarStore();
   // if (!arraysAreEqual(navbar.bubbles, [Bubbles.MENU, Bubbles.DARK_LIGHT_THEME]))
   //   navbar.setNavbarBubbles([Bubbles.MENU, Bubbles.DARK_LIGHT_THEME]);
   const provider = SupportedProviders.TCBScans;
