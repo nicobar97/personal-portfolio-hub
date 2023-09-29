@@ -3,7 +3,7 @@ import articleIcon from '../../assets/icons/article.png';
 import mangaIcon from '../../assets/icons/manga.png';
 import { MobileFrame } from '../../components/MobileFrame';
 import { useThemeStore } from '../../stores/useThemeStore';
-import { AnimatedBox } from '../../components/animations/AnimatedBox';
+import { AnimatedBox } from '../../components/AnimatedBox';
 import { Tabs, TabsEnum } from '../../model/Tabs';
 import { AnimateFade } from '../../components/animations/Animations';
 import { ThemeStyleEnum } from '../../model/Theme';
@@ -58,13 +58,13 @@ const AppButton = styled.button<{ background: string; themeStyle: ThemeStyleEnum
   min-height: 8rem;
   margin: 0.5rem;
   border-radius: 15px;
-  border: 1px solid ${(props) => props.theme.colors(props.themeStyle).border};
+  border: 1px solid ${(props) => props.theme.border};
   background-color: ${(props) => props.background};
   overflow: hidden;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  box-shadow: inset ${(props) => props.theme.colors(props.themeStyle).background}99 2px 2px 30px;
+  box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
 `;
 
 type Props = {
@@ -79,7 +79,7 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
       <AnimateFade>
         <Content>
           <MobileFrame>
-            <AnimatedBox themestyle={themeStyle.style}>
+            <AnimatedBox>
               <MainTitle>Menu</MainTitle>
               <AppContainer>
                 <AppButton

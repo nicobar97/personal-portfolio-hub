@@ -2,8 +2,12 @@ import styled from 'styled-components';
 import { MobileFrame } from '../../components/MobileFrame';
 import { useQuery } from '@tanstack/react-query';
 import { FetchAuthMapError, FetchMapError } from '../../model/errors';
-import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../../components/animations/Animations';
-import { LoaderContainer, Loader } from '../../components/Loader';
+import {
+  AnimateFade,
+  AnimateFadeIn,
+  AnimateFadeInDown,
+} from '../../components/animations/Animations';
+import { Loader } from '../../components/Loader';
 import { handleError } from '../../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
 import { getChapter } from '../../api/Manga';
@@ -30,12 +34,11 @@ const Image = styled.img`
   height: auto;
 `;
 
-const Title = styled.h3`
-`;
+const Title = styled.h3``;
 
 type Props = {
-  chapterId: string
-}
+  chapterId: string;
+};
 
 export const ReadChapterTab: React.FC<Props> = (props: Props) => {
   const provider = SupportedProviders.TCBScans;
@@ -73,9 +76,7 @@ export const ReadChapterTab: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <LoaderContainer>
-                  <Loader />
-                </LoaderContainer>
+                <Loader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

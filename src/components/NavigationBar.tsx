@@ -7,7 +7,7 @@ import { Tabs, TabsEnum } from '../model/Tabs';
 import logo from '../assets/images/logo_black_fill.svg';
 import { useState } from 'react';
 import { useThemeStore } from '../stores/useThemeStore';
-import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
+import { ThemeStyle } from '../model/Theme';
 import { BubbleButton } from './BubbleButton';
 // import { getPathFromTab } from '../router';
 // import { useNavbarStore } from '../stores/useNavbarStore';
@@ -23,7 +23,7 @@ const NavbarBubblesContainer = styled.div<{ isFloating: boolean; bubblecount: nu
   transition: width 0.2s ease 0.1s;
 `;
 
-const NavbarContainer = styled.div<{ isFloating: boolean; themestyle: ThemeStyleEnum }>`
+const NavbarContainer = styled.div<{ isFloating: boolean }>`
   display: flex;
   position: fixed;
   top: 0;
@@ -39,9 +39,7 @@ const NavbarContainer = styled.div<{ isFloating: boolean; themestyle: ThemeStyle
   ${(props) =>
     props.isFloating
       ? `padding: 2rem`
-      : `background-color: ${props.theme.colors(props.themestyle).background}; box-shadow: ${
-          props.theme.colors(props.themestyle).shadow
-        } 0px 7px 20px 0px;`}
+      : `background-color: ${props.theme.background}; box-shadow: ${props.theme.shadow} 0px 7px 20px 0px;`}
 `;
 
 export type NavbarBubbleContent = {
@@ -101,7 +99,7 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
   setUpScrolling(scrollTriggerY, setIsFloatingBar);
 
   return (
-    <NavbarContainer isFloating={isFloatingBar} themestyle={theme.style}>
+    <NavbarContainer isFloating={isFloatingBar}>
       <NavbarBubblesContainer isFloating={isFloatingBar} bubblecount={bubbles.length}>
         {bubbles.map((bubble: NavbarBubbleContent) => (
           <BubbleButton
@@ -112,7 +110,6 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
             scale={1}
             darkModeInvert={true}
             borderSize={1}
-            style={theme.style}
           />
         ))}
         <BubbleButton
@@ -125,7 +122,6 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
           darkModeInvert={false}
           scale={1}
           borderSize={1}
-          style={theme.style}
         />
       </NavbarBubblesContainer>
     </NavbarContainer>

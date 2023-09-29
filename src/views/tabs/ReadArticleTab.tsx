@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/animations/AnimatedBox';
-import { useThemeStore } from '../../stores/useThemeStore';
+import { AnimatedBox } from '../../components/AnimatedBox';
 import { getArticle } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
 import { Article } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
-import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../../components/animations/Animations';
-import { LoaderContainer, Loader } from '../../components/Loader';
+import {
+  AnimateFade,
+  AnimateFadeIn,
+  AnimateFadeInDown,
+} from '../../components/animations/Animations';
 import { handleError } from '../../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
+import { Loader } from '../../components/Loader';
 
 const Content = styled.div`
   display: flex;
@@ -66,10 +69,9 @@ const parseDate = (date: Date) =>
 
 type Props = {
   articleId: string;
-}
+};
 
 export const ReadArticleTab: React.FC<Props> = (props: Props) => {
-  const themeStyle = useThemeStore();
   const query = useQuery<Either<FetchAuthMapError, Article>, FetchAuthMapError>({
     queryKey: ['article', props.articleId],
     queryFn: () => getArticle(props.articleId).run(),
@@ -87,9 +89,7 @@ export const ReadArticleTab: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <LoaderContainer>
-                  <Loader />
-                </LoaderContainer>
+                <Loader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}
@@ -98,7 +98,7 @@ export const ReadArticleTab: React.FC<Props> = (props: Props) => {
             query.data
               .map((article) => (
                 <AnimateFadeIn trigger={query.isSuccess}>
-                  <AnimatedBox themestyle={themeStyle.style}>
+                  <AnimatedBox>
                     <Title>{article.title}</Title>
                     <SubSubTitle>
                       Read it in {article.estimatedReadingTimeMinutes} minutes

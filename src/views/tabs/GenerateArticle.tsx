@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import genArticleIcon from '../../assets/icons/ai-write.png';
 import { MobileFrame } from '../../components/MobileFrame';
 import { useThemeStore } from '../../stores/useThemeStore';
-import { AnimatedBox } from '../../components/animations/AnimatedBox';
+import { AnimatedBox } from '../../components/AnimatedBox';
 import { BubbleButton } from '../../components/BubbleButton';
-import Select, { SingleValue } from 'react-select';
+import Select, { SingleValue, Theme } from 'react-select';
 import { useState } from 'react';
 import { ArticlePrompt } from '../../model/Article';
 import { theme } from '../../style/style';
@@ -42,18 +42,18 @@ const Input = styled.input<{ theme: ThemeStyleEnum }>`
   font-size: 1.05rem;
   border-radius: 10px;
   padding: 0.5rem;
-  border: 1px solid ${(props) => props.theme.colors(props.theme).border};
-  box-shadow: ${(props) => props.theme.colors(props.theme).shadow} 0px 0px 3px 0px;
+  border: 1px solid ${(props) => props.theme.border};
+  box-shadow: ${(props) => props.theme.shadow} 0px 0px 3px 0px;
   text-transform: capitalize;
 
   &:hover {
-    border-color: ${(props) => props.theme.colors(props.theme).border};
-    box-shadow: ${(props) => props.theme.colors(props.theme).shadow} 0px 0px 5px 0px;
+    border-color: ${(props) => props.theme.border};
+    box-shadow: ${(props) => props.theme.shadow} 0px 0px 5px 0px;
   }
 
   &:focus {
-    border-color: ${(props) => props.theme.colors(props.theme).border};
-    box-shadow: ${(props) => props.theme.colors(props.theme).shadow} 0px 0px 5px 0px;
+    border-color: ${(props) => props.theme.border};
+    box-shadow: ${(props) => props.theme.shadow} 0px 0px 5px 0px;
     outline: none;
   }
 `;
@@ -157,7 +157,7 @@ export const GenerateArticle: React.FC = () => {
       <AnimateFade>
         <Content>
           <MobileFrame>
-            <AnimatedBox themestyle={themeStyle.style}>
+            <AnimatedBox>
               <Gap>
                 <MainTitle>Generate an Article with AI</MainTitle>
                 <SubTitle>Topic</SubTitle>
@@ -171,14 +171,14 @@ export const GenerateArticle: React.FC = () => {
                   <Select
                     onChange={handleStyleChange(articlePrompt, setArticlePrompt)}
                     options={styleOptions}
-                    theme={(t) => ({
+                    theme={(t: Theme) => ({
                       ...t,
                       colors: {
                         ...t.colors,
                         text: 'black',
-                        primary25: theme.colors(themeStyle.style).backdrop,
-                        primary50: theme.colors(themeStyle.style).background,
-                        primary: `${theme.colors(themeStyle.style).border}`,
+                        primary25: theme[themeStyle.style].backdrop,
+                        primary50: theme[themeStyle.style].background,
+                        primary: `${theme[themeStyle.style].border}`,
                       },
                       borderRadius: 10,
                     })}
@@ -194,9 +194,9 @@ export const GenerateArticle: React.FC = () => {
                       colors: {
                         ...t.colors,
                         text: 'black',
-                        primary25: theme.colors(themeStyle.style).backdrop,
-                        primary50: theme.colors(themeStyle.style).background,
-                        primary: `${theme.colors(themeStyle.style).border}`,
+                        primary25: theme[themeStyle.style].backdrop,
+                        primary50: theme[themeStyle.style].background,
+                        primary: `${theme[themeStyle.style].border}`,
                       },
                       borderRadius: 10,
                     })}
@@ -212,9 +212,9 @@ export const GenerateArticle: React.FC = () => {
                       colors: {
                         ...t.colors,
                         text: 'black',
-                        primary25: theme.colors(themeStyle.style).backdrop,
-                        primary50: theme.colors(themeStyle.style).background,
-                        primary: `${theme.colors(themeStyle.style).border}`,
+                        primary25: theme[themeStyle.style].backdrop,
+                        primary50: theme[themeStyle.style].background,
+                        primary: `${theme[themeStyle.style].border}`,
                       },
                       borderRadius: 10,
                     })}
@@ -230,9 +230,9 @@ export const GenerateArticle: React.FC = () => {
                       colors: {
                         ...t.colors,
                         text: 'black',
-                        primary25: theme.colors(themeStyle.style).backdrop,
-                        primary50: theme.colors(themeStyle.style).background,
-                        primary: `${theme.colors(themeStyle.style).border}`,
+                        primary25: theme[themeStyle.style].backdrop,
+                        primary50: theme[themeStyle.style].background,
+                        primary: `${theme[themeStyle.style].border}`,
                       },
                       borderRadius: 10,
                     })}
@@ -252,7 +252,6 @@ export const GenerateArticle: React.FC = () => {
                     scale={1.5}
                     darkModeInvert={false}
                     iconSrc={genArticleIcon}
-                    style={themeStyle.style}
                     label={label}
                     borderSize={1}
                   />

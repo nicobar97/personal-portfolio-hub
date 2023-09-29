@@ -1,14 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
-import { ThemeStyleEnum } from '../../model/Theme';
-
-export const GlobalStyle = createGlobalStyle<{ themeStyle: ThemeStyleEnum }>`
+export const GlobalStyle = createGlobalStyle`
 
 :root {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: ${(props) => props.theme.colors(props.themeStyle).text};
-  background-color: ${(props) => props.theme.colors(props.themeStyle).background};
+  color: ${(props) => props.theme.text};
+  background-color: ${(props) => props.theme.background};
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -28,8 +26,8 @@ body {
 }
 
 ::selection {
-  color: ${(props) => props.theme.colors(props.themeStyle).accent.text};
-  background: ${(props) => props.theme.colors(props.themeStyle).accent.color};
+  color: ${(props) => props.theme.accent.text};
+  background: ${(props) => props.theme.accent.color};
 }
 
 li {
@@ -47,7 +45,7 @@ img {
 }
 
 a:link {
-  color: ${(props) => props.theme.colors(props.themeStyle).accent.color}
+  color: ${(props) => props.theme.accent.color}
 }
 
 @keyframes fadeIn {

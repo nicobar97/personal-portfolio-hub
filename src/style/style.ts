@@ -1,27 +1,15 @@
 import 'styled-components';
-import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
+import { hexToRgbA } from '../Utils';
 
-// and extend them!
-declare module 'styled-components' {
-  // eslint-ignore-next-line
-  export interface DefaultTheme extends Theme {}
-}
+export const ThemeStyle = {
+  LIGHT: 'light' as keyof typeof theme,
+  DARK: 'dark' as keyof typeof theme,
+} as const;
 
-const hexToRgbA = (hex: string, alpha: number) => {
-  // eslint-disable-next-line
-  let c: any;
-  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-    c = hex.substring(1).split('');
-    if (c.length == 3) {
-      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-    }
-    c = '0x' + c.join('');
-    return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + `,${alpha})`;
-  }
-  throw new Error('Bad Hex');
-};
+export type ThemeStyleEnum = (typeof ThemeStyle)[keyof typeof ThemeStyle];
 
-type ThemeColor = {
+type Theme = {
+  style: ThemeStyleEnum;
   background: string;
   text: string;
   border: string;
@@ -34,7 +22,8 @@ type ThemeColor = {
   };
 };
 
-const light: ThemeColor = {
+const light: Theme = {
+  style: ThemeStyle.LIGHT,
   background: '#fff',
   text: '#27272a',
   border: '#f2f3f6',
@@ -47,7 +36,8 @@ const light: ThemeColor = {
   },
 };
 
-const dark: ThemeColor = {
+const dark: Theme = {
+  style: ThemeStyle.DARK,
   background: '#1a1a1a',
   text: '#f2f2f2',
   border: '#2f2f2f',
@@ -60,12 +50,11 @@ const dark: ThemeColor = {
   },
 };
 
-const pickColor = (themeType: ThemeStyleEnum): ThemeColor =>
-  themeType === ThemeStyle.DARK ? dark : light;
-
 export const theme = {
-  colors: pickColor,
-  hexToRgbA: hexToRgbA,
+  light,
+  dark,
 } as const;
 
-type Theme = typeof theme;
+declare module 'styled-components' {
+  export interface DefaultTheme extends Theme {}
+}

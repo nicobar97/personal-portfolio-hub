@@ -39,7 +39,7 @@ const Container = styled.div<{ themestyle: ThemeStyleEnum }>`
   margin-top: 30%;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: ${(props) => props.theme.colors(props.themestyle).shadow} 0px 7px 29px 0px;
+  box-shadow: ${(props) => props.theme.shadow} 0px 7px 29px 0px;
 `;
 
 const ErrorImg = styled.img`

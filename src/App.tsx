@@ -13,9 +13,9 @@ export const App: React.FC = () => {
   const themeStore = useThemeStore();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme[themeStore.style]}>
       <QueryClientProvider client={queryClient}>
-        <GlobalStyle themeStyle={themeStore.style} />
+        <GlobalStyle />
         <GlobalFonts />
         <BrowserRouter>
           <TabManager />

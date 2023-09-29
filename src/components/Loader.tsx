@@ -1,83 +1,57 @@
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-import { useThemeStore } from '../stores/useThemeStore';
-import { ThemeStyle } from '../model/Theme';
+import React, { useEffect, useState } from 'react';
+import { Variants, motion } from 'framer-motion';
+import { styled } from 'styled-components';
 
-const loadingContainer = {
-  margin: '0 auto 0px',
-  width: '4rem',
-  height: '3rem',
-  display: 'flex',
-  justifyContent: 'space-around',
-};
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const loadingContainerVariants = {
-  start: {
+const Dot = styled(motion.div)<{ scale: number }>`
+  width: ${(props) => props.scale * 10}px;
+  height: ${(props) => props.scale * 10}px;
+  background-color: ${(props) => props.theme.accent.color};
+  border-radius: 50%;
+  margin: 0 8px;
+`;
+
+const dotVariants: Variants = {
+  initial: {
+    scale: 1,
+  },
+  animate: {
+    scale: [1, 2, 1],
     transition: {
-      staggerChildren: 0.2,
+      repeat: Infinity,
+      duration: 1,
+      repeatType: 'loop',
+      ease: 'easeInOut',
     },
   },
-  end: {
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
 };
 
-const loadingCircleVariants = {
-  start: {
-    y: '0%',
-  },
-  end: {
-    y: '60%',
-  },
-};
-const loadingCircleTransition = {
-  duration: 0.4,
-  yoyo: Infinity,
-  ease: 'easeInOut',
-};
+export const Loader: React.FC<{ scale?: number }> = (props: { scale?: number }) => {
+  const [activeDot, setActiveDot] = useState(0);
 
-export const Loader = () => {
-  const themeStore = useThemeStore();
-  const loadingCircle = {
-    display: 'block',
-    width: '1rem',
-    height: '1rem',
-    backgroundColor: themeStore.style === ThemeStyle.DARK ? 'white' : 'black',
-    borderRadius: '0.5rem',
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveDot((prevDot) => (prevDot + 1) % 5);
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
-    <div>
-      <motion.div
-        style={loadingContainer}
-        variants={loadingContainerVariants}
-        initial="start"
-        animate="end"
-      >
-        <motion.span
-          style={loadingCircle}
-          variants={loadingCircleVariants}
-          transition={loadingCircleTransition}
-        ></motion.span>
-        <motion.span
-          style={loadingCircle}
-          variants={loadingCircleVariants}
-          transition={loadingCircleTransition}
-        ></motion.span>
-        <motion.span
-          style={loadingCircle}
-          variants={loadingCircleVariants}
-          transition={loadingCircleTransition}
-        ></motion.span>
-      </motion.div>
-    </div>
+    <LoaderContainer>
+      {[0, 1, 2, 3, 4].map((index) => (
+        <Dot
+          key={index}
+          scale={props.scale ?? 1}
+          variants={dotVariants}
+          initial={activeDot === index ? 'animate' : 'initial'}
+          animate={activeDot === index ? 'animate' : 'initial'}
+        />
+      ))}
+    </LoaderContainer>
   );
 };
-
-export const LoaderContainer = styled.div`
-  display: flex;
-  -webkit-box-pack: justify;
-  align-items: center;
-  justify-content: center;
-`;

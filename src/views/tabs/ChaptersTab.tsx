@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/animations/AnimatedBox';
-import { useThemeStore } from '../../stores/useThemeStore';
+import { AnimatedBox } from '../../components/AnimatedBox';
 import { useQuery } from '@tanstack/react-query';
 import { FetchAuthMapError, FetchMapError } from '../../model/errors';
-import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../../components/animations/Animations';
-import { LoaderContainer, Loader } from '../../components/Loader';
+import {
+  AnimateFade,
+  AnimateFadeIn,
+  AnimateFadeInDown,
+} from '../../components/animations/Animations';
+import { Loader } from '../../components/Loader';
 import { handleError } from '../../components/errors/ErrorPopup';
 import { TabsEnum } from '../../model/Tabs';
 import { Either } from 'purify-ts';
@@ -51,7 +54,6 @@ type Props = {
 
 export const ChaptersTab: React.FC<Props> = (props: Props) => {
   const provider = SupportedProviders.TCBScans;
-  const themeStyle = useThemeStore();
 
   const query = useQuery<Either<FetchMapError, ChapterList>, FetchMapError>({
     queryKey: ['chapters', props.mangaId, provider],
@@ -68,10 +70,8 @@ export const ChaptersTab: React.FC<Props> = (props: Props) => {
                 mangaList.chapters.map((chapter) => (
                   <AnimateFadeIn trigger={query.isSuccess}>
                     <Clickable onClick={() => props.openChapter(chapter.url)}>
-                      <AnimatedBox themestyle={themeStyle.style}>
-                        <Title>
-                          {chapter.title}
-                        </Title>
+                      <AnimatedBox>
+                        <Title>{chapter.title}</Title>
                         <Info>
                           <strong>Provider:</strong> {chapter.provider}
                         </Info>
@@ -95,9 +95,7 @@ export const ChaptersTab: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <LoaderContainer>
-                  <Loader />
-                </LoaderContainer>
+                <Loader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

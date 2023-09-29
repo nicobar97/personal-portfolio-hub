@@ -1,20 +1,18 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
+import { ThemeStyle } from '../model/Theme';
 
 const Icon = styled(motion.img)<{
-  themeStyle: ThemeStyleEnum;
   darkModeInvert: boolean;
 }>`
   margin: 0;
   transition: filter 0.5s;
   filter: ${(props) =>
-    props.darkModeInvert && props.themeStyle === ThemeStyle.DARK ? `invert(100%)` : ``};
+    props.darkModeInvert && props.theme.style === ThemeStyle.DARK ? `invert(100%)` : ``};
 `;
 
 const Bubble = styled(motion.div)<{
   rounded: boolean;
-  themeStyle: ThemeStyleEnum;
   scale: number;
   borderSize: number;
 }>`
@@ -27,15 +25,15 @@ const Bubble = styled(motion.div)<{
   border-radius: ${(props) => (props.rounded ? '100px' : '0px')};
   gap: 1rem;
   background-color: ${(props) =>
-    props.rounded ? props.theme.colors(props.themeStyle).background : `transparent`};
+    props.rounded ? props.theme.background : `transparent`};
   transition:
     box-shadow 0.3s ease-out ${(props) => (props.rounded ? '0.2s' : '0s')},
     border 0.2s ease-out ${(props) => (props.rounded ? '0.3s' : '0s')},
     border-radius 0.3s ease-out ${(props) => (props.rounded ? '0s' : '1s')};
   box-shadow: ${(props) =>
-    props.rounded ? `${props.theme.colors(props.themeStyle).shadow} 0px 7px 20px 0px` : ''};
+    props.rounded ? `${props.theme.shadow} 0px 7px 20px 0px` : ''};
   border: ${(props) => (props.rounded ? props.borderSize : 0)}px solid
-    ${(props) => props.theme.colors(props.themeStyle).border};
+    ${(props) => props.theme.border};
 
   user-select: none;
   -webkit-user-select: none;
@@ -57,7 +55,6 @@ const BubbleLabel = styled(motion.div)`
 type Props = {
   onBubbleClick: () => void;
   iconSrc: string;
-  style: ThemeStyleEnum;
   rounded?: boolean;
   scale?: number;
   darkModeInvert?: boolean;
@@ -68,14 +65,12 @@ type Props = {
 export const BubbleButton: React.FC<Props> = (props: Props) => (
   <div onClick={props.onBubbleClick}>
     <Bubble
-      themeStyle={props.style}
       rounded={props.rounded ?? true}
       borderSize={props.borderSize ?? 0}
       scale={props.scale ?? 1}
       whileTap={{ scale: props.rounded ? 1.5 : 1 }}
     >
       <Icon
-        themeStyle={props.style}
         src={props.iconSrc}
         whileTap={{ scale: props.rounded !== undefined && props.rounded === false ? 1.5 : 1 }}
         darkModeInvert={props.darkModeInvert ?? false}

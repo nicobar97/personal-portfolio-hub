@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import genArticleIcon from '../../assets/icons/ai-write.png';
 import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/animations/AnimatedBox';
-import { useThemeStore } from '../../stores/useThemeStore';
+import { AnimatedBox } from '../../components/AnimatedBox';
 import { getArticles } from '../../api/Article';
 import { useQuery } from '@tanstack/react-query';
 import { SimpleArticle } from '../../model/Article';
 import { FetchAuthMapError } from '../../model/errors';
-import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../../components/animations/Animations';
-import { LoaderContainer, Loader } from '../../components/Loader';
+import {
+  AnimateFade,
+  AnimateFadeIn,
+  AnimateFadeInDown,
+} from '../../components/animations/Animations';
+import { Loader } from '../../components/Loader';
 import { handleError } from '../../components/errors/ErrorPopup';
 import { BubbleButton } from '../../components/BubbleButton';
 import { Tabs, TabsEnum } from '../../model/Tabs';
@@ -74,8 +77,6 @@ type Props = {
 };
 
 export const ArticlesTab: React.FC<Props> = (props: Props) => {
-  const themeStyle = useThemeStore();
-
   const query = useQuery<Either<FetchAuthMapError, SimpleArticle[]>, FetchAuthMapError>({
     queryKey: ['articles'],
     queryFn: () => getArticles().run(),
@@ -93,11 +94,9 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                     .sort((a, b) => b.date.getTime() - a.date.getTime())
                     .map((article) => (
                       <Clickable onClick={() => props.openArticle(article.id)}>
-                        <AnimatedBox themestyle={themeStyle.style}>
+                        <AnimatedBox>
                           <Info>On {parseDate(article.date)}</Info>
-                          <Title>
-                            {article.title}
-                          </Title>
+                          <Title>{article.title}</Title>
                           <Text>{article.content}</Text>
                           <Info>
                             <strong>Tags:</strong> {article.tags.join(', ')}
@@ -123,7 +122,6 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                   scale={1.2}
                   darkModeInvert={false}
                   iconSrc={genArticleIcon}
-                  style={themeStyle.style}
                   label="Generate"
                   borderSize={1}
                 />
@@ -139,9 +137,7 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <LoaderContainer>
-                  <Loader />
-                </LoaderContainer>
+                <Loader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/animations/AnimatedBox';
-import { useThemeStore } from '../../stores/useThemeStore';
+import { AnimatedBox } from '../../components/AnimatedBox';
 import { useQuery } from '@tanstack/react-query';
 import { FetchAuthMapError, FetchMapError } from '../../model/errors';
 import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../../components/animations/Animations';
-import { LoaderContainer, Loader } from '../../components/Loader';
+import { Loader } from '../../components/Loader';
 import { handleError } from '../../components/errors/ErrorPopup';
 import { TabsEnum } from '../../model/Tabs';
 import { Either } from 'purify-ts';
@@ -53,7 +52,6 @@ type Props = {
 };
 
 export const MangaTab: React.FC<Props> = (props: Props) => {
-  const themeStyle = useThemeStore();
   const provider = SupportedProviders.TCBScans;
   const query = useQuery<Either<FetchMapError, MangaList>, FetchMapError>({
     queryKey: ['mangas', provider, provider],
@@ -70,7 +68,7 @@ export const MangaTab: React.FC<Props> = (props: Props) => {
                 mangaList.mangas.map((manga) => (
                   <AnimateFadeIn trigger={query.isSuccess}>
                     <Clickable onClick={() => props.openManga(manga.url)}>
-                      <AnimatedBox themestyle={themeStyle.style}>
+                      <AnimatedBox>
                         <Title>{manga.title}</Title>
                         <Info>
                           <strong>Provider:</strong> {manga.provider}
@@ -96,9 +94,7 @@ export const MangaTab: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <LoaderContainer>
                   <Loader />
-                </LoaderContainer>
               </MobileFrame>
             </AnimateFadeInDown>
           )}
