@@ -6,12 +6,65 @@ import menuIcon from '../assets/icons/menu.png';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import logo from '../assets/images/logo_black_fill.svg';
 import { useState } from 'react';
-import { useThemeStore } from '../stores/useThemeStore';
+import { ThemeState, useThemeStore } from '../stores/useThemeStore';
 import { ThemeStyle } from '../model/Theme';
 import { BubbleButton } from './BubbleButton';
+import { useNavbarStore } from '../stores/useNavbarStore';
+import { Bubbles, BubblesEnum } from '../model/Bubbles';
 // import { getPathFromTab } from '../router';
 // import { useNavbarStore } from '../stores/useNavbarStore';
 // import { TabProps, TabState, useTabStore } from '../stores/useTabStore';
+
+export type Bubble = NavigatorBubble | ActionBubble;
+
+export const BubbleType = {
+  NAVIGATOR: 'navigator',
+  ACTION: 'action',
+};
+export type BubbleTypeEnum = (typeof BubbleType)[keyof typeof BubbleType];
+
+export type ActionBubble = {
+  type: typeof BubbleType.ACTION;
+  bubble: BubblesEnum;
+  iconSrc: string;
+  altIconSrc?: string;
+  handler: string;
+};
+export type NavigatorBubble = {
+  type: typeof BubbleType.NAVIGATOR;
+  bubble: BubblesEnum;
+  iconSrc: string;
+  altIconSrc?: string;
+  navigateTo: TabsEnum;
+};
+
+const bubbles: Bubble[] = [
+  {
+    type: BubbleType.NAVIGATOR,
+    bubble: Bubbles.MENU,
+    iconSrc: menuIcon,
+    navigateTo: Tabs.Menu,
+  },
+  {
+    type: BubbleType.NAVIGATOR,
+    bubble: Bubbles.LOGO,
+    iconSrc: logo,
+    navigateTo: Tabs.Cv,
+  },
+  {
+    type: BubbleType.NAVIGATOR,
+    bubble: Bubbles.INFO,
+    iconSrc: infoIcon,
+    navigateTo: Tabs.ProjectInfo,
+  },
+  {
+    type: BubbleType.ACTION,
+    bubble: Bubbles.INFO,
+    iconSrc: lightModeIcon,
+    altIconSrc: darkModeIcon,
+    handler: 'switch_dark_mode',
+  },
+];
 
 const NavbarBubblesContainer = styled.div<{ isFloating: boolean; bubblecount: number }>`
   display: flex;
@@ -63,66 +116,61 @@ const handleScroll =
   (scrollTriggerY: number, setIsFloatingBar: (isFloatingBar: boolean) => void) => () =>
     window.scrollY > scrollTriggerY ? setIsFloatingBar(true) : setIsFloatingBar(false);
 
-const initNavbarBubbles = (changeTab: (tab: TabsEnum) => void) => [
-  {
-    iconSrc: menuIcon,
-    onBubbleClick: () => changeTab(Tabs.Menu),
-    linkedTab: Tabs.Menu,
-  },
-  {
-    iconSrc: logo,
-    onBubbleClick: () => changeTab(Tabs.Cv),
-    linkedTab: Tabs.Cv,
-  },
-  {
-    iconSrc: infoIcon,
-    onBubbleClick: () => changeTab(Tabs.ProjectInfo),
-    linkedTab: Tabs.ProjectInfo,
-  },
-];
-
 type Props = {
   changeTab: (tab: TabsEnum) => void;
 };
 
+const handleAction = (handler: string) => {
+  switch (handler) {
+    case 'switch_dark_mode':
+      useNavbarStore.getState().switchDarkMode();
+      break;
+  }
+};
+
+const createBubbleButton = (
+  bubble: Bubble,
+  changeTab: (tab: TabsEnum) => void,
+  theme: ThemeState,
+  floating: boolean,
+) => (
+  <BubbleButton
+    onBubbleClick={
+      bubble.type === BubbleType.NAVIGATOR
+        ? () => changeTab((bubble as NavigatorBubble).navigateTo)
+        : theme.switchDarkMode
+    }
+    iconSrc={
+      bubble.altIconSrc
+        ? theme.style === ThemeStyle.DARK
+          ? bubble.altIconSrc
+          : bubble.iconSrc
+        : bubble.iconSrc
+    }
+    rounded={floating}
+    scale={1}
+    darkModeInvert={bubble.type === BubbleType.NAVIGATOR}
+    borderSize={1}
+  />
+);
+
 export const NavigationBar: React.FC<Props> = (props: Props) => {
   const scrollTriggerY = 30;
   const theme = useThemeStore();
+  const navbar = useNavbarStore();
   const [isFloatingBar, setIsFloatingBar] = useState(false);
-  // const navbar = useNavbarStore();
-
-  const bubbles: NavbarBubbleContent[] = initNavbarBubbles(props.changeTab);
-  // if (bubbles.length === 0 || bubbles[0].onBubbleClick === undefined) {
-  //   navbar.setNavbarBubbles(initNavbarBubbles(tab));
-  // }
-
   setUpScrolling(scrollTriggerY, setIsFloatingBar);
+
+  const activeBubbles: Bubble[] = bubbles.filter((bubble: Bubble) =>
+    navbar.bubbles.includes(bubble.bubble),
+  );
 
   return (
     <NavbarContainer isFloating={isFloatingBar}>
-      <NavbarBubblesContainer isFloating={isFloatingBar} bubblecount={bubbles.length}>
-        {bubbles.map((bubble: NavbarBubbleContent) => (
-          <BubbleButton
-            key={bubble.linkedTab}
-            onBubbleClick={bubble.onBubbleClick}
-            iconSrc={bubble.iconSrc}
-            rounded={isFloatingBar}
-            scale={1}
-            darkModeInvert={true}
-            borderSize={1}
-          />
-        ))}
-        <BubbleButton
-          onBubbleClick={() => {
-            theme.switchDarkMode();
-          }}
-          key={'dark-light-mode'}
-          iconSrc={theme.style === ThemeStyle.LIGHT ? lightModeIcon : darkModeIcon}
-          rounded={isFloatingBar}
-          darkModeInvert={false}
-          scale={1}
-          borderSize={1}
-        />
+      <NavbarBubblesContainer isFloating={isFloatingBar} bubblecount={activeBubbles.length}>
+        {activeBubbles.map((bubble: Bubble) =>
+          createBubbleButton(bubble, props.changeTab, theme, isFloatingBar),
+        )}
       </NavbarBubblesContainer>
     </NavbarContainer>
   );

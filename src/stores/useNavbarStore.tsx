@@ -1,17 +1,13 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { TabsEnum } from '../model/Tabs';
-import { ThemeStyle, ThemeStyleEnum } from '../model/Theme';
-import lightModeIcon from '../assets/icons/light-mode.png';
-import darkModeIcon from '../assets/icons/dark-mode.png';
+import { Bubbles, BubblesEnum } from '../model/Bubbles';
 
 export type NavbarState = {
-  style: ThemeStyleEnum;
-  bubbles: NavbarBubbleContent[];
-  setNavbarBubbles: (navbarBubbles: NavbarBubbleContent[]) => void;
-  removeNavbarBubble: (tab: TabsEnum) => void;
-  addNavbarBubble: (bubble: NavbarBubbleContent) => void;
-  switchDarkMode: () => void;
+  bubbles: BubblesEnum[];
+  setNavbarBubbles: (navbarBubbles: BubblesEnum[]) => void;
+  removeNavbarBubble: (removeBubble: BubblesEnum) => void;
+  addNavbarBubble: (bubble: BubblesEnum) => void;
 };
 
 export type NavbarBubbleContent = {
@@ -24,23 +20,15 @@ export const useNavbarStore = create<NavbarState>()(
   devtools(
     persist(
       (set) => ({
-        style: ThemeStyle.DARK,
-        bubbles: [],
-        setTheme: (style: ThemeStyleEnum) => set(() => ({ style })),
-        setNavbarBubbles: (navbarBubbles: NavbarBubbleContent[]) =>
-          set(() => ({ bubbles: navbarBubbles })),
-        removeNavbarBubble: (tab: TabsEnum) =>
+        bubbles: [Bubbles.MENU, Bubbles.LOGO, Bubbles.INFO, Bubbles.DARK_LIGHT_THEME],
+        setNavbarBubbles: (navbarBubbles: BubblesEnum[]) => set(() => ({ bubbles: navbarBubbles })),
+        removeNavbarBubble: (removeBubble: BubblesEnum) =>
           set((state) => ({
-            bubbles: state.bubbles.filter((bubble) => bubble.linkedTab !== tab),
+            bubbles: state.bubbles.filter((bubble) => bubble !== removeBubble),
           })),
-        addNavbarBubble: (bubble: NavbarBubbleContent) =>
+        addNavbarBubble: (bubble: BubblesEnum) =>
           set((state) => ({
             bubbles: [...state.bubbles, bubble],
-          })),
-        switchDarkMode: () =>
-          set((state) => ({
-            style: state.style === ThemeStyle.DARK ? ThemeStyle.LIGHT : ThemeStyle.DARK,
-            iconSrc: state.style === ThemeStyle.DARK ? darkModeIcon : lightModeIcon,
           })),
       }),
       {
