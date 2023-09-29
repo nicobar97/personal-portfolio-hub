@@ -120,13 +120,13 @@ type Props = {
   changeTab: (tab: TabsEnum) => void;
 };
 
-const handleAction = (handler: string) => {
-  switch (handler) {
-    case 'switch_dark_mode':
-      useNavbarStore.getState().switchDarkMode();
-      break;
-  }
-};
+// const handleAction = (handler: string) => {
+//   switch (handler) {
+//     case 'switch_dark_mode':
+//       useNavbarStore.getState().switchDarkMode();
+//       break;
+//   }
+// };
 
 const createBubbleButton = (
   bubble: Bubble,
