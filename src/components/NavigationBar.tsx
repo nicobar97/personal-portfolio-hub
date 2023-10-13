@@ -5,12 +5,11 @@ import darkModeIcon from '../assets/icons/dark-mode.png';
 import menuIcon from '../assets/icons/menu.png';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import logo from '../assets/images/logo_black_fill.svg';
-import { useState } from 'react';
 import { ThemeState, useThemeStore } from '../stores/useThemeStore';
 import { ThemeStyle } from '../model/Theme';
 import { BubbleButton } from './BubbleButton';
-import { useNavbarStore } from '../stores/useNavbarStore';
 import { Bubbles, BubblesEnum } from '../model/Bubbles';
+import { AnimatePresence, motion } from 'framer-motion';
 // import { getPathFromTab } from '../router';
 // import { useNavbarStore } from '../stores/useNavbarStore';
 // import { TabProps, TabState, useTabStore } from '../stores/useTabStore';
@@ -77,7 +76,6 @@ const NavbarBubblesContainer = styled.div<{ isFloating: boolean; bubblecount: nu
 `;
 
 const NavbarContainer = styled.div<{ isFloating: boolean }>`
-  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -105,29 +103,6 @@ export type ReadArticleNavbarBubbleContent = NavbarBubbleContent & {
   articleId: string;
 };
 
-const setUpScrolling = (
-  scrollTriggerY: number,
-  setIsFloatingBar: (isFloatingBar: boolean) => void,
-) => {
-  window.addEventListener('scroll', handleScroll(scrollTriggerY, setIsFloatingBar));
-};
-
-const handleScroll =
-  (scrollTriggerY: number, setIsFloatingBar: (isFloatingBar: boolean) => void) => () =>
-    window.scrollY > scrollTriggerY ? setIsFloatingBar(true) : setIsFloatingBar(false);
-
-type Props = {
-  changeTab: (tab: TabsEnum) => void;
-};
-
-// const handleAction = (handler: string) => {
-//   switch (handler) {
-//     case 'switch_dark_mode':
-//       useNavbarStore.getState().switchDarkMode();
-//       break;
-//   }
-// };
-
 const createBubbleButton = (
   bubble: Bubble,
   changeTab: (tab: TabsEnum) => void,
@@ -154,24 +129,44 @@ const createBubbleButton = (
   />
 );
 
+type Props = {
+  bubbles: BubblesEnum[];
+  currentTab: TabsEnum;
+  isFloating: boolean;
+  hidden: boolean;
+  changeTab: (tab: TabsEnum) => void;
+};
 export const NavigationBar: React.FC<Props> = (props: Props) => {
-  const scrollTriggerY = 30;
   const theme = useThemeStore();
-  const navbar = useNavbarStore();
-  const [isFloatingBar, setIsFloatingBar] = useState(false);
-  setUpScrolling(scrollTriggerY, setIsFloatingBar);
-
   const activeBubbles: Bubble[] = bubbles.filter((bubble: Bubble) =>
-    navbar.bubbles.includes(bubble.bubble),
+    props.bubbles.includes(bubble.bubble),
   );
-
   return (
-    <NavbarContainer isFloating={isFloatingBar}>
-      <NavbarBubblesContainer isFloating={isFloatingBar} bubblecount={activeBubbles.length}>
-        {activeBubbles.map((bubble: Bubble) =>
-          createBubbleButton(bubble, props.changeTab, theme, isFloatingBar),
-        )}
-      </NavbarBubblesContainer>
-    </NavbarContainer>
+    <AnimatePresence>
+      <motion.div
+        key={'bar'}
+        initial={{ y: 0, opacity: 1 }}
+        animate={{
+          y: props.hidden ? -50 : 0,
+          opacity: props.hidden ? 0 : 1,
+        }}
+        exit={{ y: -50, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <NavbarContainer isFloating={props.isFloating} hidden={props.hidden}>
+          <NavbarBubblesContainer isFloating={props.isFloating} bubblecount={activeBubbles.length}>
+            {activeBubbles.map((bubble: Bubble) =>
+              createBubbleButton(bubble, props.changeTab, theme, props.isFloating),
+            )}
+          </NavbarBubblesContainer>
+        </NavbarContainer>
+      </motion.div>
+    </AnimatePresence>
   );
 };

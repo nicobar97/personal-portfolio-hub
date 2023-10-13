@@ -4,16 +4,8 @@ import { CvTab } from './tabs/CvTab';
 import { ArticlesTab } from './tabs/ArticlesTab';
 import { Tabs, TabsEnum } from '../model/Tabs';
 import { MobileFrame } from '../components/MobileFrame';
-import { NavigationBar } from '../components/NavigationBar';
 import { ReadArticleTab } from './tabs/ReadArticleTab';
-import {
-  Navigate,
-  NavigateFunction,
-  Route,
-  Routes,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { Navigate, NavigateFunction, Route, Routes, useNavigate } from 'react-router-dom';
 import { GenerateArticle } from './tabs/GenerateArticle';
 import { MenuTab } from './tabs/MenuTab';
 import { MangaTab } from './tabs/MangaTab';
@@ -21,6 +13,7 @@ import { ChaptersTab } from './tabs/ChaptersTab';
 import { ReadChapterTab } from './tabs/ReadChapterTab';
 import { ParamWrapper } from '../components/ParamsWrapper';
 import { ErrorPopup } from '../components/errors/ErrorPopup';
+import { NavigationBarStateful } from '../components/NavigationBarStateful';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -44,13 +37,14 @@ const openChapter = (chapterId: string, navigate: NavigateFunction) => {
 
 export const TabManager: React.FC = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  console.log(params.articleId!);
   return (
     <>
       <Container>
         <MobileFrame>
-          <NavigationBar changeTab={(tab: TabsEnum) => changeTab(navigate, tab)} />
+          <NavigationBarStateful
+            currentTab={Tabs.ReadChapter}
+            changeTab={(tab: TabsEnum) => changeTab(navigate, tab)}
+          />
           <Routes>
             <Route path="/cv" element={<CvTab />} />
             <Route
@@ -176,5 +170,5 @@ const getPath = (tab: TabsEnum): string => routes.find((route) => route.type ===
 export const getPathFromTab = (tab: TabsEnum): string =>
   getPath(tab) === '*' || !getPath(tab) ? '/' : getPath(tab);
 
-export const getTabFromPath = (path: string): string =>
+export const getTabFromPath = (path: string): TabsEnum =>
   routes.find((route) => path.startsWith(route.path!.split(':')[0]))!.type;
