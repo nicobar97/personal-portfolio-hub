@@ -10,6 +10,7 @@ import { ThemeStyle } from '../model/Theme';
 import { BubbleButton } from './BubbleButton';
 import { Bubbles, BubblesEnum } from '../model/Bubbles';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 // import { getPathFromTab } from '../router';
 // import { useNavbarStore } from '../stores/useNavbarStore';
 // import { TabProps, TabState, useTabStore } from '../stores/useTabStore';
@@ -65,10 +66,10 @@ const bubbles: Bubble[] = [
   },
 ];
 
-const NavbarBubblesContainer = styled.div<{ isFloating: boolean; bubblecount: number }>`
+const NavbarBubblesContainer = styled.div<{ isFloating: boolean; isMobile: boolean }>`
   display: flex;
   align-items: center;
-  ${(props) => (props.bubblecount < 5 ? (props.isFloating ? `width: 25em;` : `width: 35em;`) : ``)}
+  ${(props) => (props.isMobile ? `` : props.isFloating ? `width: 25em` : `width: 35em`)};
   margin: 0 auto;
   z-index: 1;
   justify-content: space-between;
@@ -76,12 +77,6 @@ const NavbarBubblesContainer = styled.div<{ isFloating: boolean; bubblecount: nu
 `;
 
 const NavbarContainer = styled.div<{ isFloating: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-
   transition:
     box-shadow ${(props) => (props.isFloating ? '0.2s' : '0.3s')} ease-in-out,
     background-color 0.2s ease-in,
@@ -138,6 +133,12 @@ type Props = {
 };
 export const NavigationBar: React.FC<Props> = (props: Props) => {
   const theme = useThemeStore();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
   const activeBubbles: Bubble[] = bubbles.filter((bubble: Bubble) =>
     props.bubbles.includes(bubble.bubble),
   );
@@ -160,7 +161,7 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
         }}
       >
         <NavbarContainer isFloating={props.isFloating} hidden={props.hidden}>
-          <NavbarBubblesContainer isFloating={props.isFloating} bubblecount={activeBubbles.length}>
+          <NavbarBubblesContainer isFloating={props.isFloating} isMobile={windowWidth < 470}>
             {activeBubbles.map((bubble: Bubble) =>
               createBubbleButton(bubble, props.changeTab, theme, props.isFloating),
             )}
