@@ -156,6 +156,7 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
         top: 0,
         left: 0,
         right: 0,
+        zIndex: 1,
       }}
     >
       <NavbarContainer isFloating={props.isFloating} hidden={props.hidden}>
