@@ -9,7 +9,7 @@ import { ThemeState, useThemeStore } from '../stores/useThemeStore';
 import { ThemeStyle } from '../model/Theme';
 import { BubbleButton } from './BubbleButton';
 import { Bubbles, BubblesEnum } from '../model/Bubbles';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 // import { getPathFromTab } from '../router';
 // import { useNavbarStore } from '../stores/useNavbarStore';
@@ -143,31 +143,28 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
     props.bubbles.includes(bubble.bubble),
   );
   return (
-    <AnimatePresence>
-      <motion.div
-        key={'bar'}
-        initial={{ y: 0, opacity: 1 }}
-        animate={{
-          y: props.hidden ? -50 : 0,
-          opacity: props.hidden ? 0 : 1,
-        }}
-        exit={{ y: -50, opacity: 0 }}
-        transition={{ duration: 0.2 }}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
-        <NavbarContainer isFloating={props.isFloating} hidden={props.hidden}>
-          <NavbarBubblesContainer isFloating={props.isFloating} isMobile={windowWidth < 470}>
-            {activeBubbles.map((bubble: Bubble) =>
-              createBubbleButton(bubble, props.changeTab, theme, props.isFloating),
-            )}
-          </NavbarBubblesContainer>
-        </NavbarContainer>
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      key={'bar'}
+      initial={{ y: 0, opacity: 1 }}
+      animate={{
+        y: props.hidden ? -50 : 0,
+        opacity: props.hidden ? 0 : 1,
+      }}
+      transition={{ duration: 0.2 }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+      }}
+    >
+      <NavbarContainer isFloating={props.isFloating} hidden={props.hidden}>
+        <NavbarBubblesContainer isFloating={props.isFloating} isMobile={windowWidth < 470}>
+          {activeBubbles.map((bubble: Bubble) =>
+            createBubbleButton(bubble, props.changeTab, theme, props.isFloating),
+          )}
+        </NavbarBubblesContainer>
+      </NavbarContainer>
+    </motion.div>
   );
 };
