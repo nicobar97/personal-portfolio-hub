@@ -183,7 +183,7 @@ export const GameCardsTab: React.FC<Props> = () => {
                         <OpenCardRarity>{selected.rarity}</OpenCardRarity>
                         <OpenCardTitle>{selected.name}</OpenCardTitle>
                         <OpenCardImage
-                          src={`${selected.image.en}?auto=format&dpr=1&w=1280`}
+                          src={`${selected.image.en}?auto=format&dpr=1&w=512`}
                           alt={selected.name}
                         />
                         <CloseButton onClick={() => setSelected(null)}>Close</CloseButton>
