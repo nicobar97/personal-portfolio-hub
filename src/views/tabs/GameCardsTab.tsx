@@ -127,8 +127,9 @@ const Container = styled.div`
 
 const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 2fr));
   max-width: 100%;
+  justify-items: center;
 `;
 
 type Props = {
