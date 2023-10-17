@@ -100,14 +100,17 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
                 </AppButton>
                 <AppButton
                   themeStyle={themeStyle.style}
-                  background="lightgreen"
-                  onClick={() => props.changeTab(Tabs.Articles)}
-                ></AppButton>
-                <AppButton
+                  background="lightblue"
+                  onClick={() => props.changeTab(Tabs.Mangas)}
+                >
+                  <AppTitle>OPCards</AppTitle>
+                  <Icon src={mangaIcon} />
+                </AppButton>
+                {/* <AppButton
                   themeStyle={themeStyle.style}
                   background="lightblue"
                   onClick={() => props.changeTab(Tabs.Articles)}
-                ></AppButton>
+                ></AppButton> */}
               </AppContainer>
             </AnimatedBox>
           </MobileFrame>

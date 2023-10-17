@@ -14,6 +14,7 @@ import { ReadChapterTab } from './tabs/ReadChapterTab';
 import { ParamWrapper } from '../components/ParamsWrapper';
 import { ErrorPopup } from '../components/errors/ErrorPopup';
 import { NavigationBarStateful } from '../components/NavigationBarStateful';
+import { GameCardsTab } from './tabs/GameCardsTab';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -69,6 +70,15 @@ export const TabManager: React.FC = () => {
               }
             />
             <Route path="/articles/generate" element={<GenerateArticle />} />
+            <Route
+              path="/gamecards/op"
+              element={
+                <GameCardsTab
+                  changeTab={(tab: TabsEnum) => changeTab(navigate, tab)}
+                  // openArticle={(articleId: string) => openArticle(articleId, navigate)}
+                />
+              }
+            />
             <Route path="/info" element={<ProjectInfoTab />} />
             <Route
               path="/manga"
@@ -158,6 +168,10 @@ export const routes = [
   {
     path: '/info',
     type: Tabs.ProjectInfo,
+  },
+  {
+    path: '/gamecards/op',
+    type: Tabs.Cards,
   },
   {
     path: '*',

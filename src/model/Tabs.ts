@@ -20,6 +20,8 @@ type Chapters = 'chapters';
 const chapters: Chapters = 'chapters';
 type ReadChapter = 'readChapter';
 const readChapter: ReadChapter = 'readChapter';
+type Cards = 'cards';
+const cards: Cards = 'cards';
 
 export const Tabs = {
   Home: home,
@@ -33,6 +35,7 @@ export const Tabs = {
   Mangas: mangas,
   Chapters: chapters,
   ReadChapter: readChapter,
+  Cards: cards,
 };
 
 export type TabsEnum = (typeof Tabs)[keyof typeof Tabs];
