@@ -128,8 +128,7 @@ const Container = styled.div`
 const CardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-  gap: 1rem;
-  max-width: 80vw;
+  max-width: 100%;
 `;
 
 type Props = {
