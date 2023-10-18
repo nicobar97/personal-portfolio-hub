@@ -15,6 +15,7 @@ import { Either } from 'purify-ts';
 import { GameCard } from '../../model/GameCard';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { CardShow } from '../../components/cards/CardShow';
 
 const Content = styled.div`
   display: flex;
@@ -52,29 +53,6 @@ const Card = styled(motion.div)`
   }
 `;
 
-const OpenCardContainer = styled(motion.div)`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-`;
-
-const OpenCard = styled(motion.div)`
-  display: flex;
-  width: 20%;
-  min-width: 25rem;
-  min-height: 35rem;
-  margin: 0.5rem;
-  border-radius: 15px;
-  border: 1px solid ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.background};
-  overflow: hidden;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
-`;
 
 const CardTitle = styled(motion.h2)`
   font-size: 1rem;
@@ -89,34 +67,10 @@ const CardRarity = styled(motion.h3)`
 
 const CardImage = styled(motion.img)`
   width: 100%;
-  max-height: 10rem;
-  object-fit: cover;
-  border-radius: 5px;
+  border-radius: 0.5rem;
 `;
 
-const OpenCardTitle = styled(motion.h2)`
-  font-size: 1.5rem;
-  margin: 0;
-`;
 
-const OpenCardRarity = styled(motion.h3)`
-  font-size: 1rem;
-  margin: 0.5rem 0;
-  color: ${(props) => props.theme.text};
-`;
-
-const OpenCardImage = styled(motion.img)`
-  max-height: 20rem;
-  border-radius: 5px;
-`;
-
-const CloseButton = styled(motion.button)`
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: ${(props) => props.theme.text};
-`;
 
 const Container = styled.div`
   display: flex;
@@ -160,8 +114,8 @@ export const GameCardsTab: React.FC<Props> = () => {
                           layoutId={gameCard.id}
                           onClick={() => setSelected(gameCard)}
                         >
-                          <CardRarity>{gameCard.rarity}</CardRarity>
                           <CardTitle>{gameCard.name}</CardTitle>
+                          <CardRarity>{gameCard.rarity}</CardRarity>
                           <CardImage
                             src={`${gameCard.image.en}?auto=format&dpr=1&fit=crop&w=256`}
                             alt={gameCard.name}
@@ -178,17 +132,7 @@ export const GameCardsTab: React.FC<Props> = () => {
                 </CardGrid>
                 <AnimatePresence>
                   {selected && (
-                    <OpenCardContainer>
-                      <OpenCard layoutId={selected.id}>
-                        <OpenCardRarity>{selected.rarity}</OpenCardRarity>
-                        <OpenCardTitle>{selected.name}</OpenCardTitle>
-                        <OpenCardImage
-                          src={`${selected.image.en}?auto=format&dpr=1&w=512`}
-                          alt={selected.name}
-                        />
-                        <CloseButton onClick={() => setSelected(null)}>Close</CloseButton>
-                      </OpenCard>
-                    </OpenCardContainer>
+                    <CardShow card={selected} onClose={() => setSelected(null)}></CardShow>
                   )}
                 </AnimatePresence>
               </Container>
