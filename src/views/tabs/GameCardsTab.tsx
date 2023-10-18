@@ -47,22 +47,46 @@ const Card = styled(motion.div)`
   justify-content: center;
   align-items: center;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
-
+  padding: .5rem;
   &:hover {
     transform: scale(1.05);
   }
 `;
 
-const CardTitle = styled(motion.h2)`
-  font-size: 1rem;
+const CardHeader = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem;
+  padding-top: 0rem;
+`;
+
+const OverTitle = styled(motion.h5)`
+  font-size: 0.5rem;
   margin: 0;
 `;
 
-const CardRarity = styled(motion.h3)`
-  font-size: 0.5rem;
-  margin: 0.5rem 0;
-  color: ${(props) => props.theme.text};
+const Title = styled(motion.h2)`
+  font-size: .8rem;
+  margin: 0;
 `;
+
+const SubTitle = styled(motion.h3)`
+  font-size: 0.4rem;
+  margin: 0;
+`;
+
+// const CardTitle = styled(motion.h2)`
+//   font-size: 1rem;
+//   margin: 0;
+// `;
+
+// const CardRarity = styled(motion.h3)`
+//   font-size: 0.5rem;
+//   margin: 0.5rem 0;
+//   color: ${(props) => props.theme.text};
+// `;
 
 const CardImage = styled(motion.img)`
   width: 100%;
@@ -111,8 +135,11 @@ export const GameCardsTab: React.FC<Props> = () => {
                           layoutId={gameCard.id}
                           onClick={() => setSelected(gameCard)}
                         >
-                          <CardTitle>{gameCard.name}</CardTitle>
-                          <CardRarity>{gameCard.rarity}</CardRarity>
+                          <CardHeader>
+                            <OverTitle>{gameCard.slug}</OverTitle>
+                            <Title>{gameCard.name}</Title>
+                            <SubTitle>{gameCard.set}</SubTitle>
+                          </CardHeader>
                           <CardImage
                             src={`${gameCard.image.en}?auto=format&dpr=1&fit=crop&w=256`}
                             alt={gameCard.name}
