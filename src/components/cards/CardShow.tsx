@@ -10,9 +10,28 @@ const Container = styled(motion.div)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1;
   overflow: hidden;
   max-height: 80vh;
+  overscroll-behavior: contain;
+`;
+
+const Card = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  max-width: 50rem;
+  min-height: 70vh;
+  padding: 1rem;
+  border: 1px solid ${(props) => props.theme.border};
+  border-radius: 1rem;
+  background-color: ${(props) => props.theme.background};
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  align-items: left;
+  margin: 1rem;
+  gap: 1rem;
+  box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
+  padding-bottom: 3rem;
 `;
 
 const OverTitle = styled(motion.h5)`
@@ -32,6 +51,7 @@ const SubTitle = styled(motion.h3)`
 
 const Property = styled(motion.h3)`
   font-size: 1rem;
+  font-weight: 400;
   margin: 0.5rem 0;
   color: ${(props) => props.theme.text};
 `;
@@ -41,27 +61,10 @@ const Image = styled(motion.img)`
   border-radius: 0.5rem;
 `;
 
-const Card = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  max-width: 50rem;
-  min-height: 70vh;
-  padding: 1rem;
-  border: 1px solid ${(props) => props.theme.border};
-  border-radius: 1rem;
-  background-color: ${(props) => props.theme.background};
-  overflow-y: auto;
-  overflow-x: hidden;
-  align-items: left;
-  gap: 1rem;
-  box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
-  padding-bottom: 3rem;
-`;
-
 const CloseButton = styled(motion.button)`
   position: absolute;
   bottom: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   background: none;
   border: none;
   width: 80%;
@@ -74,6 +77,8 @@ const CloseButton = styled(motion.button)`
   background-color: ${(props) => props.theme.accent.color};
   box-shadow: ${(props) => props.theme.shadow} 0px 7px 20px 0px;
   border-radius: 0.5rem;
+  opacity: 0;
+  animation: fadeIn 0.5s ease .5s 1 forwards;
 `;
 
 const Header = styled(motion.div)`
@@ -87,7 +92,9 @@ const Content = styled(motion.div)<{ currentWidth: number; thresholdWidth: numbe
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: ${(props) => (props.currentWidth < props.thresholdWidth ? 'column' : 'row')};
+  padding-left: 2rem;
+  flex-direction: ${(props) =>
+    props.currentWidth < props.thresholdWidth ? 'column' : 'row-reverse'};
 `;
 
 const Right = styled(motion.div)`
@@ -117,6 +124,11 @@ const Footer = styled(motion.div)`
 const ImageContainer = styled(motion.div)`
   max-width: 20rem;
   width: 100%;
+`;
+
+const Description = styled(motion.div)`
+  padding-left: 5rem;
+  padding: 1rem;
 `;
 
 type Props = {
@@ -151,6 +163,9 @@ export const CardShow: React.FC<Props> = (props: Props) => {
             </ImageContainer>
           </Left>
           <Right>
+            <Title>Details</Title>
+            <br></br>
+
             <Property>Type: {props.card.type}</Property>
             <Property>Rarity: {props.card.rarity}</Property>
             <Property>Feature: {props.card.feature}</Property>
@@ -162,9 +177,12 @@ export const CardShow: React.FC<Props> = (props: Props) => {
             <Property>Counter: {props.card.counter ?? 'Uncounterable'}</Property>
           </Right>
         </Content>
-        {/* <Content>
-          <Property>Card Text: {props.card.text}</Property>
-        </Content> */}
+        {props.card.text ? (
+          <Description>
+            <Title>Effect</Title>
+            <Property>Card Text: {props.card.text}</Property>
+          </Description>
+        ) : null}
         <Footer>
           <CloseButton onClick={props.onClose}>Close</CloseButton>
         </Footer>
