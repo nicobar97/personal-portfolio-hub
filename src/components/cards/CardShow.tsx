@@ -2,10 +2,9 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { GameCard } from '../../model/GameCard';
 import { useState, useEffect } from 'react';
-
 const Container = styled(motion.div)`
   position: fixed;
-  top: 10rem;
+  top: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,33 +42,34 @@ const Image = styled(motion.img)`
 
 const Card = styled(motion.div)`
   display: flex;
+  flex-direction: column;
   max-width: 50rem;
   min-height: 70vh;
   padding: 1rem;
-  border-radius: 1rem;
   border: 1px solid ${(props) => props.theme.border};
+  border-radius: 1rem;
   background-color: ${(props) => props.theme.background};
-  overflow: hidden;
-  flex-direction: column;
-  gap: 1rem;
-  /* justify-content: center; */
+  overflow-y: scroll;
+  overflow-x: hidden;
   align-items: left;
+  gap: 1rem;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
+  padding-bottom: 3rem;
 `;
 
 const CloseButton = styled(motion.button)`
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 2rem;
   background: none;
   border: none;
+  width: 80%;
   font-size: 1rem;
   font-weight: 600;
   padding: 0.5rem;
   cursor: pointer;
   color: ${(props) => props.theme.text};
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 2rem;
   text-align: center;
-  width: 80%;
   background-color: ${(props) => props.theme.accent.color};
   box-shadow: ${(props) => props.theme.shadow} 0px 7px 20px 0px;
   border-radius: 0.5rem;
@@ -84,26 +84,26 @@ const Header = styled(motion.div)`
 
 const Content = styled(motion.div)<{ currentWidth: number; thresholdWidth: number }>`
   display: flex;
-  flex-direction: ${(props) => (props.currentWidth < props.thresholdWidth ? 'column' : 'row')};
   justify-content: center;
   align-items: center;
+  flex-direction: ${(props) => (props.currentWidth < props.thresholdWidth ? 'column' : 'row')};
 `;
 
 const Right = styled(motion.div)`
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
+  padding: 1rem;
 `;
 
 const Left = styled(motion.div)`
   display: flex;
-  padding: 0.5rem;
-  width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem;
+  width: 100%;
 `;
 
 const Footer = styled(motion.div)`
@@ -114,8 +114,8 @@ const Footer = styled(motion.div)`
 `;
 
 const ImageContainer = styled(motion.div)`
-  width: 100%;
   max-width: 20rem;
+  width: 100%;
 `;
 
 type Props = {
@@ -124,10 +124,13 @@ type Props = {
 };
 
 export const CardShow: React.FC<Props> = (props: Props) => {
-  const [currentWidth, setCurrentWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
-    setCurrentWidth(window.innerWidth);
-  }, [window.innerWidth]);
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
+
   return (
     <Container>
       <Card layoutId={props.card.id}>
@@ -136,10 +139,14 @@ export const CardShow: React.FC<Props> = (props: Props) => {
           <Title>{props.card.name}</Title>
           <SubTitle>{props.card.set}</SubTitle>
         </Header>
-        <Content currentWidth={currentWidth} thresholdWidth={580}>
+        <Content currentWidth={windowWidth} thresholdWidth={580}>
           <Left>
             <ImageContainer>
-              <Image src={`${props.card.image.en}?auto=format&dpr=1&w=512`} alt={props.card.name} />
+              <Image
+                src={`${props.card.image.en}?auto=format&dpr=1&w=512`}
+                alt={props.card.name}
+                loading="lazy"
+              />
             </ImageContainer>
           </Left>
           <Right>

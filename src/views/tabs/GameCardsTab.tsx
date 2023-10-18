@@ -53,7 +53,6 @@ const Card = styled(motion.div)`
   }
 `;
 
-
 const CardTitle = styled(motion.h2)`
   font-size: 1rem;
   margin: 0;
@@ -69,8 +68,6 @@ const CardImage = styled(motion.img)`
   width: 100%;
   border-radius: 0.5rem;
 `;
-
-
 
 const Container = styled.div`
   display: flex;
@@ -119,6 +116,7 @@ export const GameCardsTab: React.FC<Props> = () => {
                           <CardImage
                             src={`${gameCard.image.en}?auto=format&dpr=1&fit=crop&w=256`}
                             alt={gameCard.name}
+                            loading="lazy"
                           />
                         </Card>
                       )),
