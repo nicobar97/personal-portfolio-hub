@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { GameCard } from '../../model/GameCard';
 import { useState, useEffect } from 'react';
+
 const Container = styled(motion.div)`
   position: fixed;
   top: 10%;
@@ -10,7 +11,7 @@ const Container = styled(motion.div)`
   justify-content: center;
   align-items: center;
   z-index: 1;
-  overflow-y: scroll;
+  overflow: hidden;
   max-height: 80vh;
 `;
 
@@ -49,7 +50,7 @@ const Card = styled(motion.div)`
   border: 1px solid ${(props) => props.theme.border};
   border-radius: 1rem;
   background-color: ${(props) => props.theme.background};
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   align-items: left;
   gap: 1rem;

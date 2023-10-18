@@ -24,8 +24,8 @@ const Content = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  overflow-x: hidden;
   margin-top: 0.5rem;
+  overflow: hidden;
   padding: 1.5rem;
   -webkit-user-select: text;
   -moz-user-select: text;
