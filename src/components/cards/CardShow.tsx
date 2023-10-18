@@ -92,7 +92,8 @@ const Content = styled(motion.div)<{ currentWidth: number; thresholdWidth: numbe
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 2rem;
+  padding-left: ${(props) =>
+    props.currentWidth < props.thresholdWidth ? '0rem' : '2rem'};
   flex-direction: ${(props) =>
     props.currentWidth < props.thresholdWidth ? 'column' : 'row-reverse'};
 `;
