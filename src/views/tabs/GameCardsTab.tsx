@@ -36,6 +36,7 @@ const Content = styled.div`
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -53,9 +54,11 @@ type Props = {
 };
 
 export const GameCardsTab: React.FC<Props> = () => {
+  const [keyword, setKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState(keyword);
   const query = useQuery<Either<FetchAuthMapError, GameCard[]>, FetchAuthMapError>({
-    queryKey: ['gameCards'],
-    queryFn: () => getGameCards().run(),
+    queryKey: ['gameCards', searchKeyword],
+    queryFn: () => getGameCards({ keyword: searchKeyword }).run(),
   });
 
   const [selected, setSelected] = useState<GameCard | null>(null);
@@ -67,6 +70,12 @@ export const GameCardsTab: React.FC<Props> = () => {
           {query.isSuccess && (
             <AnimateFadeIn trigger={query.isSuccess}>
               <Container>
+                <input
+                  type="text"
+                  placeholder="Search for cards..."
+                  onKeyDown={() => setSearchKeyword(keyword)}
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
                 <CardGrid>
                   {query.data
                     .map((gameCards) =>

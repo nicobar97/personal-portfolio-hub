@@ -5,11 +5,23 @@ import { FetchAuthMapError } from '../model/errors';
 import { GameCard } from '../model/GameCard';
 import { config } from '../configuration/ViteConfiguration';
 
-export type GetGameCards = () => EitherAsync<FetchAuthMapError, GameCard[]>;
+export type GameCardFilters = {
+  keyword?: string;
+  types?: string;
+  sets?: string;
+  rarities?: string;
+  features?: string;
+  colors?: string;
+  attributes?: string;
+};
+
+export type GetGameCards = (
+  filters?: GameCardFilters,
+) => EitherAsync<FetchAuthMapError, GameCard[]>;
 export type GetGameCard = (id: string) => EitherAsync<FetchAuthMapError, GameCard>;
-export const getGameCards: GetGameCards = () =>
+export const getGameCards: GetGameCards = (filters?: GameCardFilters) =>
   mapFetchFactory().fetch<GameCard[], GameCard[]>(
-    `${config.baseUrl}/api/gamecards/op/all`,
+    `${config.baseUrl}/api/gamecards/op/all${getFilters(filters)}`,
     { method: 'GET' },
     (gameCards) =>
       Right(
@@ -32,3 +44,12 @@ export const getGameCard: GetGameCard = (id: string) =>
     { method: 'GET' },
     (card) => Right(card),
   );
+
+const getFilters = (filters?: GameCardFilters) =>
+  `${filters?.keyword ? `&keyword=${filters.keyword}` : ''}${
+    filters?.types ? `&types=${filters.types}` : ''
+  }${filters?.sets ? `&sets=${filters.sets}` : ''}${
+    filters?.rarities ? `&rarities=${filters.rarities}` : ''
+  }${filters?.features ? `&features=${filters.features}` : ''}${
+    filters?.colors ? `&colors=${filters.colors}` : ''
+  }${filters?.attributes ? `&attributes=${filters.attributes}` : ''}`;
