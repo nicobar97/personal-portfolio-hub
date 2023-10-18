@@ -14,8 +14,9 @@ import { TabsEnum } from '../../model/Tabs';
 import { Either } from 'purify-ts';
 import { GameCard } from '../../model/GameCard';
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { CardShow } from '../../components/cards/CardShow';
+import { CardPreview } from '../../components/cards/CardPreview';
 
 const Content = styled.div`
   display: flex;
@@ -31,66 +32,6 @@ const Content = styled.div`
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
-`;
-
-const Card = styled(motion.div)`
-  display: inline-flex;
-  width: 20%;
-  min-width: 8rem;
-  min-height: 8rem;
-  margin: 0.5rem;
-  border-radius: 15px;
-  border: 1px solid ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.background};
-  overflow: hidden;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
-  padding: .5rem;
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const CardHeader = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: .5rem;
-  padding-top: 0rem;
-`;
-
-const OverTitle = styled(motion.h5)`
-  font-size: 0.5rem;
-  margin: 0;
-`;
-
-const Title = styled(motion.h2)`
-  font-size: .8rem;
-  margin: 0;
-`;
-
-const SubTitle = styled(motion.h3)`
-  font-size: 0.4rem;
-  margin: 0;
-`;
-
-// const CardTitle = styled(motion.h2)`
-//   font-size: 1rem;
-//   margin: 0;
-// `;
-
-// const CardRarity = styled(motion.h3)`
-//   font-size: 0.5rem;
-//   margin: 0.5rem 0;
-//   color: ${(props) => props.theme.text};
-// `;
-
-const CardImage = styled(motion.img)`
-  width: 100%;
-  border-radius: 0.5rem;
 `;
 
 const Container = styled.div`
@@ -129,24 +70,11 @@ export const GameCardsTab: React.FC<Props> = () => {
                 <CardGrid>
                   {query.data
                     .map((gameCards) =>
-                      gameCards.sort().map((gameCard) => (
-                        <Card
-                          key={gameCard.id}
-                          layoutId={gameCard.id}
-                          onClick={() => setSelected(gameCard)}
-                        >
-                          <CardHeader>
-                            <OverTitle>{gameCard.slug}</OverTitle>
-                            <Title>{gameCard.name}</Title>
-                            <SubTitle>{gameCard.set}</SubTitle>
-                          </CardHeader>
-                          <CardImage
-                            src={`${gameCard.image.en}?auto=format&dpr=1&fit=crop&w=256`}
-                            alt={gameCard.name}
-                            loading="lazy"
-                          />
-                        </Card>
-                      )),
+                      gameCards
+                        .sort()
+                        .map((gameCard) => (
+                          <CardPreview card={gameCard} onClick={() => setSelected(gameCard)} />
+                        )),
                     )
                     .mapLeft((err: FetchAuthMapError) => (
                       <AnimateFadeInDown trigger={query.isSuccess}>
@@ -156,9 +84,7 @@ export const GameCardsTab: React.FC<Props> = () => {
                     .extract()}
                 </CardGrid>
                 <AnimatePresence>
-                  {selected && (
-                    <CardShow card={selected} onClose={() => setSelected(null)}></CardShow>
-                  )}
+                  {selected && <CardShow card={selected} onClose={() => setSelected(null)} />}
                 </AnimatePresence>
               </Container>
             </AnimateFadeIn>
