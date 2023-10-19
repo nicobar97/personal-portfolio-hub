@@ -4,7 +4,6 @@ import { GameCard } from '../../model/GameCard';
 
 const Card = styled(motion.div)`
   display: inline-flex;
-  width: 20%;
   min-width: 8rem;
   min-height: 8rem;
   margin: 0.5rem;
