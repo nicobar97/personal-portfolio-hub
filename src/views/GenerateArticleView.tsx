@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import genArticleIcon from '../../assets/icons/ai-write.png';
-import { MobileFrame } from '../../components/MobileFrame';
-import { useThemeStore } from '../../stores/useThemeStore';
-import { AnimatedBox } from '../../components/AnimatedBox';
-import { BubbleButton } from '../../components/BubbleButton';
+import genArticleIcon from '../assets/icons/ai-write.png';
+import { MobileFrame } from '../components/misc/MobileFrame';
+import { useThemeStore } from '../stores/useThemeStore';
+import { AnimatedBox } from '../components/animations/AnimatedBox';
+import { BubbleButton } from '../components/navbar/BubbleButton';
 import Select, { SingleValue, Theme } from 'react-select';
 import { useState } from 'react';
-import { ArticlePrompt } from '../../model/Article';
-import { theme } from '../../style/style';
-import { ThemeStyleEnum } from '../../model/Theme';
+import { ArticlePrompt } from '../model/Article';
+import { theme } from '../style/style';
+import { ThemeStyleEnum } from '../model/Theme';
 import { useMutation } from '@tanstack/react-query';
-import { generateArticle } from '../../api/Article';
-import { AnimateFade } from '../../components/animations/Animations';
+import { generateArticle } from '../api/Article';
+import { AnimateFade } from '../components/animations/Animations';
 
 const Content = styled.div`
   display: flex;
@@ -126,7 +126,7 @@ const handleLengthChange =
     });
   };
 
-export const GenerateArticle: React.FC = () => {
+export const GenerateArticleView: React.FC = () => {
   const themeStyle = useThemeStore();
 
   const [articlePrompt, setArticlePrompt] = useState<ArticlePrompt>({

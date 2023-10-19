@@ -1,21 +1,22 @@
 import styled from 'styled-components';
-import genArticleIcon from '../../assets/icons/ai-write.png';
-import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/AnimatedBox';
-import { getArticles } from '../../api/Article';
+import genArticleIcon from '../assets/icons/ai-write.png';
+import { MobileFrame } from '../components/misc/MobileFrame';
+import { AnimatedBox } from '../components/animations/AnimatedBox';
+import { getArticles } from '../api/Article';
 import { useQuery } from '@tanstack/react-query';
-import { SimpleArticle } from '../../model/Article';
-import { FetchAuthMapError } from '../../model/errors';
+import { SimpleArticle } from '../model/Article';
+import { FetchAuthMapError } from '../model/errors';
 import {
   AnimateFade,
   AnimateFadeIn,
   AnimateFadeInDown,
-} from '../../components/animations/Animations';
-import { Loader } from '../../components/Loader';
-import { handleError } from '../../components/errors/ErrorPopup';
-import { BubbleButton } from '../../components/BubbleButton';
-import { Tabs, TabsEnum } from '../../model/Tabs';
+} from '../components/animations/Animations';
+import { Loader } from '../components/misc/Loader';
+import { handleError } from '../components/errors/ErrorPopup';
+import { BubbleButton } from '../components/navbar/BubbleButton';
 import { Either } from 'purify-ts';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../Routes';
 
 const Content = styled.div`
   display: flex;
@@ -71,16 +72,14 @@ const parseDate = (date: Date) =>
     timeZone: 'Europe/Rome', // Time zone set to Italy
   });
 
-type Props = {
-  openArticle: (articleId: string) => void;
-  changeTab: (tab: TabsEnum) => void;
-};
-
-export const ArticlesTab: React.FC<Props> = (props: Props) => {
+export const ArticleListView: React.FC = () => {
+  const navigate = useNavigate();
   const query = useQuery<Either<FetchAuthMapError, SimpleArticle[]>, FetchAuthMapError>({
     queryKey: ['articles'],
     queryFn: () => getArticles().run(),
   });
+
+  const getReadArticleUrl = (articleId: string) => Routes.ReadArticle.replace(':articleId', articleId);
 
   return (
     <AnimateFade>
@@ -93,7 +92,7 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                   articles
                     .sort((a, b) => b.date.getTime() - a.date.getTime())
                     .map((article) => (
-                      <Clickable onClick={() => props.openArticle(article.id)}>
+                      <Clickable onClick={() => navigate(getReadArticleUrl(article.id))}>
                         <AnimatedBox>
                           <Info>On {parseDate(article.date)}</Info>
                           <Title>{article.title}</Title>
@@ -117,7 +116,7 @@ export const ArticlesTab: React.FC<Props> = (props: Props) => {
                 .extract()}
               <BubbleContainer>
                 <BubbleButton
-                  onBubbleClick={() => props.changeTab(Tabs.GenerateArticle)}
+                  onBubbleClick={() => navigate(Routes.GenerateArticle)}
                   rounded={true}
                   scale={1.2}
                   darkModeInvert={false}

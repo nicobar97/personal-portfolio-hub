@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { ThemeStyle } from '../model/Theme';
+import { ThemeStyle } from '../../model/Theme';
 
 const Icon = styled(motion.img)<{
   darkModeInvert: boolean;

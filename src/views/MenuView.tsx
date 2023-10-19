@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import articleIcon from '../../assets/icons/article.png';
-import mangaIcon from '../../assets/icons/manga.png';
-import { MobileFrame } from '../../components/MobileFrame';
-import { useThemeStore } from '../../stores/useThemeStore';
-import { AnimatedBox } from '../../components/AnimatedBox';
-import { Tabs, TabsEnum } from '../../model/Tabs';
-import { AnimateFade } from '../../components/animations/Animations';
-import { ThemeStyleEnum } from '../../model/Theme';
+import articleIcon from '../assets/icons/article.png';
+import mangaIcon from '../assets/icons/manga.png';
+import { MobileFrame } from '../components/misc/MobileFrame';
+import { useThemeStore } from '../stores/useThemeStore';
+import { AnimatedBox } from '../components/animations/AnimatedBox';
+import { AnimateFade } from '../components/animations/Animations';
+import { ThemeStyleEnum } from '../model/Theme';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../Routes';
 
 const Content = styled.div`
   display: flex;
@@ -67,11 +68,8 @@ const AppButton = styled.button<{ background: string; themeStyle: ThemeStyleEnum
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
 `;
 
-type Props = {
-  changeTab: (tab: TabsEnum) => void;
-};
-
-export const MenuTab: React.FC<Props> = (props: Props) => {
+export const MenuView: React.FC = () => {
+  const navigate = useNavigate();
   const themeStyle = useThemeStore();
 
   return (
@@ -85,7 +83,7 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
                 <AppButton
                   themeStyle={themeStyle.style}
                   background="indianred"
-                  onClick={() => props.changeTab(Tabs.Articles)}
+                  onClick={() => navigate(Routes.ArticleList)}
                 >
                   <AppTitle>Articles</AppTitle>
                   <Icon src={articleIcon} />
@@ -93,7 +91,7 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
                 <AppButton
                   themeStyle={themeStyle.style}
                   background="lightyellow"
-                  onClick={() => props.changeTab(Tabs.Mangas)}
+                  onClick={() => navigate(Routes.MangaList)}
                 >
                   <AppTitle>Mangas</AppTitle>
                   <Icon src={mangaIcon} />
@@ -101,7 +99,7 @@ export const MenuTab: React.FC<Props> = (props: Props) => {
                 <AppButton
                   themeStyle={themeStyle.style}
                   background="lightblue"
-                  onClick={() => props.changeTab(Tabs.Cards)}
+                  onClick={() => navigate(Routes.OpCardList)}
                 >
                   <AppTitle>OPCards</AppTitle>
                   <Icon src={mangaIcon} />

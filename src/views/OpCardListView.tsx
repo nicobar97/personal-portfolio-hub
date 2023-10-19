@@ -1,22 +1,17 @@
 import styled from 'styled-components';
-import { MobileFrame } from '../../components/MobileFrame';
-import { getGameCards } from '../../api/GameCard';
+import { MobileFrame } from '../components/misc/MobileFrame';
+import { getGameCards } from '../api/GameCard';
 import { useQuery } from '@tanstack/react-query';
-import { FetchAuthMapError } from '../../model/errors';
-import {
-  AnimateFade,
-  AnimateFadeIn,
-  AnimateFadeInDown,
-} from '../../components/animations/Animations';
-import { Loader } from '../../components/Loader';
-import { handleError } from '../../components/errors/ErrorPopup';
-import { TabsEnum } from '../../model/Tabs';
+import { FetchAuthMapError } from '../model/errors';
+import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../components/animations/Animations';
+import { Loader } from '../components/misc/Loader';
+import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
-import { GameCard } from '../../model/GameCard';
+import { GameCard } from '../model/GameCard';
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { CardShow } from '../../components/cards/CardShow';
-import { CardPreview } from '../../components/cards/CardPreview';
+import { CardShow } from '../components/cards/CardShow';
+import { CardPreview } from '../components/cards/CardPreview';
 
 const Content = styled.div`
   display: flex;
@@ -64,15 +59,10 @@ const SearchBarContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 `;
 
-
-type Props = {
-  changeTab: (tab: TabsEnum) => void;
-};
-
-export const GameCardsTab: React.FC<Props> = () => {
+export const OpCardListView: React.FC = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   const query = useQuery<Either<FetchAuthMapError, GameCard[]>, FetchAuthMapError>({
@@ -91,16 +81,16 @@ export const GameCardsTab: React.FC<Props> = () => {
     <AnimateFade>
       <Content>
         <MobileFrame>
-          <SearchBarContainer>
-            <SearchBar
-              type="text"
-              placeholder="Search for cards..."
-              value={searchKeyword}
-              onChange={handleSearchChange}
-            />
-          </SearchBarContainer>
           {query.isSuccess && (
             <AnimateFadeIn trigger={query.isSuccess}>
+              <SearchBarContainer>
+                <SearchBar
+                  type="text"
+                  placeholder="Search for cards..."
+                  value={searchKeyword}
+                  onChange={handleSearchChange}
+                />
+              </SearchBarContainer>
               <Container>
                 <CardGrid>
                   {query.data

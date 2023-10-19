@@ -2,35 +2,36 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { GameCard } from '../../model/GameCard';
 import { useState, useEffect } from 'react';
+import { useNavbarStore } from '../navbar/useNavbarStore';
 
-const Container = styled(motion.div)`
+const Container = styled(motion.div)<{ isMobile: boolean }>`
   position: fixed;
-  top: 8%;
+  top: ${(props) => (props.isMobile ? '0%' : '12%')};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  max-height: 80vh;
+  max-height: ${(props) => (props.isMobile ? '100vh' : '80vh')};
   overscroll-behavior: contain;
 `;
 
-const Card = styled(motion.div)`
+const Card = styled(motion.div)<{ isMobile: boolean; isBarFloating: boolean }>`
   display: flex;
   flex-direction: column;
-  max-width: 50rem;
-  min-height: 72vh;
-  padding: 1rem;
-  border: 1px solid ${(props) => props.theme.border};
-  border-radius: 1rem;
+  width: ${(props) => (props.isMobile ? '100vw' : '')};
+  max-width: 75%;
+  max-height: ${(props) => (props.isMobile ? '100vh' : '70vh')};
+  padding: 3rem;
+  padding-top: ${(props) => (props.isMobile ? (props.isBarFloating ? '8rem' : '5rem') : '3rem')};
+  border: ${(props) => (props.isMobile ? 'none' : '1px solid')} ${(props) => props.theme.border};
+  border-radius: 1.5rem;
   background-color: ${(props) => props.theme.background};
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  align-items: left;
-  margin: 1rem;
   gap: 1rem;
-  padding-bottom: 3rem;
+  padding-bottom: 3.5rem;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
 `;
 
@@ -67,7 +68,7 @@ const CloseButton = styled(motion.button)`
   margin-bottom: 2.5rem;
   background: none;
   border: none;
-  width: 80%;
+  width: 72%;
   font-size: 1rem;
   font-weight: 600;
   padding: 0.5rem;
@@ -88,11 +89,10 @@ const Header = styled(motion.div)`
   align-items: center;
 `;
 
-const Content = styled(motion.div)<{ currentWidth: number; thresholdWidth: number }>`
+const Content = styled(motion.div)<{ isMobile: boolean }>`
   display: flex;
   justify-content: space-between;
-  flex-direction: ${(props) =>
-    props.currentWidth < props.thresholdWidth ? 'column' : 'row-reverse'};
+  flex-direction: ${(props) => (props.isMobile ? 'column' : 'row-reverse')};
 `;
 
 const Right = styled(motion.div)`
@@ -127,12 +127,15 @@ const Description = styled(motion.div)`
   padding: 1rem;
 `;
 
+const isMobileView = (windowWidth: number) => windowWidth < 580;
+
 type Props = {
   card: GameCard;
   onClose: () => void;
 };
 
 export const CardShow: React.FC<Props> = (props: Props) => {
+  const navbarStore = useNavbarStore();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -141,14 +144,18 @@ export const CardShow: React.FC<Props> = (props: Props) => {
   });
 
   return (
-    <Container>
-      <Card layoutId={props.card.id}>
+    <Container isMobile={isMobileView(windowWidth)}>
+      <Card
+        layoutId={props.card.id}
+        isMobile={isMobileView(windowWidth)}
+        isBarFloating={navbarStore.floating}
+      >
         <Header>
           <OverTitle>{props.card.slug}</OverTitle>
           <Title>{props.card.name}</Title>
           <SubTitle>{props.card.set}</SubTitle>
         </Header>
-        <Content currentWidth={windowWidth} thresholdWidth={580}>
+        <Content isMobile={isMobileView(windowWidth)}>
           <Left>
             <ImageContainer>
               <Image

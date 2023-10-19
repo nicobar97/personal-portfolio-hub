@@ -1,18 +1,18 @@
 import styled from 'styled-components';
-import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/AnimatedBox';
-import { getArticle } from '../../api/Article';
+import { MobileFrame } from '../components/misc/MobileFrame';
+import { AnimatedBox } from '../components/animations/AnimatedBox';
+import { getArticle } from '../api/Article';
 import { useQuery } from '@tanstack/react-query';
-import { Article } from '../../model/Article';
-import { FetchAuthMapError } from '../../model/errors';
+import { Article } from '../model/Article';
+import { FetchAuthMapError } from '../model/errors';
 import {
   AnimateFade,
   AnimateFadeIn,
   AnimateFadeInDown,
-} from '../../components/animations/Animations';
-import { handleError } from '../../components/errors/ErrorPopup';
+} from '../components/animations/Animations';
+import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
-import { Loader } from '../../components/Loader';
+import { Loader } from '../components/misc/Loader';
 
 const Content = styled.div`
   display: flex;
@@ -30,17 +30,9 @@ const Content = styled.div`
   user-select: text;
 `;
 
-// const MainTitle = styled.h1`
-//   margin: 0rem;
-// `;
-
 const Title = styled.h2`
   margin: 0rem;
 `;
-
-// const SubTitle = styled.h3`
-//   margin: 0rem;
-// `;
 
 const SubSubTitle = styled.h4`
   margin: 0rem;
@@ -71,7 +63,7 @@ type Props = {
   articleId: string;
 };
 
-export const ReadArticleTab: React.FC<Props> = (props: Props) => {
+export const ReadArticleView: React.FC<Props> = (props: Props) => {
   const query = useQuery<Either<FetchAuthMapError, Article>, FetchAuthMapError>({
     queryKey: ['article', props.articleId],
     queryFn: () => getArticle(props.articleId).run(),

@@ -1,19 +1,20 @@
 import styled from 'styled-components';
-import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/AnimatedBox';
+import { MobileFrame } from '../components/misc/MobileFrame';
+import { AnimatedBox } from '../components/animations/AnimatedBox';
 import { useQuery } from '@tanstack/react-query';
-import { FetchAuthMapError, FetchMapError } from '../../model/errors';
+import { FetchAuthMapError, FetchMapError } from '../model/errors';
 import {
   AnimateFade,
   AnimateFadeIn,
   AnimateFadeInDown,
-} from '../../components/animations/Animations';
-import { Loader } from '../../components/Loader';
-import { handleError } from '../../components/errors/ErrorPopup';
-import { TabsEnum } from '../../model/Tabs';
+} from '../components/animations/Animations';
+import { Loader } from '../components/misc/Loader';
+import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
-import { getChapters } from '../../api/Manga';
-import { ChapterList, SupportedProviders } from '../../model/Manga';
+import { getChapters } from '../api/Manga';
+import { ChapterList, SupportedProviders } from '../model/Manga';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../Routes';
 
 const Content = styled.div`
   display: flex;
@@ -48,13 +49,15 @@ const Info = styled.p`
 
 type Props = {
   mangaId: string;
-  openChapter: (url: string) => void;
-  changeTab: (tab: TabsEnum) => void;
 };
 
-export const ChaptersTab: React.FC<Props> = (props: Props) => {
+const getChapterUrl = (chapterId: string) =>
+  Routes.ReadMangaChapter.replace(':chapterId', btoa(chapterId));
+
+export const ChapterListView: React.FC<Props> = (props: Props) => {
   const provider = SupportedProviders.TCBScans;
 
+  const navigate = useNavigate();
   const query = useQuery<Either<FetchMapError, ChapterList>, FetchMapError>({
     queryKey: ['chapters', props.mangaId, provider],
     queryFn: () => getChapters(provider, atob(props.mangaId)).run(),
@@ -69,7 +72,7 @@ export const ChaptersTab: React.FC<Props> = (props: Props) => {
               .map((mangaList) =>
                 mangaList.chapters.map((chapter) => (
                   <AnimateFadeIn trigger={query.isSuccess}>
-                    <Clickable onClick={() => props.openChapter(chapter.url)}>
+                    <Clickable onClick={() => navigate(getChapterUrl(chapter.url))}>
                       <AnimatedBox>
                         <Title>{chapter.title}</Title>
                         <Info>

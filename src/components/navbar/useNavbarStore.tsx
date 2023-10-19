@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { TabsEnum } from '../model/Tabs';
-import { Bubbles, BubblesEnum } from '../model/Bubbles';
+import { Bubbles, BubblesEnum } from '../../model/Bubbles';
+import { RoutesEnum } from '../../Routes';
 
 export type NavbarState = {
   bubbles: BubblesEnum[];
@@ -19,7 +19,7 @@ export type NavbarState = {
 };
 
 export type NavbarBubbleContent = {
-  linkedTab: TabsEnum;
+  linkedTab: RoutesEnum;
   iconSrc: string;
   onBubbleClick: () => void;
 };

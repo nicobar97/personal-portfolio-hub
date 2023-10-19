@@ -5,7 +5,7 @@ import { GlobalStyle } from './components/globals/GlobalStyle';
 import { theme } from './style/style';
 import { GlobalFonts } from './components/globals/GlobalFonts';
 import { useThemeStore } from './stores/useThemeStore';
-import { TabManager } from './views/TabManager';
+import { NavbarRouter } from './NavbarRouter';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +18,7 @@ export const App: React.FC = () => {
         <GlobalStyle />
         <GlobalFonts />
         <BrowserRouter>
-          <TabManager />
+          <NavbarRouter />
         </BrowserRouter>
       </QueryClientProvider>
     </ThemeProvider>

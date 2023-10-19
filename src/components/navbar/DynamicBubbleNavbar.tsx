@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
-import { useNavbarStore } from '../stores/useNavbarStore';
-import { TabsEnum } from '../model/Tabs';
-import { NavigationBar } from './NavigationBar';
+import { BubbleNavbar } from './BubbleNavbar';
+import { useNavbarStore } from './useNavbarStore';
+import styled from 'styled-components';
+
+const ContentContainer = styled.div`
+  margin-top: 3rem;
+`;
 
 const setUpScrolling = (
   scrollTriggerY: number,
@@ -24,11 +28,10 @@ const setUpScrolling = (
 };
 
 type Props = {
-  currentTab: TabsEnum;
-  changeTab: (tab: TabsEnum) => void;
+  children: React.ReactNode;
 };
 
-export const NavigationBarStateful: React.FC<Props> = (props: Props) => {
+export const DynamicBubbleNavbar: React.FC<Props> = (props: Props) => {
   const navbar = useNavbarStore();
   const scrollTriggerY = 30;
 
@@ -47,12 +50,9 @@ export const NavigationBarStateful: React.FC<Props> = (props: Props) => {
   }, [window.location.pathname, navbar.floating]);
 
   return (
-    <NavigationBar
-      bubbles={navbar.bubbles}
-      currentTab={props.currentTab}
-      isFloating={navbar.floating}
-      hidden={navbar.hidden}
-      changeTab={props.changeTab}
-    />
+    <>
+      <BubbleNavbar bubbles={navbar.bubbles} isFloating={navbar.floating} hidden={navbar.hidden} />
+      <ContentContainer>{props.children}</ContentContainer>
+    </>
   );
 };

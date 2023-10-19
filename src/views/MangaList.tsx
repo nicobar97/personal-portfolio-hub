@@ -1,15 +1,20 @@
 import styled from 'styled-components';
-import { MobileFrame } from '../../components/MobileFrame';
-import { AnimatedBox } from '../../components/AnimatedBox';
+import { MobileFrame } from '../components/misc/MobileFrame';
+import { AnimatedBox } from '../components/animations/AnimatedBox';
 import { useQuery } from '@tanstack/react-query';
-import { FetchAuthMapError, FetchMapError } from '../../model/errors';
-import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../../components/animations/Animations';
-import { Loader } from '../../components/Loader';
-import { handleError } from '../../components/errors/ErrorPopup';
-import { TabsEnum } from '../../model/Tabs';
+import { FetchAuthMapError, FetchMapError } from '../model/errors';
+import {
+  AnimateFade,
+  AnimateFadeIn,
+  AnimateFadeInDown,
+} from '../components/animations/Animations';
+import { Loader } from '../components/misc/Loader';
+import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
-import { getMangas } from '../../api/Manga';
-import { MangaList, SupportedProviders } from '../../model/Manga';
+import { getMangas } from '../api/Manga';
+import { MangaList, SupportedProviders } from '../model/Manga';
+import { useNavigate } from 'react-router-dom';
+import { Routes } from '../Routes';
 
 const Content = styled.div`
   display: flex;
@@ -46,12 +51,10 @@ const Info = styled.p`
   cursor: text;
 `;
 
-type Props = {
-  openManga: (url: string) => void;
-  changeTab: (tab: TabsEnum) => void;
-};
+const getMangaChapterListUrl = (chapterListId: string) => Routes.ChapterList.replace(':mangaId', btoa(chapterListId));
 
-export const MangaTab: React.FC<Props> = (props: Props) => {
+export const MangaListView: React.FC = () => {
+  const navigate = useNavigate();
   const provider = SupportedProviders.TCBScans;
   const query = useQuery<Either<FetchMapError, MangaList>, FetchMapError>({
     queryKey: ['mangas', provider, provider],
@@ -67,7 +70,7 @@ export const MangaTab: React.FC<Props> = (props: Props) => {
               .map((mangaList) =>
                 mangaList.mangas.map((manga) => (
                   <AnimateFadeIn trigger={query.isSuccess}>
-                    <Clickable onClick={() => props.openManga(manga.url)}>
+                    <Clickable onClick={() => navigate(getMangaChapterListUrl(manga.url))}>
                       <AnimatedBox>
                         <Title>{manga.title}</Title>
                         <Info>
@@ -94,7 +97,7 @@ export const MangaTab: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                  <Loader />
+                <Loader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

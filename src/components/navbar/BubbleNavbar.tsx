@@ -1,19 +1,17 @@
 import styled from 'styled-components';
-import infoIcon from '../assets/icons/info.png';
-import lightModeIcon from '../assets/icons/light-mode.png';
-import darkModeIcon from '../assets/icons/dark-mode.png';
-import menuIcon from '../assets/icons/menu.png';
-import { Tabs, TabsEnum } from '../model/Tabs';
-import logo from '../assets/images/logo_black_fill.svg';
-import { ThemeState, useThemeStore } from '../stores/useThemeStore';
-import { ThemeStyle } from '../model/Theme';
+import infoIcon from '../../assets/icons/info.png';
+import lightModeIcon from '../../assets/icons/light-mode.png';
+import darkModeIcon from '../../assets/icons/dark-mode.png';
+import menuIcon from '../../assets/icons/menu.png';
+import logo from '../../assets/images/logo_black_fill.svg';
+import { ThemeState, useThemeStore } from '../../stores/useThemeStore';
+import { ThemeStyle } from '../../model/Theme';
 import { BubbleButton } from './BubbleButton';
-import { Bubbles, BubblesEnum } from '../model/Bubbles';
+import { Bubbles, BubblesEnum } from '../../model/Bubbles';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-// import { getPathFromTab } from '../router';
-// import { useNavbarStore } from '../stores/useNavbarStore';
-// import { TabProps, TabState, useTabStore } from '../stores/useTabStore';
+import { RoutesEnum, Routes } from '../../Routes';
+import { useNavigate } from 'react-router-dom';
 
 export type Bubble = NavigatorBubble | ActionBubble;
 
@@ -35,7 +33,7 @@ export type NavigatorBubble = {
   bubble: BubblesEnum;
   iconSrc: string;
   altIconSrc?: string;
-  navigateTo: TabsEnum;
+  navigateTo: RoutesEnum;
 };
 
 const bubbles: Bubble[] = [
@@ -43,19 +41,19 @@ const bubbles: Bubble[] = [
     type: BubbleType.NAVIGATOR,
     bubble: Bubbles.MENU,
     iconSrc: menuIcon,
-    navigateTo: Tabs.Menu,
+    navigateTo: Routes.Menu,
   },
   {
     type: BubbleType.NAVIGATOR,
     bubble: Bubbles.LOGO,
     iconSrc: logo,
-    navigateTo: Tabs.Cv,
+    navigateTo: Routes.Cv,
   },
   {
     type: BubbleType.NAVIGATOR,
     bubble: Bubbles.INFO,
     iconSrc: infoIcon,
-    navigateTo: Tabs.ProjectInfo,
+    navigateTo: Routes.Info,
   },
   {
     type: BubbleType.ACTION,
@@ -89,7 +87,7 @@ const NavbarContainer = styled.div<{ isFloating: boolean }>`
 `;
 
 export type NavbarBubbleContent = {
-  linkedTab: TabsEnum;
+  linkedTab: RoutesEnum;
   iconSrc: string;
   onBubbleClick: () => void;
 };
@@ -100,7 +98,7 @@ export type ReadArticleNavbarBubbleContent = NavbarBubbleContent & {
 
 const createBubbleButton = (
   bubble: Bubble,
-  changeTab: (tab: TabsEnum) => void,
+  changeTab: (tab: RoutesEnum) => void,
   theme: ThemeState,
   floating: boolean,
 ) => (
@@ -126,13 +124,14 @@ const createBubbleButton = (
 
 type Props = {
   bubbles: BubblesEnum[];
-  currentTab: TabsEnum;
   isFloating: boolean;
   hidden: boolean;
-  changeTab: (tab: TabsEnum) => void;
 };
-export const NavigationBar: React.FC<Props> = (props: Props) => {
+
+export const BubbleNavbar: React.FC<Props> = (props: Props) => {
   const theme = useThemeStore();
+  const navigate = useNavigate();
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -144,7 +143,7 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
   );
   return (
     <motion.div
-      key={'bar'}
+      key={'navbar'}
       initial={{ y: 0, opacity: 1 }}
       animate={{
         y: props.hidden ? -50 : 0,
@@ -159,10 +158,14 @@ export const NavigationBar: React.FC<Props> = (props: Props) => {
         zIndex: 1,
       }}
     >
-      <NavbarContainer isFloating={props.isFloating} hidden={props.hidden}>
-        <NavbarBubblesContainer isFloating={props.isFloating} isMobile={windowWidth < 470}>
+      <NavbarContainer key="navbar-container" isFloating={props.isFloating} hidden={props.hidden}>
+        <NavbarBubblesContainer
+          key="navbar-bubbles-container"
+          isFloating={props.isFloating}
+          isMobile={windowWidth < 470}
+        >
           {activeBubbles.map((bubble: Bubble) =>
-            createBubbleButton(bubble, props.changeTab, theme, props.isFloating),
+            createBubbleButton(bubble, navigate, theme, props.isFloating),
           )}
         </NavbarBubblesContainer>
       </NavbarContainer>

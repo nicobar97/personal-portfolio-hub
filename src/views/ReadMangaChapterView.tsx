@@ -1,20 +1,20 @@
 import styled from 'styled-components';
-import { MobileFrame } from '../../components/MobileFrame';
+import { MobileFrame } from '../components/misc/MobileFrame';
 import { useQuery } from '@tanstack/react-query';
-import { FetchAuthMapError, FetchMapError } from '../../model/errors';
+import { FetchAuthMapError, FetchMapError } from '../model/errors';
 import {
   AnimateFade,
   AnimateFadeIn,
   AnimateFadeInDown,
-} from '../../components/animations/Animations';
-import { Loader } from '../../components/Loader';
-import { handleError } from '../../components/errors/ErrorPopup';
+} from '../components/animations/Animations';
+import { Loader } from '../components/misc/Loader';
+import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
-import { getChapter } from '../../api/Manga';
-import { Chapter, SupportedProviders } from '../../model/Manga';
-// import { useNavbarStore } from '../../stores/useNavbarStore';
-// import { Bubbles } from '../../model/Bubbles';
-// import { arraysAreEqual } from '../../Utils';
+import { getChapter } from '../api/Manga';
+import { Chapter, SupportedProviders } from '../model/Manga';
+// import { useNavbarStore } from '../stores/useNavbarStore';
+// import { Bubbles } from '../model/Bubbles';
+// import { arraysAreEqual } from '../Utils';
 
 const Content = styled.div`
   display: flex;
@@ -43,10 +43,7 @@ type Props = {
   chapterId: string;
 };
 
-export const ReadChapterTab: React.FC<Props> = (props: Props) => {
-  // const navbar = useNavbarStore();
-  // if (!arraysAreEqual(navbar.bubbles, [Bubbles.MENU, Bubbles.DARK_LIGHT_THEME]))
-  //   navbar.setNavbarBubbles([Bubbles.MENU, Bubbles.DARK_LIGHT_THEME]);
+export const ReadMangaChapterView: React.FC<Props> = (props: Props) => {
   const provider = SupportedProviders.TCBScans;
   const query = useQuery<Either<FetchMapError, Chapter>, FetchMapError>({
     queryKey: ['chapter', props.chapterId, provider],
