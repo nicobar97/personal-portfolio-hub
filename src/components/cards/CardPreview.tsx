@@ -47,6 +47,12 @@ const SubTitle = styled(motion.h3)`
   margin: 0;
 `;
 
+const ImageContainer = styled(motion.div)`
+  padding-left: .5rem;
+  padding-right: .5rem;
+  padding-top: .5rem;
+`;
+
 const Image = styled(motion.img)`
   width: 100%;
   border-radius: 0.5rem;
@@ -62,14 +68,16 @@ export const CardPreview: React.FC<Props> = (props: Props) => {
     <Card key={props.card.id} layoutId={props.card.id} onClick={props.onClick}>
       <Header>
         <OverTitle>{props.card.slug}</OverTitle>
-        <Title>{props.card.name}</Title>
+        <Title>{props.card.name.substring(0, 20)}</Title>
         <SubTitle>{props.card.set}</SubTitle>
       </Header>
-      <Image
-        src={`${props.card.image.en}?auto=format&dpr=1&fit=crop&w=256`}
-        alt={props.card.name}
-        loading="lazy"
-      />
+      <ImageContainer>
+        <Image
+          src={`${props.card.image.en}?auto=format&dpr=1&fit=crop&w=256`}
+          alt={props.card.name}
+          loading="lazy"
+        />
+      </ImageContainer>
     </Card>
   );
 };
