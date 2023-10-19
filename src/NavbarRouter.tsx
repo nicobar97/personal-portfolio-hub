@@ -43,7 +43,7 @@ export const NavbarRouter: React.FC = () => {
           }
         />
         <Route
-          path={MyRoutes.ReadMangaChapter}
+          path={MyRoutes.ReadArticle}
           element={
             <ParamWrapper paramKey="articleId">
               {(articleId) => <ReadArticleView articleId={articleId} />}
