@@ -2,7 +2,7 @@ export const Routes = {
   ArticleList: '/articles/',
   ReadArticle: '/articles/read/:articleId',
   GenerateArticle: '/articles/generate',
-  Cv: '/cv',
+  Me: '/me',
   Menu: '/menu',
   MangaList: '/manga',
   ChapterList: '/manga/chapters/:mangaId',
@@ -10,5 +10,8 @@ export const Routes = {
   Info: '/info',
   OpCardList: '/gamecards/op',
   Loader: '/loader',
+  Absolute: '/',
+  Catchall: '*',
 } as const;
+
 export type RoutesEnum = (typeof Routes)[keyof typeof Routes];

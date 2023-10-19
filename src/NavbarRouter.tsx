@@ -1,5 +1,5 @@
 import { InfoView } from './views/InfoView';
-import { NicobarView } from './views/NicobarView';
+import { MeView } from './views/NicobarView';
 import { ArticleListView } from './views/ArticleListView';
 import { ReadArticleView } from './views/ReadArticleView';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -13,36 +13,29 @@ import { ErrorPopup } from './components/errors/ErrorPopup';
 import { OpCardListView } from './views/OpCardListView';
 import { Loader } from './components/misc/Loader';
 import { DynamicBubbleNavbar } from './components/navbar/DynamicBubbleNavbar';
+import { Routes as MyRoutes } from './Routes';
 
 export const NavbarRouter: React.FC = () => {
   return (
     <DynamicBubbleNavbar>
       <Routes>
-        <Route path="/cv" element={<NicobarView />} />
-        <Route path="/menu" element={<MenuView />} />
-        <Route path="/articles/" element={<ArticleListView />} />
+        <Route path={MyRoutes.Me} element={<MeView />} />
+        <Route path={MyRoutes.Menu} element={<MenuView />} />
+        <Route path={MyRoutes.ArticleList} element={<ArticleListView />} />
         <Route
-          path="/articles/read/:articleId"
+          path={MyRoutes.ReadArticle}
           element={
             <ParamWrapper paramKey="articleId">
               {(articleId) => <ReadArticleView articleId={articleId} />}
             </ParamWrapper>
           }
         />
-        <Route path="/articles/generate" element={<GenerateArticleView />} />
-        <Route path="/gamecards/op" element={<OpCardListView />} />
-        <Route path="/info" element={<InfoView />} />
-        <Route path="/manga" element={<MangaListView />} />
+        <Route path={MyRoutes.GenerateArticle} element={<GenerateArticleView />} />
+        <Route path={MyRoutes.OpCardList} element={<OpCardListView />} />
+        <Route path={MyRoutes.Info} element={<InfoView />} />
+        <Route path={MyRoutes.MangaList} element={<MangaListView />} />
         <Route
-          path="/articles/read/:articleId"
-          element={
-            <ParamWrapper paramKey="articleId">
-              {(articleId) => <ReadArticleView articleId={articleId} />}
-            </ParamWrapper>
-          }
-        />
-        <Route
-          path="/manga/chapters/:mangaId"
+          path={MyRoutes.ChapterList}
           element={
             <ParamWrapper paramKey="mangaId">
               {(mangaId) => <ChapterListView mangaId={mangaId} />}
@@ -50,19 +43,27 @@ export const NavbarRouter: React.FC = () => {
           }
         />
         <Route
-          path="/manga/chapters/read/:chapterId"
+          path={MyRoutes.ReadMangaChapter}
+          element={
+            <ParamWrapper paramKey="articleId">
+              {(articleId) => <ReadArticleView articleId={articleId} />}
+            </ParamWrapper>
+          }
+        />
+        <Route
+          path={MyRoutes.ReadMangaChapter}
           element={
             <ParamWrapper paramKey="chapterId">
               {(chapterId) => <ReadMangaChapterView chapterId={chapterId} />}
             </ParamWrapper>
           }
         />
-        <Route path="/loader" element={<Loader />} />
+        <Route path={MyRoutes.Loader} element={<Loader />} />
 
-        <Route path="/" element={<Navigate to="/menu" />} />
+        <Route path={MyRoutes.Absolute} element={<Navigate to={MyRoutes.Me} />} />
 
         <Route
-          path="*"
+          path={MyRoutes.Catchall}
           element={<ErrorPopup title={'Page not found'} message={'this is not a valid url'} />}
         />
       </Routes>

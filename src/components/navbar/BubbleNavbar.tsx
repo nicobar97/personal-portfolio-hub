@@ -47,7 +47,7 @@ const bubbles: Bubble[] = [
     type: BubbleType.NAVIGATOR,
     bubble: Bubbles.LOGO,
     iconSrc: logo,
-    navigateTo: Routes.Cv,
+    navigateTo: Routes.Nicobar,
   },
   {
     type: BubbleType.NAVIGATOR,
