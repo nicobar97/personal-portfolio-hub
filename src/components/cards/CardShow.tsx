@@ -31,7 +31,7 @@ const Card = styled(motion.div)<{ isMobile: boolean; isBarFloating: boolean }>`
   overflow-x: hidden;
   overscroll-behavior: contain;
   gap: 1rem;
-  padding-bottom: 3.5rem;
+  padding-bottom: 4.5rem;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
 `;
 
@@ -64,7 +64,7 @@ const Image = styled(motion.img)`
 
 const CloseButton = styled(motion.button)<{ isMobile: boolean }>`
   position: absolute;
-  top: ${(props) => (props.isMobile ? '0rem' : '')};
+  top: ${(props) => (props.isMobile ? '2rem' : '')};
   right: ${(props) => (props.isMobile ? '0' : '')};
   bottom: ${(props) => (props.isMobile ? '' : '0')};
   margin: ${(props) => (props.isMobile ? '5rem' : '0 auto 2.5rem auto')};
@@ -82,6 +82,7 @@ const CloseButton = styled(motion.button)<{ isMobile: boolean }>`
   border-radius: 0.5rem;
   opacity: 0;
   animation: fadeIn 0.5s ease 0.5s 1 forwards;
+  z-index: 10;
 `;
 
 const Header = styled(motion.div)`
@@ -189,7 +190,9 @@ export const CardShow: React.FC<Props> = (props: Props) => {
           </Description>
         ) : null}
         <Footer>
-          <CloseButton onClick={props.onClose} isMobile={isMobileView(windowWidth)}>Close</CloseButton>
+          <CloseButton onClick={props.onClose} isMobile={isMobileView(windowWidth)}>
+            Close
+          </CloseButton>
         </Footer>
       </Card>
     </Container>
