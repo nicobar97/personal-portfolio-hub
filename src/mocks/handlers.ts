@@ -13,7 +13,7 @@ export const handlers = [
 
   rest.get('http://localhost:3000/api/gamecards/op/all', (_req, res, ctx) => {
     return res(
-      ctx.delay(500),
+      ctx.delay(50000),
       ctx.json<Either<FetchAuthMapError, GameCard[]>>(
         Right([
           {

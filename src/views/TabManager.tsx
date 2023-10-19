@@ -15,6 +15,7 @@ import { ParamWrapper } from '../components/ParamsWrapper';
 import { ErrorPopup } from '../components/errors/ErrorPopup';
 import { NavigationBarStateful } from '../components/NavigationBarStateful';
 import { GameCardsTab } from './tabs/GameCardsTab';
+import { Loader } from '../components/Loader';
 
 const Container = styled.div`
   margin-top: 3rem;
@@ -119,6 +120,8 @@ export const TabManager: React.FC = () => {
                 </ParamWrapper>
               }
             />
+            <Route path="/loader" element={<Loader />} />
+
             <Route path="/" element={<Navigate to="/menu" />} />
 
             <Route

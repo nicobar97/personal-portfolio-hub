@@ -36,8 +36,8 @@ const Content = styled.div`
 
 const Container = styled.div`
   display: flex;
+  margin-top: 1rem;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   min-height: 100vh;
 `;
@@ -48,6 +48,25 @@ const CardGrid = styled.div`
   max-width: 100%;
   justify-items: center;
 `;
+
+const SearchBar = styled.input`
+  width: 100%;
+  max-width: 20rem;
+  height: 1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 2rem;
+  border: none;
+  box-shadow: ${(props) => props.theme.shadow} 0px 7px 20px 0px;
+`;
+
+const SearchBarContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: .5rem;
+`;
+
 
 type Props = {
   changeTab: (tab: TabsEnum) => void;
@@ -72,12 +91,14 @@ export const GameCardsTab: React.FC<Props> = () => {
     <AnimateFade>
       <Content>
         <MobileFrame>
-          <input
-            type="text"
-            placeholder="Search for cards..."
-            value={searchKeyword}
-            onChange={handleSearchChange}
-          />
+          <SearchBarContainer>
+            <SearchBar
+              type="text"
+              placeholder="Search for cards..."
+              value={searchKeyword}
+              onChange={handleSearchChange}
+            />
+          </SearchBarContainer>
           {query.isSuccess && (
             <AnimateFadeIn trigger={query.isSuccess}>
               <Container>

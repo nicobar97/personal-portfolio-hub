@@ -64,7 +64,7 @@ const Image = styled(motion.img)`
 const CloseButton = styled(motion.button)`
   position: absolute;
   bottom: 0;
-  margin-bottom: 2%.5;
+  margin-bottom: 2.5rem;
   background: none;
   border: none;
   width: 80%;

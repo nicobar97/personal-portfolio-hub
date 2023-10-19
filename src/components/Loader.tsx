@@ -16,6 +16,14 @@ const Dot = styled(motion.div)<{ scale: number }>`
   margin: 0 8px;
 `;
 
+const Container = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+`;
+
 const dotVariants: Variants = {
   initial: {
     scale: 1,
@@ -42,16 +50,18 @@ export const Loader: React.FC<{ scale?: number }> = (props: { scale?: number }) 
     return () => clearInterval(interval);
   }, []);
   return (
-    <LoaderContainer>
-      {[0, 1, 2, 3, 4].map((index) => (
-        <Dot
-          key={index}
-          scale={props.scale ?? 1}
-          variants={dotVariants}
-          initial={activeDot === index ? 'animate' : 'initial'}
-          animate={activeDot === index ? 'animate' : 'initial'}
-        />
-      ))}
-    </LoaderContainer>
+    <Container>
+      <LoaderContainer>
+        {[0, 1, 2, 3, 4].map((index) => (
+          <Dot
+            key={index}
+            scale={props.scale ?? 1}
+            variants={dotVariants}
+            initial={activeDot === index ? 'animate' : 'initial'}
+            animate={activeDot === index ? 'animate' : 'initial'}
+          />
+        ))}
+      </LoaderContainer>
+    </Container>
   );
 };
