@@ -17,7 +17,7 @@ const Container = styled(motion.div)<{ isMobile: boolean }>`
 `;
 
 const Card = styled(motion.div)<{ isMobile: boolean; isBarFloating: boolean }>`
-  position: relative;
+  position: ${(props) => (props.isMobile ? 'relative' : '')};
   display: flex;
   flex-direction: column;
   width: ${(props) => (props.isMobile ? '100vw' : '')};
