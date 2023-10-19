@@ -1,5 +1,5 @@
 import { InfoView } from './views/InfoView';
-import { MeView } from './views/NicobarView';
+import { MeView } from './views/MeView';
 import { ArticleListView } from './views/ArticleListView';
 import { ReadArticleView } from './views/ReadArticleView';
 import { Navigate, Route, Routes } from 'react-router-dom';

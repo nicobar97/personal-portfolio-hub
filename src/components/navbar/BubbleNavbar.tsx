@@ -19,6 +19,7 @@ export const BubbleType = {
   NAVIGATOR: 'navigator',
   ACTION: 'action',
 };
+
 export type BubbleTypeEnum = (typeof BubbleType)[keyof typeof BubbleType];
 
 export type ActionBubble = {
@@ -28,6 +29,7 @@ export type ActionBubble = {
   altIconSrc?: string;
   handler: string;
 };
+
 export type NavigatorBubble = {
   type: typeof BubbleType.NAVIGATOR;
   bubble: BubblesEnum;
@@ -47,7 +49,7 @@ const bubbles: Bubble[] = [
     type: BubbleType.NAVIGATOR,
     bubble: Bubbles.LOGO,
     iconSrc: logo,
-    navigateTo: Routes.Nicobar,
+    navigateTo: Routes.Me,
   },
   {
     type: BubbleType.NAVIGATOR,

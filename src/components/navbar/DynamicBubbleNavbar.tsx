@@ -32,8 +32,8 @@ type Props = {
 };
 
 export const DynamicBubbleNavbar: React.FC<Props> = (props: Props) => {
-  const navbar = useNavbarStore();
   const scrollTriggerY = 30;
+  const navbar = useNavbarStore();
 
   setUpScrolling(scrollTriggerY, navbar.setFloating);
 
