@@ -76,7 +76,7 @@ export const OpCardGridView: React.FC = () => {
     <AnimateFade>
       <Content>
         <MobileFrame>
-          {query.isSuccess || searchKeyword && (
+          {(searchKeyword || query.isSuccess) && (
             <SearchBarContainer>
               <SearchBar
                 type="text"
@@ -100,9 +100,9 @@ export const OpCardGridView: React.FC = () => {
                           <CardPreview card={gameCard} onClick={() => setSelected(gameCard)} />
                         )),
                     )
-                    .mapLeft((err: FetchAuthMapError) => (
+                    .mapLeft(() => (
                       <AnimateFadeInDown trigger={query.isSuccess}>
-                        <MobileFrame>{handleError(err)}</MobileFrame>
+                        No card found for keyword: {searchKeyword}
                       </AnimateFadeInDown>
                     ))
                     .extract()}
