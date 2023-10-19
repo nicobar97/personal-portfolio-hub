@@ -17,9 +17,11 @@ const Card = styled(motion.div)`
   align-items: center;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
   padding: 0.5rem;
+  cursor: pointer;
   &:hover {
     transform: scale(1.05);
   }
+  transition: transform 0.2s;
 `;
 
 const Header = styled(motion.div)`

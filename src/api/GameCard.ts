@@ -46,10 +46,10 @@ export const getGameCard: GetGameCard = (id: string) =>
   );
 
 const getFilters = (filters?: GameCardFilters) =>
-  `${filters?.keyword ? `&keyword=${filters.keyword}` : ''}${
+  `?${`${filters?.keyword ? `&keyword=${filters.keyword}` : ''}${
     filters?.types ? `&types=${filters.types}` : ''
   }${filters?.sets ? `&sets=${filters.sets}` : ''}${
     filters?.rarities ? `&rarities=${filters.rarities}` : ''
   }${filters?.features ? `&features=${filters.features}` : ''}${
     filters?.colors ? `&colors=${filters.colors}` : ''
-  }${filters?.attributes ? `&attributes=${filters.attributes}` : ''}`;
+  }${filters?.attributes ? `&attributes=${filters.attributes}` : ''}`.slice(1)}`;
