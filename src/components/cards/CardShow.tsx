@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 const Container = styled(motion.div)`
   position: fixed;
-  top: 10%;
+  top: 8%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,7 +31,6 @@ const Card = styled(motion.div)`
   margin: 1rem;
   gap: 1rem;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
-  padding-bottom: 3rem;
 `;
 
 const OverTitle = styled(motion.h5)`
