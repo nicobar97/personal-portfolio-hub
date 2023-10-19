@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { GameCard } from '../../model/GameCard';
 import { useState, useEffect } from 'react';
 import { useNavbarStore } from '../navbar/useNavbarStore';
+import { isMobile } from 'react-device-detect';
 
 const Container = styled(motion.div)<{ isMobile: boolean }>`
   position: fixed;
@@ -131,7 +132,7 @@ const Description = styled(motion.div)`
   padding: 1rem;
 `;
 
-const isMobileView = (windowWidth: number) => windowWidth < 580;
+const isMobileView = (windowWidth: number) => isMobile || windowWidth < 768;
 
 type Props = {
   card: GameCard;
