@@ -62,13 +62,15 @@ const Image = styled(motion.img)`
   border-radius: 0.5rem;
 `;
 
-const CloseButton = styled(motion.button)`
+const CloseButton = styled(motion.button)<{ isMobile: boolean }>`
   position: absolute;
-  bottom: 0;
-  margin-bottom: 2.5rem;
+  top: ${(props) => (props.isMobile ? '0rem' : '')};
+  right: ${(props) => (props.isMobile ? '0' : '')};
+  bottom: ${(props) => (props.isMobile ? '' : '0')};
+  margin: ${(props) => (props.isMobile ? '5rem' : '0 auto 2.5rem auto')};
+  width: ${(props) => (props.isMobile ? '' : '72%')};
   background: none;
   border: none;
-  width: 72%;
   font-size: 1rem;
   font-weight: 600;
   padding: 0.5rem;
@@ -187,7 +189,7 @@ export const CardShow: React.FC<Props> = (props: Props) => {
           </Description>
         ) : null}
         <Footer>
-          <CloseButton onClick={props.onClose}>Close</CloseButton>
+          <CloseButton onClick={props.onClose} isMobile={isMobileView(windowWidth)}>Close</CloseButton>
         </Footer>
       </Card>
     </Container>
