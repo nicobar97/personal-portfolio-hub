@@ -17,6 +17,7 @@ const Container = styled(motion.div)<{ isMobile: boolean }>`
 `;
 
 const Card = styled(motion.div)<{ isMobile: boolean; isBarFloating: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: ${(props) => (props.isMobile ? '100vw' : '')};
@@ -64,10 +65,10 @@ const Image = styled(motion.img)`
 
 const CloseButton = styled(motion.button)<{ isMobile: boolean }>`
   position: absolute;
-  top: ${(props) => (props.isMobile ? '0' : '')};
+  top: ${(props) => (props.isMobile ? '1rem' : '')};
   right: ${(props) => (props.isMobile ? '0' : '')};
   bottom: ${(props) => (props.isMobile ? '' : '0')};
-  margin: ${(props) => (props.isMobile ? '5rem' : '0 auto 2.5rem auto')};
+  margin: ${(props) => (props.isMobile ? '4rem' : '0 auto 2.5rem auto')};
   width: ${(props) => (props.isMobile ? '' : '72%')};
   background: none;
   border: none;
