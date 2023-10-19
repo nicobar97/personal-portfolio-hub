@@ -10,7 +10,7 @@ import { ChapterListView } from './views/ChapterListView';
 import { ReadMangaChapterView } from './views/ReadMangaChapterView';
 import { ParamWrapper } from './components/misc/ParamsWrapper';
 import { ErrorPopup } from './components/errors/ErrorPopup';
-import { OpCardListView } from './views/OpCardListView';
+import { OpCardGridView } from './views/OpCardGridView';
 import { Loader } from './components/misc/Loader';
 import { DynamicBubbleNavbar } from './components/navbar/DynamicBubbleNavbar';
 import { Routes as MyRoutes } from './Routes';
@@ -31,7 +31,7 @@ export const NavbarRouter: React.FC = () => {
           }
         />
         <Route path={MyRoutes.GenerateArticle} element={<GenerateArticleView />} />
-        <Route path={MyRoutes.OpCardList} element={<OpCardListView />} />
+        <Route path={MyRoutes.OpCardList} element={<OpCardGridView />} />
         <Route path={MyRoutes.Info} element={<InfoView />} />
         <Route path={MyRoutes.MangaList} element={<MangaListView />} />
         <Route
