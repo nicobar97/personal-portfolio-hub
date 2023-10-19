@@ -65,7 +65,7 @@ const Image = styled(motion.img)`
 
 const CloseButton = styled(motion.button)<{ isMobile: boolean; isBarFloating: boolean }>`
   position: absolute;
-  top: ${(props) => (props.isMobile ? (props.isBarFloating ? '4rem' : '2rem') : '')};
+  top: ${(props) => (props.isMobile ? (props.isBarFloating ? '5rem' : '2rem') : '')};
   right: ${(props) => (props.isMobile ? '0' : '')};
   bottom: ${(props) => (props.isMobile ? '' : '0')};
   margin: ${(props) => (props.isMobile ? '4rem' : '0 auto 2.5rem auto')};
