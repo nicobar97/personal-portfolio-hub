@@ -19,7 +19,7 @@ const Card = styled(motion.div)`
   display: flex;
   flex-direction: column;
   max-width: 50rem;
-  min-height: 70vh;
+  min-height: 72vh;
   padding: 1rem;
   border: 1px solid ${(props) => props.theme.border};
   border-radius: 1rem;
@@ -30,6 +30,7 @@ const Card = styled(motion.div)`
   align-items: left;
   margin: 1rem;
   gap: 1rem;
+  padding-bottom: 3rem;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
 `;
 
@@ -63,7 +64,7 @@ const Image = styled(motion.img)`
 const CloseButton = styled(motion.button)`
   position: absolute;
   bottom: 0;
-  margin-bottom: 3rem;
+  margin-bottom: 2%.5;
   background: none;
   border: none;
   width: 80%;
@@ -77,7 +78,7 @@ const CloseButton = styled(motion.button)`
   box-shadow: ${(props) => props.theme.shadow} 0px 7px 20px 0px;
   border-radius: 0.5rem;
   opacity: 0;
-  animation: fadeIn 0.5s ease .5s 1 forwards;
+  animation: fadeIn 0.5s ease 0.5s 1 forwards;
 `;
 
 const Header = styled(motion.div)`
@@ -89,10 +90,7 @@ const Header = styled(motion.div)`
 
 const Content = styled(motion.div)<{ currentWidth: number; thresholdWidth: number }>`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-left: ${(props) =>
-    props.currentWidth < props.thresholdWidth ? '0rem' : '2rem'};
+  justify-content: space-between;
   flex-direction: ${(props) =>
     props.currentWidth < props.thresholdWidth ? 'column' : 'row-reverse'};
 `;
@@ -101,7 +99,6 @@ const Right = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: left;
   padding: 1rem;
 `;
 
@@ -110,8 +107,7 @@ const Left = styled(motion.div)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem;
-  width: 100%;
+  padding: 1rem;
 `;
 
 const Footer = styled(motion.div)`
@@ -122,8 +118,8 @@ const Footer = styled(motion.div)`
 `;
 
 const ImageContainer = styled(motion.div)`
-  max-width: 20rem;
   width: 100%;
+  max-width: 20rem;
 `;
 
 const Description = styled(motion.div)`
