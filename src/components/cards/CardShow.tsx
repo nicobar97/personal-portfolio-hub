@@ -32,7 +32,7 @@ const Card = styled(motion.div)<{ isMobile: boolean; isBarFloating: boolean }>`
   overflow-x: hidden;
   overscroll-behavior: contain;
   gap: 1rem;
-  padding-bottom: 4.5rem;
+  padding-bottom: 5rem;
   box-shadow: inset ${(props) => props.theme.background}99 2px 2px 30px;
 `;
 
