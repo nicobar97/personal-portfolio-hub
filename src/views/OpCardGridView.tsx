@@ -76,18 +76,20 @@ export const OpCardGridView: React.FC = () => {
     <AnimateFade>
       <Content>
         <MobileFrame>
+          {query.isSuccess || searchKeyword && (
+            <SearchBarContainer>
+              <SearchBar
+                type="text"
+                placeholder="Search for cards..."
+                value={searchKeyword}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchKeyword(event.target.value)
+                }
+              />
+            </SearchBarContainer>
+          )}
           {query.isSuccess && (
             <AnimateFadeIn trigger={query.isSuccess}>
-              <SearchBarContainer>
-                <SearchBar
-                  type="text"
-                  placeholder="Search for cards..."
-                  value={searchKeyword}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setSearchKeyword(event.target.value)
-                  }
-                />
-              </SearchBarContainer>
               <Container>
                 <CardGrid>
                   {query.data
