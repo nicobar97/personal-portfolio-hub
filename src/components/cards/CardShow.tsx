@@ -63,9 +63,9 @@ const Image = styled(motion.img)`
   border-radius: 0.5rem;
 `;
 
-const CloseButton = styled(motion.button)<{ isMobile: boolean }>`
+const CloseButton = styled(motion.button)<{ isMobile: boolean; isBarFloating: boolean }>`
   position: absolute;
-  top: ${(props) => (props.isMobile ? '1rem' : '')};
+  top: ${(props) => (props.isMobile ? (props.isBarFloating ? '4rem' : '2rem') : '')};
   right: ${(props) => (props.isMobile ? '0' : '')};
   bottom: ${(props) => (props.isMobile ? '' : '0')};
   margin: ${(props) => (props.isMobile ? '4rem' : '0 auto 2.5rem auto')};
@@ -76,14 +76,14 @@ const CloseButton = styled(motion.button)<{ isMobile: boolean }>`
   font-weight: 600;
   padding: 0.5rem;
   cursor: pointer;
-  color: ${(props) => props.theme.text};
+  color: white;
   text-align: center;
   background-color: ${(props) => props.theme.accent.color};
   box-shadow: ${(props) => props.theme.shadow} 0px 7px 20px 0px;
   border-radius: 0.5rem;
   opacity: 0;
   animation: fadeIn 0.5s ease 0.5s 1 forwards;
-  z-index: 10;
+  z-index: 1;
 `;
 
 const Header = styled(motion.div)`
@@ -191,7 +191,7 @@ export const CardShow: React.FC<Props> = (props: Props) => {
           </Description>
         ) : null}
         <Footer>
-          <CloseButton onClick={props.onClose} isMobile={isMobileView(windowWidth)}>
+          <CloseButton onClick={props.onClose} isMobile={isMobileView(windowWidth)} isBarFloating={navbarStore.floating}>
             Close
           </CloseButton>
         </Footer>
