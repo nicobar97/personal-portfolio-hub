@@ -71,7 +71,7 @@ const CloseButton = styled(motion.button)<{ isMobile: boolean; isBarFloating: bo
   right: ${(props) => (props.isMobile ? '0' : '')};
   bottom: ${(props) => (props.isMobile ? '' : '0')};
   margin: ${(props) => (props.isMobile ? '4rem' : '0 auto 2.5rem auto')};
-  width: ${(props) => (props.isMobile ? '' : '72%')};
+  width: ${(props) => (props.isMobile ? '' : '30rem')};
   background: none;
   border: none;
   font-size: 1rem;
@@ -168,6 +168,7 @@ export const CardShow: React.FC<Props> = (props: Props) => {
                 src={`${props.card.image.en}?auto=format&dpr=1&w=512`}
                 alt={props.card.name}
                 loading="lazy"
+                width={512}
               />
             </ImageContainer>
           </Left>
