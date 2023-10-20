@@ -9,6 +9,7 @@ const Container = styled(motion.div)<{ isMobile: boolean }>`
   position: fixed;
   top: ${(props) => (props.isMobile ? '0%' : '12%')};
   display: flex;
+  width: ${(props) => (props.isMobile ? '100%' : '60%')};
   flex-direction: column;
   justify-content: center;
   align-items: center;
