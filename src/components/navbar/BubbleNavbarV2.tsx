@@ -59,7 +59,7 @@ const NavbarBubblesContainer = styled.div<{ isFloating: boolean; isMobile: boole
   ${(props) => (props.isMobile ? `` : props.isFloating ? `width: 25em` : `width: 35em`)};
   margin: 0 auto;
   z-index: 1;
-  justify-content: ${(props) => (props.isMobile ? 'center' : 'space-between')};
+  justify-content: 'space-between';
   align-items: flex-start;
   transition: width 0.2s ease 0.1s;
 `;
