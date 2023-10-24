@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavbarStore } from './useNavbarStore';
 import styled from 'styled-components';
-import { BubbleNavbar } from './BubbleNavbar';
+import { BubbleNavbarV2 } from './BubbleNavbarV2';
 
 const ContentContainer = styled.div`
   margin-top: 3rem;
@@ -31,7 +31,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const DynamicBubbleNavbar: React.FC<Props> = (props: Props) => {
+export const DynamicBubbleNavbarV2: React.FC<Props> = (props: Props) => {
   const scrollTriggerY = 30;
   const navbar = useNavbarStore();
 
@@ -51,10 +51,12 @@ export const DynamicBubbleNavbar: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <BubbleNavbar
+      <BubbleNavbarV2
         bubbles={navbar.bubbles}
         isFloating={navbar.floating}
-        hidden={navbar.hidden}
+        isHidden={navbar.hidden}
+        isMenuExpanded={navbar.menuExpanded}
+        toggleMenu={navbar.toggleMenu}
       />
       <ContentContainer>{props.children}</ContentContainer>
     </>

@@ -24,14 +24,12 @@ const Bubble = styled(motion.div)<{
   padding: 1.1rem;
   border-radius: ${(props) => (props.rounded ? '100px' : '0px')};
   gap: 1rem;
-  background-color: ${(props) =>
-    props.rounded ? props.theme.background : `transparent`};
+  background-color: ${(props) => (props.rounded ? props.theme.background : `transparent`)};
   transition:
     box-shadow 0.3s ease-out ${(props) => (props.rounded ? '0.2s' : '0s')},
     border 0.2s ease-out ${(props) => (props.rounded ? '0.3s' : '0s')},
     border-radius 0.3s ease-out ${(props) => (props.rounded ? '0s' : '1s')};
-  box-shadow: ${(props) =>
-    props.rounded ? `${props.theme.shadow} 0px 7px 20px 0px` : ''};
+  box-shadow: ${(props) => (props.rounded ? `${props.theme.shadow} 0px 7px 20px 0px` : '')};
   border: ${(props) => (props.rounded ? props.borderSize : 0)}px solid
     ${(props) => props.theme.border};
 
@@ -52,6 +50,11 @@ const BubbleLabel = styled(motion.div)`
   justify-content: center;
 `;
 
+const Container = styled.div<{ hide: boolean }>`
+  opacity: ${(props) => (props.hide ? 0 : 1)};
+  transition: opacity 0.5s;
+`;
+
 type Props = {
   onBubbleClick: () => void;
   iconSrc: string;
@@ -60,15 +63,17 @@ type Props = {
   darkModeInvert?: boolean;
   label?: string;
   borderSize?: number;
+  hide?: boolean;
 };
 
 export const BubbleButton: React.FC<Props> = (props: Props) => (
-  <div onClick={props.onBubbleClick}>
+  <Container onClick={props.onBubbleClick} hide={props.hide ?? false}>
     <Bubble
       rounded={props.rounded ?? true}
       borderSize={props.borderSize ?? 0}
       scale={props.scale ?? 1}
       whileTap={{ scale: props.rounded ? 1.5 : 1 }}
+      exit={{ opacity: 0 }}
     >
       <Icon
         src={props.iconSrc}
@@ -81,5 +86,5 @@ export const BubbleButton: React.FC<Props> = (props: Props) => (
         </BubbleLabel>
       )}
     </Bubble>
-  </div>
+  </Container>
 );

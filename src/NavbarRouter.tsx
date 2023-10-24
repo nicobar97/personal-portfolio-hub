@@ -12,12 +12,13 @@ import { ParamWrapper } from './components/misc/ParamsWrapper';
 import { ErrorPopup } from './components/errors/ErrorPopup';
 import { OpCardGridView } from './views/OpCardGridView';
 import { Loader } from './components/misc/Loader';
-import { DynamicBubbleNavbar } from './components/navbar/DynamicBubbleNavbar';
 import { Routes as MyRoutes } from './Routes';
+import { DynamicBubbleNavbarV2 } from './components/navbar/DynamicBubbleNavbarV2';
+import { Bacon } from './views/Bacon';
 
 export const NavbarRouter: React.FC = () => {
   return (
-    <DynamicBubbleNavbar>
+    <DynamicBubbleNavbarV2>
       <Routes>
         <Route path={MyRoutes.Me} element={<MeView />} />
         <Route path={MyRoutes.Menu} element={<MenuView />} />
@@ -59,6 +60,8 @@ export const NavbarRouter: React.FC = () => {
           }
         />
         <Route path={MyRoutes.Loader} element={<Loader />} />
+        <Route path={'/bacon'} element={<Bacon />} />
+        {/* <Route path={'/mpop'} element={<MenuPopup isMenuExpanded={false} />} /> */}
 
         <Route path={MyRoutes.Absolute} element={<Navigate to={MyRoutes.Me} />} />
 
@@ -67,6 +70,6 @@ export const NavbarRouter: React.FC = () => {
           element={<ErrorPopup title={'Page not found'} message={'this is not a valid url'} />}
         />
       </Routes>
-    </DynamicBubbleNavbar>
+    </DynamicBubbleNavbarV2>
   );
 };

@@ -7,10 +7,14 @@ export type NavbarState = {
   bubbles: BubblesEnum[];
   floating: boolean;
   hidden: boolean;
+  menuExpanded: boolean;
   toggleFloating: () => void;
   toggleHide: () => void;
   hide: () => void;
   show: () => void;
+  expandMenu: () => void;
+  collapseMenu: () => void;
+  toggleMenu: () => void;
   setHidden: (isHidden: boolean) => void;
   setFloating: (floating: boolean) => void;
   setNavbarBubbles: (navbarBubbles: BubblesEnum[]) => void;
@@ -30,9 +34,13 @@ export const useNavbarStore = create<NavbarState>()(
       bubbles: [Bubbles.MENU, Bubbles.LOGO, Bubbles.INFO, Bubbles.DARK_LIGHT_THEME],
       floating: false,
       hidden: false,
+      menuExpanded: false,
       toggleFloating: () => set((state) => ({ floating: !state.floating })),
       hide: () => set(() => ({ hidden: true })),
       show: () => set(() => ({ hidden: false })),
+      expandMenu: () => set(() => ({ menuExpanded: true })),
+      collapseMenu: () => set(() => ({ menuExpanded: false })),
+      toggleMenu: () => set((state) => ({ menuExpanded: !state.menuExpanded })),
       setHidden: (isHidden: boolean) => set(() => ({ hidden: isHidden })),
       toggleHide: () => set((state) => ({ hidden: !state.hidden })),
       setFloating: (floating: boolean) => set(() => ({ floating: floating })),
