@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { MobileFrame } from '../components/misc/MobileFrame';
 import { AnimatedBox } from '../components/animations/AnimatedBox';
 import { AnimateFade } from '../components/animations/Animations';
-import { useState } from 'react';
 
 const Content = styled.div`
   display: flex;
