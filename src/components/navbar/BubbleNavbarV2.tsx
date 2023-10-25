@@ -10,13 +10,18 @@ import { useNavigate } from 'react-router-dom';
 import { BubbleNavbarMenu } from './BubbleNavbarMenu';
 import { Bubble, bubbles } from './BubbleNavbarConfig';
 
-const NavbarBubblesContainer = styled.div<{ isFloating: boolean; isMobile: boolean }>`
+const NavbarBubblesContainer = styled.div<{
+  isFloating: boolean;
+  isMobile: boolean;
+  isMenuExpanded: boolean;
+}>`
   display: flex;
   align-items: center;
   ${(props) => (props.isMobile ? `` : props.isFloating ? `width: 25em` : `width: 35em`)};
   margin: 0 auto;
   z-index: 1;
-  justify-content: space-between;
+  justify-content: ${(props) =>
+    props.isMenuExpanded && props.isMobile && props.isFloating ? 'center' : 'space-between'};
   align-items: flex-start;
   transition: width 0.2s ease 0.1s;
 `;
@@ -113,6 +118,7 @@ export const BubbleNavbarV2: React.FC<Props> = (props: Props) => {
           key="navbar-bubbles-container"
           isFloating={props.isFloating}
           isMobile={windowWidth < 470}
+          isMenuExpanded={props.isMenuExpanded}
         >
           <AnimatePresence>
             <div onClick={props.toggleMenu}>
