@@ -79,6 +79,26 @@ const Container = styled(motion.div)`
   flex-direction: column;
 `;
 
+const contentVariants = {
+  open: {
+    opacity: 1,
+    display: 'flex',
+    transition: {
+      duration: 0.3,
+      delay: 0.2,
+    },
+  },
+  closed: {
+    opacity: 0,
+    display: 'none',
+    transition: {
+      duration: 0.3,
+      delay: 0.1,
+      when: 'afterChildren',
+    },
+  },
+};
+
 type Props = {
   rounded?: boolean;
   isMenuShown: boolean;
@@ -94,8 +114,8 @@ export const BubbleNavbarMenu: React.FC<Props> = (props: Props) => (
     initial={false}
     variants={{
       open: {
-        width: `72vw`,
-        height: `25vh`,
+        width: `20rem`,
+        height: `14rem`,
         transition: {
           duration: 0.2,
           ease: 'easeInOut',
@@ -143,9 +163,15 @@ export const BubbleNavbarMenu: React.FC<Props> = (props: Props) => (
             Menu
           </BubbleLabel>
         </Header>
-        <Content>
-          <BubbleMenuContent />
-        </Content>
+        {props.isMenuShown && (
+          <Content
+            variants={contentVariants}
+            initial="closed"
+            animate={props.isMenuShown ? 'open' : 'closed'}
+          >
+            <BubbleMenuContent />
+          </Content>
+        )}
       </Container>
     </motion.nav>
   </Bubble>
