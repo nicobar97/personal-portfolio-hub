@@ -15,6 +15,7 @@ import { Loader } from './components/misc/Loader';
 import { Routes as MyRoutes } from './Routes';
 import { DynamicBubbleNavbarV2 } from './components/navbar/DynamicBubbleNavbarV2';
 import { Bacon } from './views/Bacon';
+import { TrainTableView } from './views/TrainTableView';
 
 export const NavbarRouter: React.FC = () => {
   return (
@@ -59,12 +60,17 @@ export const NavbarRouter: React.FC = () => {
             </ParamWrapper>
           }
         />
+        <Route
+          path={MyRoutes.TrainTable}
+          element={
+            <ParamWrapper paramKey="placeId">
+              {(placeId) => <TrainTableView placeId={placeId} />}
+            </ParamWrapper>
+          }
+        />
         <Route path={MyRoutes.Loader} element={<Loader />} />
         <Route path={'/bacon'} element={<Bacon />} />
-        {/* <Route path={'/mpop'} element={<MenuPopup isMenuExpanded={false} />} /> */}
-
         <Route path={MyRoutes.Absolute} element={<Navigate to={MyRoutes.Me} />} />
-
         <Route
           path={MyRoutes.Catchall}
           element={<ErrorPopup title={'Page not found'} message={'this is not a valid url'} />}

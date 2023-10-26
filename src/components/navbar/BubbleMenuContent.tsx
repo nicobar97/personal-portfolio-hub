@@ -79,14 +79,6 @@ const ItemLabel = styled.div`
   padding: 1rem;
 `;
 
-// const BubbleLabel = styled(motion.span)`
-//   display: flex;
-//   flex-direction: column;
-//   font-weight: 600;
-//   align-items: center;
-//   justify-content: center;
-// `;
-
 export const BubbleMenuContent = () => {
   const navigate = useNavigate();
 
@@ -130,6 +122,19 @@ export const BubbleMenuContent = () => {
               <Icon src={mangaIcon} />
             </IconContainer>
             <ItemLabel>Card List</ItemLabel>
+          </MenuItem>
+        </motion.li>
+        <motion.li
+          variants={menuItemVariants}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <MenuItem onClick={() => navigate(Routes.TrainTable.replace(':placeId', '1728'))}>
+            <IconContainer background="indianred">
+              <IconTitle>Trains</IconTitle>
+              <Icon src={articleIcon} />
+            </IconContainer>
+            <ItemLabel>Train List</ItemLabel>
           </MenuItem>
         </motion.li>
       </motion.ul>

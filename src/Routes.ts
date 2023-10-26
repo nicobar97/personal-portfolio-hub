@@ -2,6 +2,7 @@ export const Routes = {
   ArticleList: '/articles/',
   ReadArticle: '/articles/read/:articleId',
   GenerateArticle: '/articles/generate',
+  TrainTable: '/traintables/departures/:placeId',
   Me: '/me',
   Menu: '/menu',
   MangaList: '/manga',

@@ -25,13 +25,10 @@ const Bubble = styled(motion.div)<{
   display: flex;
   max-width: 25em;
   width: 1.5rem;
-  height: 1.5rem;
   flex-direction: row;
   justify-content: center;
   flex-flow: wrap;
   place-content: flex-start;
-  /* height: ${(props) => (props.isExpanded ? `25vh` : `1.5rem`)};
-  width: ${(props) => (props.isExpanded ? `72vw` : `1.5rem`)}; */
   padding: 1.1rem;
   border-radius: ${(props) => (props.rounded ? '2rem' : '0px')};
   gap: 1rem;
@@ -40,8 +37,7 @@ const Bubble = styled(motion.div)<{
     box-shadow 0.3s ease-out ${(props) => (props.rounded ? '0.2s' : '0s')},
     border 0.2s ease-out ${(props) => (props.rounded ? '0.3s' : '0s')},
     border-radius 0.3s ease-out ${(props) => (props.rounded ? '0s' : '1s')};
-  width: 0.2s ease-in-out;
-  height: 0.2s ease-in-out;
+
   box-shadow: ${(props) => (props.rounded ? `${props.theme.shadow} 0px 7px 20px 0px` : '')};
   border: ${(props) => (props.rounded ? props.borderSize : 0)}px solid
     ${(props) => props.theme.border};
@@ -72,6 +68,7 @@ const Header = styled(motion.div)`
 const Content = styled(motion.div)`
   display: flex;
   flex-direction: row;
+  padding-top: 0.8rem;
 `;
 
 const Container = styled(motion.div)`
@@ -115,14 +112,14 @@ export const BubbleNavbarMenu: React.FC<Props> = (props: Props) => (
     variants={{
       open: {
         width: `20rem`,
-        height: `14rem`,
+        height: `100%`,
         transition: {
           duration: 0.2,
           ease: 'easeInOut',
         },
       },
       closed: {
-        width: `1.5rem`,
+        // width: `1.5rem`,
         height: `1.5rem`,
         transition: {
           duration: 0.2,
