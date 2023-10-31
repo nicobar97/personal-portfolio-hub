@@ -3,7 +3,7 @@ import { ThemeState, useThemeStore } from '../../stores/useThemeStore';
 import { ThemeStyle } from '../../model/Theme';
 import { BubbleButton } from './BubbleButton';
 import { BubblesEnum } from '../../model/Bubbles';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { RoutesEnum } from '../../Routes';
 import { useNavigate } from 'react-router-dom';
@@ -120,15 +120,13 @@ export const BubbleNavbar: React.FC<Props> = (props: Props) => {
           isMobile={windowWidth < 470}
           isMenuExpanded={props.isMenuExpanded}
         >
-          <AnimatePresence>
-            <div onClick={props.toggleMenu}>
-              <BubbleNavbarMenu rounded={props.isFloating} isMenuShown={props.isMenuExpanded} />
-            </div>
-            {(windowWidth > 782 || !props.isMenuExpanded) &&
-              activeBubbles.map((bubble: Bubble) =>
-                createBubbleButton(bubble, navigate, theme, props.isFloating, false),
-              )}
-          </AnimatePresence>
+          <div onClick={props.toggleMenu}>
+            <BubbleNavbarMenu rounded={props.isFloating} isMenuShown={props.isMenuExpanded} />
+          </div>
+          {(windowWidth > 782 || !props.isMenuExpanded) &&
+            activeBubbles.map((bubble: Bubble) =>
+              createBubbleButton(bubble, navigate, theme, props.isFloating, false),
+            )}
         </NavbarBubblesContainer>
       </NavbarContainer>
     </motion.div>
