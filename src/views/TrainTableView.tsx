@@ -67,8 +67,26 @@ const TableHeader = styled.th`
   }
 `;
 
+const TableHeaderCentered = styled.th`
+  padding: 8px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 6px;
+  }
+`;
+
 const TableCell = styled.td`
   padding: 8px;
+
+  @media (max-width: 768px) {
+    padding: 6px;
+  }
+`;
+
+const TableCellCentered = styled.td`
+  padding: 8px;
+  text-align: center;
 
   @media (max-width: 768px) {
     padding: 6px;
@@ -97,10 +115,10 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
                 {/* <TableHeader>Category</TableHeader> */}
                 <TableHeader>Train</TableHeader>
                 <TableHeader>Destination</TableHeader>
-                <TableHeader>Time</TableHeader>
-                <TableHeader>Delay</TableHeader>
-                <TableHeader>Binary</TableHeader>
-                <TableHeader>Departing</TableHeader>
+                <TableHeaderCentered>Time</TableHeaderCentered>
+                <TableHeaderCentered>Delay</TableHeaderCentered>
+                <TableHeaderCentered>Binary</TableHeaderCentered>
+                <TableHeaderCentered>Departing</TableHeaderCentered>
               </TableRow>
             </thead>
             <tbody>
@@ -122,14 +140,14 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
                       {/* <TableCell>{trainLine.category}</TableCell> */}
                       <TableCell>{trainLine.trainId}</TableCell>
                       <TableCell>{formatText(trainLine.destination)}</TableCell>
-                      <TableCell>{trainLine.departureTime}</TableCell>
-                      <TableCell>{trainLine.delay !== 0 && trainLine.delay}</TableCell>
-                      <TableCell>{trainLine.binary}</TableCell>
-                      <TableCell>
+                      <TableCellCentered>{trainLine.departureTime}</TableCellCentered>
+                      <TableCellCentered>{trainLine.delay !== 0 && trainLine.delay}</TableCellCentered>
+                      <TableCellCentered>{trainLine.binary}</TableCellCentered>
+                      <TableCellCentered>
                         {trainLine.isDeparting && (
                           <DotLoader cycleTimeMs={200} dotNumber={3} scale={0.4} />
                         )}
-                      </TableCell>
+                      </TableCellCentered>
                     </TableRow>
                   )),
                 )
