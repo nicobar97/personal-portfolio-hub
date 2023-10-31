@@ -93,11 +93,11 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
           <StyledTable>
             <thead>
               <TableRow>
-                <TableHeader>Provider</TableHeader>
+                <TableHeader></TableHeader>
                 {/* <TableHeader>Category</TableHeader> */}
-                <TableHeader>Train ID</TableHeader>
+                <TableHeader>Train</TableHeader>
                 <TableHeader>Destination</TableHeader>
-                <TableHeader>Departure Time</TableHeader>
+                <TableHeader>Time</TableHeader>
                 <TableHeader>Delay</TableHeader>
                 <TableHeader>Binary</TableHeader>
                 <TableHeader>Departing</TableHeader>
@@ -121,15 +121,13 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
                       </TableCell>
                       {/* <TableCell>{trainLine.category}</TableCell> */}
                       <TableCell>{trainLine.trainId}</TableCell>
-                      <TableCell>{trainLine.destination}</TableCell>
+                      <TableCell>{formatText(trainLine.destination)}</TableCell>
                       <TableCell>{trainLine.departureTime}</TableCell>
-                      <TableCell>{trainLine.delay}</TableCell>
+                      <TableCell>{trainLine.delay !== 0 && trainLine.delay}</TableCell>
                       <TableCell>{trainLine.binary}</TableCell>
                       <TableCell>
-                        {trainLine.isDeparting ? (
+                        {trainLine.isDeparting && (
                           <DotLoader cycleTimeMs={200} dotNumber={3} scale={0.4} />
-                        ) : (
-                          ' '
                         )}
                       </TableCell>
                     </TableRow>
@@ -150,6 +148,8 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
     </Content>
   );
 };
+
+const formatText = (text: string) => text.length > 20 ? `${text.substring(0, 12)}...${text.substring(text.length - 6, text.length)}` : text;
 
 const pickProviderLogo = (provider: string) => {
   switch (provider) {
