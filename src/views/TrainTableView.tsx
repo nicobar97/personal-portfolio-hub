@@ -9,7 +9,11 @@ import { motion } from 'framer-motion';
 import { handleError } from '../components/errors/ErrorPopup';
 import { FullPageDotLoader } from '../components/misc/FullPageDotLoader';
 import { DotLoader } from '../components/misc/DotLoader';
-import trenitaliaLogo from '../assets/trains/trenitalia.svg'
+import trenitaliaLogo from '../assets/trains/trenitalia.svg';
+import trenordLogo from '../assets/trains/trenord.svg';
+import italoLogo from '../assets/trains/italo.svg';
+import tperLogo from '../assets/trains/trenitalia_tper.svg';
+import frecciarossaLogo from '../assets/trains/frecciarossa.svg';
 import { useThemeStore } from '../stores/useThemeStore';
 import { ThemeStyle } from '../model/Theme';
 
@@ -33,9 +37,10 @@ const Content = styled.div`
   }
 `;
 
-const TrainProviderImage = styled.img<{invertColor?: boolean}>`
-  ${(props) => props.invertColor ? 'filter: brightness(0) invert(1)' : ''};
-`
+const TrainProviderImage = styled.img<{ invertColor?: boolean }>`
+  width: 3rem;
+  ${(props) => (props.invertColor ? 'filter: brightness(0) invert(1)' : '')};
+`;
 
 const StyledTable = styled.table`
   width: 100%;
@@ -108,14 +113,25 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                     >
-                      <TableCell><TrainProviderImage src={trenitaliaLogo} invertColor={theme.style === ThemeStyle.DARK}/></TableCell>
+                      <TableCell>
+                        <TrainProviderImage
+                          src={pickProviderLogo(trainLine.provider)}
+                          invertColor={theme.style === ThemeStyle.DARK}
+                        />
+                      </TableCell>
                       {/* <TableCell>{trainLine.category}</TableCell> */}
                       <TableCell>{trainLine.trainId}</TableCell>
                       <TableCell>{trainLine.destination}</TableCell>
                       <TableCell>{trainLine.departureTime}</TableCell>
                       <TableCell>{trainLine.delay}</TableCell>
                       <TableCell>{trainLine.binary}</TableCell>
-                      <TableCell>{trainLine.isDeparting ? (<DotLoader cycleTimeMs={200} dotNumber={3} scale={.4}/>) : ' '}</TableCell>
+                      <TableCell>
+                        {trainLine.isDeparting ? (
+                          <DotLoader cycleTimeMs={200} dotNumber={3} scale={0.4} />
+                        ) : (
+                          ' '
+                        )}
+                      </TableCell>
                     </TableRow>
                   )),
                 )
@@ -133,4 +149,21 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
       </MobileFrame>
     </Content>
   );
+};
+
+const pickProviderLogo = (provider: string) => {
+  switch (provider) {
+    case 'trenitalia':
+      return trenitaliaLogo;
+    case 'italo':
+      return italoLogo;
+    case 'trenitalia tper':
+      return tperLogo;
+    case 'trenord':
+      return trenordLogo;
+    case 'frecciarossa':
+      return frecciarossaLogo;
+    default:
+      return trenitaliaLogo;
+  }
 };
