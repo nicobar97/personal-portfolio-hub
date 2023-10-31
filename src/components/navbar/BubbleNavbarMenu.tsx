@@ -26,9 +26,9 @@ const Bubble = styled(motion.div)<{
   max-width: 25em;
   width: 1.5rem;
   flex-direction: row;
-  justify-content: center;
-  flex-flow: wrap;
-  place-content: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: space-between;
   padding: 1.1rem;
   border-radius: ${(props) => (props.rounded ? '2rem' : '0px')};
   gap: 1rem;
@@ -68,7 +68,6 @@ const Header = styled(motion.div)`
 const Content = styled(motion.div)`
   display: flex;
   flex-direction: row;
-  padding-top: 0.8rem;
 `;
 
 const Container = styled(motion.div)`
@@ -112,7 +111,7 @@ export const BubbleNavbarMenu: React.FC<Props> = (props: Props) => (
     variants={{
       open: {
         width: `20rem`,
-        height: `100%`,
+        height: `18rem`,
         transition: {
           duration: 0.2,
           ease: 'easeInOut',
