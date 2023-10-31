@@ -11,7 +11,7 @@ import {
   AnimateFadeIn,
   AnimateFadeInDown,
 } from '../components/animations/Animations';
-import { Loader } from '../components/misc/Loader';
+import { FullPageDotLoader } from '../components/misc/FullPageDotLoader';
 import { handleError } from '../components/errors/ErrorPopup';
 import { BubbleButton } from '../components/navbar/BubbleButton';
 import { Either } from 'purify-ts';
@@ -136,7 +136,7 @@ export const ArticleListView: React.FC = () => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <Loader />
+                <FullPageDotLoader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

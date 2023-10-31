@@ -11,7 +11,7 @@ import { ReadMangaChapterView } from './views/ReadMangaChapterView';
 import { ParamWrapper } from './components/misc/ParamsWrapper';
 import { ErrorPopup } from './components/errors/ErrorPopup';
 import { OpCardGridView } from './views/OpCardGridView';
-import { Loader } from './components/misc/Loader';
+import { FullPageDotLoader } from './components/misc/FullPageDotLoader';
 import { Routes as MyRoutes } from './Routes';
 import { DynamicBubbleNavbarV2 } from './components/navbar/DynamicBubbleNavbarV2';
 import { Bacon } from './views/Bacon';
@@ -68,7 +68,7 @@ export const NavbarRouter: React.FC = () => {
             </ParamWrapper>
           }
         />
-        <Route path={MyRoutes.Loader} element={<Loader />} />
+        <Route path={MyRoutes.Loader} element={<FullPageDotLoader />} />
         <Route path={'/bacon'} element={<Bacon />} />
         <Route path={MyRoutes.Absolute} element={<Navigate to={MyRoutes.Me} />} />
         <Route

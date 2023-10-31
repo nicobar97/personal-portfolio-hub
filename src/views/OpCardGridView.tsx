@@ -4,7 +4,7 @@ import { getGameCards } from '../api/GameCard';
 import { useQuery } from '@tanstack/react-query';
 import { FetchAuthMapError } from '../model/errors';
 import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../components/animations/Animations';
-import { Loader } from '../components/misc/Loader';
+import { FullPageDotLoader } from '../components/misc/FullPageDotLoader';
 import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
 import { GameCard } from '../model/GameCard';
@@ -122,7 +122,7 @@ export const OpCardGridView: React.FC = () => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <Loader />
+                <FullPageDotLoader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

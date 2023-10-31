@@ -13,15 +13,7 @@ const Dot = styled(motion.div)<{ scale: number }>`
   height: ${(props) => props.scale * 10}px;
   background-color: ${(props) => props.theme.accent.color};
   border-radius: 50%;
-  margin: 0 8px;
-`;
-
-const Container = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
+  margin: 0 ${(props) => props.scale * 8}px;
 `;
 
 const dotVariants: Variants = {
@@ -39,20 +31,20 @@ const dotVariants: Variants = {
   },
 };
 
-export const Loader: React.FC<{ scale?: number }> = (props: { scale?: number }) => {
+export const DotLoader: React.FC<{ scale?: number, dotNumber?: number, cycleTimeMs?: number }> = (props: { scale?: number, dotNumber?: number, cycleTimeMs?: number }) => {
   const [activeDot, setActiveDot] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveDot((prevDot) => (prevDot + 1) % 5);
-    }, 400);
+    }, props.cycleTimeMs ?? 400);
 
     return () => clearInterval(interval);
   }, []);
+
   return (
-    <Container>
       <LoaderContainer>
-        {[0, 1, 2, 3, 4].map((index) => (
+        {Array.from({ length: props.dotNumber ?? 5 }).map((_value, index) => (
           <Dot
             key={index}
             scale={props.scale ?? 1}
@@ -62,6 +54,5 @@ export const Loader: React.FC<{ scale?: number }> = (props: { scale?: number }) 
           />
         ))}
       </LoaderContainer>
-    </Container>
   );
 };

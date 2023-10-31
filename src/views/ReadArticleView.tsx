@@ -12,7 +12,7 @@ import {
 } from '../components/animations/Animations';
 import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
-import { Loader } from '../components/misc/Loader';
+import { FullPageDotLoader } from '../components/misc/FullPageDotLoader';
 
 const Content = styled.div`
   display: flex;
@@ -81,7 +81,7 @@ export const ReadArticleView: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <Loader />
+                <FullPageDotLoader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

@@ -8,7 +8,7 @@ import {
   AnimateFadeIn,
   AnimateFadeInDown,
 } from '../components/animations/Animations';
-import { Loader } from '../components/misc/Loader';
+import { FullPageDotLoader } from '../components/misc/FullPageDotLoader';
 import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
 import { getChapters } from '../api/Manga';
@@ -98,7 +98,7 @@ export const ChapterListView: React.FC<Props> = (props: Props) => {
           {query.isLoading && (
             <AnimateFadeInDown trigger={query.isLoading}>
               <MobileFrame>
-                <Loader />
+                <FullPageDotLoader />
               </MobileFrame>
             </AnimateFadeInDown>
           )}

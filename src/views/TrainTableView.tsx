@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import { MobileFrame } from '../components/misc/MobileFrame';
-import { AnimatedBox } from '../components/animations/AnimatedBox';
 import { useQuery } from '@tanstack/react-query';
 import { FetchAuthMapError } from '../model/errors';
-import { AnimateFade, AnimateFadeIn, AnimateFadeInDown } from '../components/animations/Animations';
-import { Loader } from '../components/misc/Loader';
-import { handleError } from '../components/errors/ErrorPopup';
 import { Either } from 'purify-ts';
 import { TrainTable } from '../model/Train';
 import { getTrainTable } from '../api/Train';
+import { motion } from 'framer-motion';
+import { handleError } from '../components/errors/ErrorPopup';
+import { FullPageDotLoader } from '../components/misc/FullPageDotLoader';
+import { DotLoader } from '../components/misc/DotLoader';
+import trenitaliaLogo from '../assets/trains/trenitalia.svg'
+import { useThemeStore } from '../stores/useThemeStore';
+import { ThemeStyle } from '../model/Theme';
 
 const Content = styled.div`
   display: flex;
@@ -24,25 +27,47 @@ const Content = styled.div`
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
-const Title = styled.h2`
-  margin: 0rem;
-  cursor: pointer;
+const TrainProviderImage = styled.img<{invertColor?: boolean}>`
+  ${(props) => props.invertColor ? 'filter: brightness(0) invert(1)' : ''};
+`
+
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 `;
 
-// const Clickable = styled.div`
-//   cursor: pointer;
-// `;
+const TableRow = styled(motion.tr)`
+  border-bottom: 1px solid #ddd;
+`;
 
-// const Text = styled.div`
-//   cursor: text;
-// `;
+const TableHeader = styled.th`
+  padding: 8px;
+  text-align: left;
 
-const Info = styled.p`
-  margin: 0rem;
-  font-style: italic;
-  cursor: text;
+  @media (max-width: 768px) {
+    padding: 6px;
+  }
+`;
+
+const TableCell = styled.td`
+  padding: 8px;
+
+  @media (max-width: 768px) {
+    padding: 6px;
+  }
 `;
 
 type Props = {
@@ -50,49 +75,62 @@ type Props = {
 };
 
 export const TrainTableView: React.FC<Props> = (props: Props) => {
+  const theme = useThemeStore();
   const query = useQuery<Either<FetchAuthMapError, TrainTable>, FetchAuthMapError>({
     queryKey: ['trainTable', props.placeId],
     queryFn: () => getTrainTable(props.placeId).run(),
   });
 
   return (
-    <AnimateFade>
-      <Content>
-        <MobileFrame>
-          {query.isSuccess && (
-            <AnimateFadeIn trigger={query.isSuccess}>
+    <Content>
+      <MobileFrame>
+        {query.isSuccess && (
+          <StyledTable>
+            <thead>
+              <TableRow>
+                <TableHeader>Provider</TableHeader>
+                {/* <TableHeader>Category</TableHeader> */}
+                <TableHeader>Train ID</TableHeader>
+                <TableHeader>Destination</TableHeader>
+                <TableHeader>Departure Time</TableHeader>
+                <TableHeader>Delay</TableHeader>
+                <TableHeader>Binary</TableHeader>
+                <TableHeader>Departing</TableHeader>
+              </TableRow>
+            </thead>
+            <tbody>
               {query.data
                 .map((trainTable) =>
-                  trainTable.lines
-                    .map((trainLine) => (
-                      <AnimatedBox>
-                          <Info>{trainLine.destination}</Info>
-                          <Title>{trainLine.trainId} - {trainLine.provider}</Title>
-                        </AnimatedBox>
-                    )),
+                  trainTable.lines.map((trainLine) => (
+                    <TableRow
+                      key={trainLine.trainId}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                    >
+                      <TableCell><TrainProviderImage src={trenitaliaLogo} invertColor={theme.style === ThemeStyle.DARK}/></TableCell>
+                      {/* <TableCell>{trainLine.category}</TableCell> */}
+                      <TableCell>{trainLine.trainId}</TableCell>
+                      <TableCell>{trainLine.destination}</TableCell>
+                      <TableCell>{trainLine.departureTime}</TableCell>
+                      <TableCell>{trainLine.delay}</TableCell>
+                      <TableCell>{trainLine.binary}</TableCell>
+                      <TableCell>{trainLine.isDeparting ? (<DotLoader cycleTimeMs={200} dotNumber={3} scale={.4}/>) : ' '}</TableCell>
+                    </TableRow>
+                  )),
                 )
-                .mapLeft((err: FetchAuthMapError) => (
-                  <AnimateFadeInDown trigger={query.isSuccess}>
-                    <MobileFrame>{handleError(err)}</MobileFrame>
-                  </AnimateFadeInDown>
-                ))
+                .mapLeft((err: FetchAuthMapError) => <MobileFrame>{handleError(err)}</MobileFrame>)
                 .extract()}
-            </AnimateFadeIn>
-          )}
-          {query.isError && (
-            <AnimateFadeInDown trigger={query.isError}>
-              <MobileFrame>{handleError(query.error)}</MobileFrame>
-            </AnimateFadeInDown>
-          )}
-          {query.isLoading && (
-            <AnimateFadeInDown trigger={query.isLoading}>
-              <MobileFrame>
-                <Loader />
-              </MobileFrame>
-            </AnimateFadeInDown>
-          )}
-        </MobileFrame>
-      </Content>
-    </AnimateFade>
+            </tbody>
+          </StyledTable>
+        )}
+        {query.isError && <MobileFrame>{handleError(query.error)}</MobileFrame>}
+        {query.isLoading && (
+          <MobileFrame>
+            <FullPageDotLoader />
+          </MobileFrame>
+        )}
+      </MobileFrame>
+    </Content>
   );
 };
