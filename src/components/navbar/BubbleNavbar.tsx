@@ -1,78 +1,28 @@
 import styled from 'styled-components';
-import infoIcon from '../../assets/icons/info.png';
-import lightModeIcon from '../../assets/icons/light-mode.png';
-import darkModeIcon from '../../assets/icons/dark-mode.png';
-import menuIcon from '../../assets/icons/menu.png';
-import logo from '../../assets/images/logo_black_fill.svg';
 import { ThemeState, useThemeStore } from '../../stores/useThemeStore';
 import { ThemeStyle } from '../../model/Theme';
 import { BubbleButton } from './BubbleButton';
-import { Bubbles, BubblesEnum } from '../../model/Bubbles';
-import { motion } from 'framer-motion';
+import { BubblesEnum } from '../../model/Bubbles';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { RoutesEnum, Routes } from '../../Routes';
+import { RoutesEnum } from '../../Routes';
 import { useNavigate } from 'react-router-dom';
+import { BubbleNavbarMenu } from './BubbleNavbarMenu';
+import { Bubble, bubbles } from './BubbleNavbarConfig';
 
-export type Bubble = NavigatorBubble | ActionBubble;
-
-export const BubbleType = {
-  NAVIGATOR: 'navigator',
-  ACTION: 'action',
-};
-
-export type BubbleTypeEnum = (typeof BubbleType)[keyof typeof BubbleType];
-
-export type ActionBubble = {
-  type: typeof BubbleType.ACTION;
-  bubble: BubblesEnum;
-  iconSrc: string;
-  altIconSrc?: string;
-  handler: string;
-};
-
-export type NavigatorBubble = {
-  type: typeof BubbleType.NAVIGATOR;
-  bubble: BubblesEnum;
-  iconSrc: string;
-  altIconSrc?: string;
-  navigateTo: RoutesEnum;
-};
-
-const bubbles: Bubble[] = [
-  {
-    type: BubbleType.NAVIGATOR,
-    bubble: Bubbles.MENU,
-    iconSrc: menuIcon,
-    navigateTo: Routes.Menu,
-  },
-  {
-    type: BubbleType.NAVIGATOR,
-    bubble: Bubbles.LOGO,
-    iconSrc: logo,
-    navigateTo: Routes.Me,
-  },
-  {
-    type: BubbleType.NAVIGATOR,
-    bubble: Bubbles.INFO,
-    iconSrc: infoIcon,
-    navigateTo: Routes.Info,
-  },
-  {
-    type: BubbleType.ACTION,
-    bubble: Bubbles.INFO,
-    iconSrc: lightModeIcon,
-    altIconSrc: darkModeIcon,
-    handler: 'switch_dark_mode',
-  },
-];
-
-const NavbarBubblesContainer = styled.div<{ isFloating: boolean; isMobile: boolean }>`
+const NavbarBubblesContainer = styled.div<{
+  isFloating: boolean;
+  isMobile: boolean;
+  isMenuExpanded: boolean;
+}>`
   display: flex;
   align-items: center;
   ${(props) => (props.isMobile ? `` : props.isFloating ? `width: 25em` : `width: 35em`)};
   margin: 0 auto;
   z-index: 1;
-  justify-content: space-between;
+  justify-content: ${(props) =>
+    props.isMenuExpanded && props.isMobile && props.isFloating ? 'center' : 'space-between'};
+  align-items: flex-start;
   transition: width 0.2s ease 0.1s;
 `;
 
@@ -94,21 +44,16 @@ export type NavbarBubbleContent = {
   onBubbleClick: () => void;
 };
 
-export type ReadArticleNavbarBubbleContent = NavbarBubbleContent & {
-  articleId: string;
-};
-
 const createBubbleButton = (
   bubble: Bubble,
   changeTab: (tab: RoutesEnum) => void,
   theme: ThemeState,
   floating: boolean,
+  hide: boolean,
 ) => (
   <BubbleButton
     onBubbleClick={
-      bubble.type === BubbleType.NAVIGATOR
-        ? () => changeTab((bubble as NavigatorBubble).navigateTo)
-        : theme.switchDarkMode
+      bubble.type === 'navigator' ? () => changeTab(bubble.navigateTo) : theme.switchDarkMode
     }
     iconSrc={
       bubble.altIconSrc
@@ -119,15 +64,23 @@ const createBubbleButton = (
     }
     rounded={floating}
     scale={1}
-    darkModeInvert={bubble.type === BubbleType.NAVIGATOR}
+    darkModeInvert={bubble.type === 'navigator'}
     borderSize={1}
+    hide={hide}
   />
 );
+
+const navbarVariants = {
+  hidden: { y: 0, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+};
 
 type Props = {
   bubbles: BubblesEnum[];
   isFloating: boolean;
-  hidden: boolean;
+  isHidden: boolean;
+  isMenuExpanded: boolean;
+  toggleMenu: () => void;
 };
 
 export const BubbleNavbar: React.FC<Props> = (props: Props) => {
@@ -140,18 +93,18 @@ export const BubbleNavbar: React.FC<Props> = (props: Props) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   });
+
   const activeBubbles: Bubble[] = bubbles.filter((bubble: Bubble) =>
     props.bubbles.includes(bubble.bubble),
   );
+
   return (
     <motion.div
       key={'navbar'}
-      initial={{ y: 0, opacity: 1 }}
-      animate={{
-        y: props.hidden ? -50 : 0,
-        opacity: props.hidden ? 0 : 1,
-      }}
+      initial="visible"
+      animate={props.isHidden ? 'hidden' : 'visible'}
       transition={{ duration: 0.2 }}
+      variants={navbarVariants}
       style={{
         position: 'fixed',
         top: 0,
@@ -160,15 +113,22 @@ export const BubbleNavbar: React.FC<Props> = (props: Props) => {
         zIndex: 1,
       }}
     >
-      <NavbarContainer key="navbar-container" isFloating={props.isFloating} hidden={props.hidden}>
+      <NavbarContainer key="navbar-container" isFloating={props.isFloating} hidden={props.isHidden}>
         <NavbarBubblesContainer
           key="navbar-bubbles-container"
           isFloating={props.isFloating}
           isMobile={windowWidth < 470}
+          isMenuExpanded={props.isMenuExpanded}
         >
-          {activeBubbles.map((bubble: Bubble) =>
-            createBubbleButton(bubble, navigate, theme, props.isFloating),
-          )}
+          <AnimatePresence>
+            <div onClick={props.toggleMenu}>
+              <BubbleNavbarMenu rounded={props.isFloating} isMenuShown={props.isMenuExpanded} />
+            </div>
+            {(windowWidth > 782 || !props.isMenuExpanded) &&
+              activeBubbles.map((bubble: Bubble) =>
+                createBubbleButton(bubble, navigate, theme, props.isFloating, false),
+              )}
+          </AnimatePresence>
         </NavbarBubblesContainer>
       </NavbarContainer>
     </motion.div>

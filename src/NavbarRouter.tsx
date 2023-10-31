@@ -4,7 +4,6 @@ import { ArticleListView } from './views/ArticleListView';
 import { ReadArticleView } from './views/ReadArticleView';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { GenerateArticleView } from './views/GenerateArticleView';
-import { MenuView } from './views/MenuView';
 import { MangaListView } from './views/MangaList';
 import { ChapterListView } from './views/ChapterListView';
 import { ReadMangaChapterView } from './views/ReadMangaChapterView';
@@ -13,16 +12,15 @@ import { ErrorPopup } from './components/errors/ErrorPopup';
 import { OpCardGridView } from './views/OpCardGridView';
 import { FullPageDotLoader } from './components/misc/FullPageDotLoader';
 import { Routes as MyRoutes } from './Routes';
-import { DynamicBubbleNavbarV2 } from './components/navbar/DynamicBubbleNavbarV2';
+import { DynamicBubbleNavbar } from './components/navbar/DynamicBubbleNavbar';
 import { Bacon } from './views/Bacon';
 import { TrainTableView } from './views/TrainTableView';
 
 export const NavbarRouter: React.FC = () => {
   return (
-    <DynamicBubbleNavbarV2>
+    <DynamicBubbleNavbar>
       <Routes>
         <Route path={MyRoutes.Me} element={<MeView />} />
-        <Route path={MyRoutes.Menu} element={<MenuView />} />
         <Route path={MyRoutes.ArticleList} element={<ArticleListView />} />
         <Route
           path={MyRoutes.ReadArticle}
@@ -76,6 +74,6 @@ export const NavbarRouter: React.FC = () => {
           element={<ErrorPopup title={'Page not found'} message={'this is not a valid url'} />}
         />
       </Routes>
-    </DynamicBubbleNavbarV2>
+    </DynamicBubbleNavbar>
   );
 };

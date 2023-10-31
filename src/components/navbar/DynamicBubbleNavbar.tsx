@@ -54,7 +54,9 @@ export const DynamicBubbleNavbar: React.FC<Props> = (props: Props) => {
       <BubbleNavbar
         bubbles={navbar.bubbles}
         isFloating={navbar.floating}
-        hidden={navbar.hidden}
+        isHidden={navbar.hidden}
+        isMenuExpanded={navbar.menuExpanded}
+        toggleMenu={navbar.toggleMenu}
       />
       <ContentContainer>{props.children}</ContentContainer>
     </>

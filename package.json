@@ -1,6 +1,6 @@
 {
-  "name": "ts-vite-react-prj",
-  "version": "0.0.1",
+  "name": "nicobar-portfolio-fe",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "scripts": {

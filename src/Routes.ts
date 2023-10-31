@@ -4,7 +4,6 @@ export const Routes = {
   GenerateArticle: '/articles/generate',
   TrainTable: '/traintables/departures/:placeId',
   Me: '/me',
-  Menu: '/menu',
   MangaList: '/manga',
   ChapterList: '/manga/chapters/:mangaId',
   ReadMangaChapter: '/manga/chapters/read/:chapterId',
