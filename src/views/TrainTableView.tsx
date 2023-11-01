@@ -93,6 +93,12 @@ const TableCellCentered = styled.td`
   }
 `;
 
+const Title = styled.h2`
+  margin: 0rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+`;
+
 type Props = {
   placeId: string;
 };
@@ -107,55 +113,57 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
   return (
     <Content>
       <MobileFrame>
-        {query.isSuccess && (
-          <StyledTable>
-            <thead>
-              <TableRow>
-                <TableHeader></TableHeader>
-                {/* <TableHeader>Category</TableHeader> */}
-                <TableHeader>Train</TableHeader>
-                <TableHeader>Destination</TableHeader>
-                <TableHeaderCentered>Time</TableHeaderCentered>
-                <TableHeaderCentered>Delay</TableHeaderCentered>
-                <TableHeaderCentered>Binary</TableHeaderCentered>
-                <TableHeaderCentered>Departing</TableHeaderCentered>
-              </TableRow>
-            </thead>
-            <tbody>
-              {query.data
-                .map((trainTable) =>
-                  trainTable.lines.map((trainLine) => (
-                    <TableRow
-                      key={trainLine.trainId}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                    >
-                      <TableCell>
-                        <TrainProviderImage
-                          src={pickProviderLogo(trainLine.provider)}
-                          invertColor={theme.style === ThemeStyle.DARK}
-                        />
-                      </TableCell>
-                      {/* <TableCell>{trainLine.category}</TableCell> */}
-                      <TableCell>{trainLine.trainId}</TableCell>
-                      <TableCell>{formatText(trainLine.destination)}</TableCell>
-                      <TableCellCentered>{trainLine.departureTime}</TableCellCentered>
-                      <TableCellCentered>{trainLine.delay !== 0 && trainLine.delay}</TableCellCentered>
-                      <TableCellCentered>{trainLine.binary}</TableCellCentered>
-                      <TableCellCentered>
-                        {trainLine.isDeparting && (
-                          <DotLoader cycleTimeMs={200} dotNumber={3} scale={0.4} />
-                        )}
-                      </TableCellCentered>
+        {query.isSuccess &&
+          query.data
+            .map((trainTable) => (
+              <>
+                <Title>{trainTable.place}</Title>
+                <StyledTable>
+                  <thead>
+                    <TableRow>
+                      <TableHeader></TableHeader>
+                      <TableHeader>Train</TableHeader>
+                      <TableHeader>Destination</TableHeader>
+                      <TableHeaderCentered>Time</TableHeaderCentered>
+                      <TableHeaderCentered>Delay</TableHeaderCentered>
+                      <TableHeaderCentered>Binary</TableHeaderCentered>
+                      <TableHeaderCentered>Departing</TableHeaderCentered>
                     </TableRow>
-                  )),
-                )
-                .mapLeft((err: FetchAuthMapError) => <MobileFrame>{handleError(err)}</MobileFrame>)
-                .extract()}
-            </tbody>
-          </StyledTable>
-        )}
+                  </thead>
+                  <tbody>
+                    {trainTable.lines.map((trainLine) => (
+                      <TableRow
+                        key={trainLine.trainId}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                      >
+                        <TableCell>
+                          <TrainProviderImage
+                            src={pickProviderLogo(trainLine.provider)}
+                            invertColor={theme.style === ThemeStyle.DARK}
+                          />
+                        </TableCell>
+                        <TableCell>{trainLine.trainId}</TableCell>
+                        <TableCell>{formatText(trainLine.destination)}</TableCell>
+                        <TableCellCentered>{trainLine.departureTime}</TableCellCentered>
+                        <TableCellCentered>
+                          {trainLine.delay !== 0 && trainLine.delay}
+                        </TableCellCentered>
+                        <TableCellCentered>{trainLine.binary}</TableCellCentered>
+                        <TableCellCentered>
+                          {trainLine.isDeparting && (
+                            <DotLoader cycleTimeMs={200} dotNumber={3} scale={0.4} />
+                          )}
+                        </TableCellCentered>
+                      </TableRow>
+                    ))}
+                  </tbody>
+                </StyledTable>
+              </>
+            ))
+            .mapLeft((err: FetchAuthMapError) => <MobileFrame>{handleError(err)}</MobileFrame>)
+            .extract()}
         {query.isError && <MobileFrame>{handleError(query.error)}</MobileFrame>}
         {query.isLoading && (
           <MobileFrame>
@@ -167,7 +175,10 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
   );
 };
 
-const formatText = (text: string) => text.length > 20 ? `${text.substring(0, 12)}...${text.substring(text.length - 6, text.length)}` : text;
+const formatText = (text: string) =>
+  text.length > 20
+    ? `${text.substring(0, 12)}...${text.substring(text.length - 6, text.length)}`
+    : text;
 
 const pickProviderLogo = (provider: string) => {
   switch (provider) {

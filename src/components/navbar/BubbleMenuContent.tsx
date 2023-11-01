@@ -97,11 +97,11 @@ export const BubbleMenuContent = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <MenuItem onClick={() => navigate(Routes.TrainTable.replace(':placeId', '1728'))}>
+          <MenuItem onClick={() => navigate(Routes.TrainList)}>
             <IconContainer background="indianred">
               <Icon src={articleIcon} />
             </IconContainer>
-            <ItemLabel>Train Table</ItemLabel>
+            <ItemLabel>Train Tables</ItemLabel>
           </MenuItem>
         </motion.li>
 

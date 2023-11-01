@@ -15,6 +15,7 @@ import { Routes as MyRoutes } from './Routes';
 import { DynamicBubbleNavbar } from './components/navbar/DynamicBubbleNavbar';
 import { Bacon } from './views/Bacon';
 import { TrainTableView } from './views/TrainTableView';
+import { TrainListView } from './views/TrainListView';
 
 export const NavbarRouter: React.FC = () => {
   return (
@@ -66,6 +67,7 @@ export const NavbarRouter: React.FC = () => {
             </ParamWrapper>
           }
         />
+        <Route path={MyRoutes.TrainList} element={<TrainListView />} />
         <Route path={MyRoutes.Loader} element={<FullPageDotLoader />} />
         <Route path={'/bacon'} element={<Bacon />} />
         <Route path={MyRoutes.Absolute} element={<Navigate to={MyRoutes.Me} />} />
