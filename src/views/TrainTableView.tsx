@@ -96,6 +96,7 @@ const TableCellCentered = styled.td`
 const Title = styled.h2`
   margin: 0rem;
   margin-bottom: 1rem;
+  margin-top: 1rem;
   cursor: pointer;
 `;
 
