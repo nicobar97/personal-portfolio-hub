@@ -5,6 +5,8 @@ import { BubbleNavbar } from './BubbleNavbar';
 
 const ContentContainer = styled.div`
   margin-top: 3rem;
+  height: 100%;
+  min-height: calc(100vh - 3rem);
 `;
 
 const setUpScrolling = (
@@ -58,7 +60,11 @@ export const DynamicBubbleNavbar: React.FC<Props> = (props: Props) => {
         isMenuExpanded={navbar.menuExpanded}
         toggleMenu={navbar.toggleMenu}
       />
-      <ContentContainer>{props.children}</ContentContainer>
+      <ContentContainer
+        onClick={() => navbar.menuExpanded && navbar.collapseMenu()}
+      >
+        {props.children}
+      </ContentContainer>
     </>
   );
 };
