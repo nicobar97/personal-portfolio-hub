@@ -14,7 +14,6 @@ import trenordLogo from '../assets/trains/trenord.svg';
 import italoLogo from '../assets/trains/italo.svg';
 import tperLogo from '../assets/trains/trenitalia_tper.svg';
 import frecciarossaLogo from '../assets/trains/frecciarossa.svg';
-import { useThemeStore } from '../stores/useThemeStore';
 import { ThemeStyle } from '../model/Theme';
 
 const Content = styled.div`
@@ -37,9 +36,9 @@ const Content = styled.div`
   }
 `;
 
-const TrainProviderImage = styled.img<{ invertColor?: boolean }>`
+const TrainProviderImage = styled.img`
   width: 3rem;
-  ${(props) => (props.invertColor ? 'filter: brightness(0) invert(1)' : '')};
+  ${(props) => (props.theme.style === ThemeStyle.DARK ? 'filter: brightness(0) invert(1)' : '')};
 `;
 
 const StyledTable = styled.table`
@@ -105,7 +104,6 @@ type Props = {
 };
 
 export const TrainTableView: React.FC<Props> = (props: Props) => {
-  const theme = useThemeStore();
   const query = useQuery<Either<FetchAuthMapError, TrainTable>, FetchAuthMapError>({
     queryKey: ['trainTable', props.placeId],
     queryFn: () => getTrainTable(props.placeId).run(),
@@ -142,7 +140,6 @@ export const TrainTableView: React.FC<Props> = (props: Props) => {
                         <TableCell>
                           <TrainProviderImage
                             src={pickProviderLogo(trainLine.provider)}
-                            invertColor={theme.style === ThemeStyle.DARK}
                           />
                         </TableCell>
                         <TableCell>{trainLine.trainId}</TableCell>
