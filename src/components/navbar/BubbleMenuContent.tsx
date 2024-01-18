@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Routes } from '../../Routes';
 import { useNavigate } from 'react-router-dom';
 import articleIcon from '../../assets/icons/article.png';
-import mangaIcon from '../../assets/icons/manga.png';
 
 const variants = {
   open: {
@@ -72,23 +71,10 @@ export const BubbleMenuContent = () => {
           whileTap={{ scale: 0.95 }}
         >
           <MenuItem onClick={() => navigate(Routes.ArticleList)}>
-            <IconContainer background="indianred">
+            <IconContainer background="lightblue">
               <Icon src={articleIcon} />
             </IconContainer>
             <ItemLabel>Articles</ItemLabel>
-          </MenuItem>
-        </motion.li>
-
-        <motion.li
-          variants={menuItemVariants}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <MenuItem onClick={() => navigate(Routes.MangaList)}>
-            <IconContainer background="lightyellow">
-              <Icon src={mangaIcon} />
-            </IconContainer>
-            <ItemLabel>Manga Reader</ItemLabel>
           </MenuItem>
         </motion.li>
 
@@ -105,18 +91,6 @@ export const BubbleMenuContent = () => {
           </MenuItem>
         </motion.li>
 
-        <motion.li
-          variants={menuItemVariants}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <MenuItem onClick={() => navigate(Routes.OpCardList)}>
-            <IconContainer background="lightblue">
-              <Icon src={mangaIcon} />
-            </IconContainer>
-            <ItemLabel>Card List</ItemLabel>
-          </MenuItem>
-        </motion.li>
       </motion.ul>
     </>
   );

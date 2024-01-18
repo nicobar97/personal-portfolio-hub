@@ -111,7 +111,7 @@ export const BubbleNavbarMenu: React.FC<Props> = (props: Props) => (
     variants={{
       open: {
         width: `20rem`,
-        height: `18rem`,
+        height: `10.5rem`,
         transition: {
           duration: 0.2,
           ease: 'easeInOut',
