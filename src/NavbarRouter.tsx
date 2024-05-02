@@ -1,4 +1,3 @@
-import { InfoView } from './views/InfoView';
 import { MeView } from './views/MeView';
 import { ArticleListView } from './views/ArticleListView';
 import { ReadArticleView } from './views/ReadArticleView';
@@ -28,7 +27,6 @@ export const NavbarRouter: React.FC = () => {
           }
         />
         <Route path={MyRoutes.GenerateArticle} element={<GenerateArticleView />} />
-        <Route path={MyRoutes.Info} element={<InfoView />} />
         <Route
           path={MyRoutes.ReadArticle}
           element={

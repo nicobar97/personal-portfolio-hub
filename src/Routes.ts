@@ -5,7 +5,6 @@ export const Routes = {
   TrainList: '/traintables/departures',
   TrainTable: '/traintables/departures/:placeId',
   Me: '/me',
-  Info: '/info',
   Loader: '/loader',
   Absolute: '/',
   Catchall: '*',

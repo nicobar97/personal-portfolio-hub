@@ -34,7 +34,7 @@ export const bubbles: Bubble[] = [
     type: 'navigator',
     bubble: Bubbles.INFO,
     iconSrc: infoIcon,
-    navigateTo: Routes.Info,
+    navigateTo: Routes.Me,
   },
   {
     type: 'action',

@@ -31,10 +31,6 @@ const Title = styled.h2`
   margin: 0rem;
 `;
 
-const SubTitle = styled.h3`
-  margin: 0rem;
-`;
-
 const BulletList = styled.ul`
   margin: 0rem;
 `;
@@ -50,11 +46,18 @@ export const MeView: React.FC = () => (
         <MobileFrame>
           <AnimatedBox>
             <MainTitle>Hello,</MainTitle>
-            <Title>I'm Nicolò Bartelucci</Title>
-            <SubTitle>Software Engineer</SubTitle>
+            <Title>I'm Nicolò Bartelucci</Title>{' '}
+            <div>
+              I am a <strong>Software Engineer</strong>{' '}
+              specializing in <strong>Back-end development</strong>, holding a Master's degree in
+              Computer Engineering.
+              <br></br>
+              While I have a strong passion for <strong>technical aspects</strong>, I am equally
+              committed to enhancing{' '}
+              <strong>user experiences</strong> and <strong>product design</strong>.<br></br>I
+              currently reside in the beautiful city of Bologna, Italy.
+            </div>
             <BulletList>
-              <BulletRow>TypeScript</BulletRow>
-              <BulletRow>React / Node.js</BulletRow>
               <BulletRow>
                 <strong>Email:</strong>
                 <a href="mailto:nicobar97@gmail.com">
